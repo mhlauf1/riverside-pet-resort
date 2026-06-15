@@ -47,7 +47,7 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
 // Main Sanity configuration
 export default defineConfig({
   name: 'default',
-  title: 'Wags Stay N Play',
+  title: 'Riverside Pet Resort',
 
   projectId,
   dataset,

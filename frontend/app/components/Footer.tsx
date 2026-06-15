@@ -55,8 +55,8 @@ export default function Footer({
             <div>
               <div className="mb-4">
                 <NextImage
-                  src="/images/wags-logo-no-bg.png"
-                  alt="Wags Stay N Play"
+                  src="/images/riverside-logo.png"
+                  alt="Riverside Pet Resort"
                   width={160}
                   height={80}
                   className="w-[140px] h-auto"
@@ -172,7 +172,7 @@ export default function Footer({
                 ? footerTextLink?.label && footerTextLink?.href
                   ? renderFooterTextWithLink(footerText, footerTextLink.label, footerTextLink.href)
                   : footerText
-                : `\u00A9 ${new Date().getFullYear()} Wags Stay N Play. All rights reserved.`}
+                : `\u00A9 ${new Date().getFullYear()} Riverside Pet Resort. All rights reserved.`}
             </p>
             <p className="font-sans text-[14px] text-text-muted">
               Designed and developed by{' '}

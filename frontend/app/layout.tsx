@@ -2,17 +2,17 @@ import './globals.css'
 
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
-import {Bricolage_Grotesque, Geist} from 'next/font/google'
+import {Cinzel, Montserrat} from 'next/font/google'
 
-const bricolage = Bricolage_Grotesque({
-  variable: '--font-bricolage',
+const cinzel = Cinzel({
+  variable: '--font-cinzel',
   subsets: ['latin'],
   display: 'swap',
   weight: ['400', '500', '600', '700'],
 })
 
-const geist = Geist({
-  variable: '--font-geist',
+const montserrat = Montserrat({
+  variable: '--font-montserrat',
   subsets: ['latin'],
   display: 'swap',
   weight: ['400', '500', '600', '700'],
@@ -30,8 +30,7 @@ import {settingsQuery, servicesNavQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage, urlForImage} from '@/sanity/lib/utils'
 import Script from 'next/script'
 import {handleError} from '@/app/client-utils'
-
-const SITE_URL = 'https://wagsstaynplay.com'
+import {SITE_URL, SITE_NAME} from '@/app/site-config'
 
 function buildLocalBusinessJsonLd(settings: any) {
   const lb = settings?.localBusiness
@@ -96,7 +95,7 @@ export async function generateMetadata(): Promise<Metadata> {
     query: settingsQuery,
     stega: false,
   })
-  const title = settings?.title || 'Wags Stay N Play'
+  const title = settings?.title || SITE_NAME
   const description = settings?.description
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage)
@@ -163,7 +162,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   })
 
   return (
-    <html lang="en" className={`${bricolage.variable} ${geist.variable} bg-cream text-forest`}>
+    <html lang="en" className={`${cinzel.variable} ${montserrat.variable} bg-cream text-forest`}>
       <head>
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
@@ -246,7 +245,12 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         >
           Skip to main content
         </a>
-        <Header navItems={navItems as any} ctaButton={settings?.ctaButton as any} logo={settings?.logo as any} />
+        <Header
+          navItems={navItems as any}
+          ctaButton={settings?.ctaButton as any}
+          logo={settings?.logo as any}
+          phone={settings?.contactInfo?.phone ?? undefined}
+        />
         <main id="main-content">{children}</main>
         <Footer
           tagline={settings?.footerTagline ?? undefined}

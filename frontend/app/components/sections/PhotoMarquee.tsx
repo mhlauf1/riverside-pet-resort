@@ -46,7 +46,7 @@ export default function PhotoMarquee({block, index}: PhotoMarqueeProps) {
                 >
                   <Image
                     id={img.asset._ref}
-                    alt={img.alt || "Wags Stay N' Play"}
+                    alt={img.alt || 'Riverside Pet Resort'}
                     width={880}
                     crop={img.crop}
                     hotspot={img.hotspot}

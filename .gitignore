@@ -10,6 +10,9 @@
 .DS_Store
 *.pem
 
+# working artifacts (context bundle is unpacked into context/)
+context/riverside-context.zip
+
 # debug
 npm-debug.log*
 yarn-debug.log*

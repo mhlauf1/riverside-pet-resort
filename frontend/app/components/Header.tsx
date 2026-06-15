@@ -24,9 +24,11 @@ type HeaderProps = {
   navItems?: NavItem[]
   ctaButton?: {buttonText?: string; link?: any}
   logo?: {asset?: {_ref: string}}
+  phone?: string
 }
 
-export default function Header({navItems, ctaButton, logo}: HeaderProps) {
+export default function Header({navItems, ctaButton, logo, phone}: HeaderProps) {
+  const phoneHref = phone ? `tel:${phone.replace(/\D/g, '')}` : undefined
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -185,8 +187,8 @@ export default function Header({navItems, ctaButton, logo}: HeaderProps) {
             {/* Logo */}
             <Link href="/" className="flex items-start">
               <NextImage
-                src="/images/wags-logo-no-bg.png"
-                alt="Wags Stay N Play"
+                src="/images/riverside-logo.png"
+                alt="Riverside Pet Resort"
                 width={150}
                 height={75}
                 className="w-[80px] lg:w-[100px] h-auto"
@@ -288,12 +290,14 @@ export default function Header({navItems, ctaButton, logo}: HeaderProps) {
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center justify-end gap-6 shrink-0">
-              <a
-                href="tel:2182872000"
-                className="font-sans text-[14px] text-forest/80 hover:text-terracotta transition-colors whitespace-nowrap"
-              >
-                (218) 287-2000
-              </a>
+              {phone && phoneHref && (
+                <a
+                  href={phoneHref}
+                  className="font-sans text-[14px] text-forest/80 hover:text-terracotta transition-colors whitespace-nowrap"
+                >
+                  {phone}
+                </a>
+              )}
               {ctaButton?.buttonText && (
                 <Button variant="primary" link={ctaButton.link}>
                   {ctaButton.buttonText}
@@ -472,25 +476,27 @@ export default function Header({navItems, ctaButton, logo}: HeaderProps) {
                 className="p-8 pt-4 space-y-3"
                 onClick={() => setMobileOpen(false)}
               >
-                <a
-                  href="tel:2182872000"
-                  className="flex items-center justify-center gap-2 font-sans text-[16px] text-forest hover:text-terracotta transition-colors"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
+                {phone && phoneHref && (
+                  <a
+                    href={phoneHref}
+                    className="flex items-center justify-center gap-2 font-sans text-[16px] text-forest hover:text-terracotta transition-colors"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-                    />
-                  </svg>
-                  (218) 287-2000
-                </a>
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                      />
+                    </svg>
+                    {phone}
+                  </a>
+                )}
                 {ctaButton?.buttonText && (
                   <Button variant="primary" link={ctaButton.link} className="w-full">
                     {ctaButton.buttonText}

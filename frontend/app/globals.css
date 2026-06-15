@@ -5,33 +5,39 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
-   COLOR PALETTE
-   Single palette: tan + burgundy with warm neutrals.
-   Fonts: Bricolage Grotesque (heading) + Geist (body)
+   COLOR PALETTE — Riverside Pet Resort
+   Brand: Navy #0B1D3A · Maroon #8B1E2D · Stone #F5F5F2
+   Fonts: Cinzel (heading) + Montserrat (body)
+
+   NOTE (deliberate divergence, M1): token NAMES are inherited from
+   the Wags base (forest/terracotta/cream) and are used as class names
+   across all page-builder blocks. We value-swap only — names stay,
+   values become Riverside brand colors. So `forest` = Navy,
+   `terracotta` = Maroon, `cream` = Stone. A future rename is optional.
    ============================================================ */
 
 :root {
-  --theme-cream: #faf6f1;
-  --theme-sand: #efe8df;
-  --theme-forest: #4a1c2a;
-  --theme-forest-card: #5c2636;
-  --theme-terracotta: #8b2f3a;
-  --theme-terracotta-dark: #6e2430;
-  --theme-terracotta-light: #d4a0a0;
-  --theme-sage: #c4a882;
-  --theme-charcoal: #361520;
-  --theme-gold: #c49a3c;
-  --theme-rose: #a64452;
-  --theme-black: #1a0e12;
-  --theme-black-card: #221418;
-  --theme-border-light: rgba(74, 28, 42, 0.15);
-  --theme-border-dark: rgba(250, 246, 241, 0.2);
-  --theme-border-black: rgba(250, 246, 241, 0.12);
-  --theme-text-muted: rgba(74, 28, 42, 0.8);
-  --theme-text-muted-dark: rgba(250, 246, 241, 0.7);
-  --theme-shadow-color: 74, 28, 42;
-  --theme-font-heading: var(--font-bricolage, 'Bricolage Grotesque', system-ui, sans-serif);
-  --theme-font-body: var(--font-geist, 'Geist', system-ui, sans-serif);
+  --theme-cream: #f5f5f2; /* Stone — primary light background */
+  --theme-sand: #e7e5df; /* darker stone neutral */
+  --theme-forest: #0b1d3a; /* Navy — primary dark */
+  --theme-forest-card: #14305c; /* navy raised/card surface */
+  --theme-terracotta: #8b1e2d; /* Maroon — accent */
+  --theme-terracotta-dark: #6e1623;
+  --theme-terracotta-light: #c98892; /* light maroon for muted text on dark */
+  --theme-sage: #b8a88c; /* warm stone accent (harmonizes with navy) */
+  --theme-charcoal: #0a1526; /* near-black navy */
+  --theme-gold: #c49a3c; /* gold accent — classic navy pairing */
+  --theme-rose: #a64452; /* maroon-family rose */
+  --theme-black: #08111f;
+  --theme-black-card: #0e1b30;
+  --theme-border-light: rgba(11, 29, 58, 0.15);
+  --theme-border-dark: rgba(245, 245, 242, 0.2);
+  --theme-border-black: rgba(245, 245, 242, 0.12);
+  --theme-text-muted: rgba(11, 29, 58, 0.8);
+  --theme-text-muted-dark: rgba(245, 245, 242, 0.7);
+  --theme-shadow-color: 11, 29, 58;
+  --theme-font-heading: var(--font-cinzel, 'Cinzel', Georgia, serif);
+  --theme-font-body: var(--font-montserrat, 'Montserrat', system-ui, sans-serif);
 }
 
 /* ============================================================

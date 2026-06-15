@@ -17,7 +17,10 @@
 const {execSync} = require('node:child_process')
 const {createClient} = require('@sanity/client')
 
-const OLD_ID = '0f056e49-7b45-4c84-84e6-f7ddf3abb654'
+// NOTE: OLD_ID below was the orphaned UUID in the Wags base dataset. For the
+// Riverside project this only needs running IF the settings singleton ends up
+// orphaned at an auto-UUID again — set OLD_ID to that UUID before running.
+const OLD_ID = process.env.SETTINGS_OLD_ID || '0f056e49-7b45-4c84-84e6-f7ddf3abb654'
 const NEW_ID = 'siteSettings'
 
 function getCliToken() {
@@ -28,9 +31,12 @@ function getCliToken() {
 }
 
 async function main() {
+  const projectId =
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_STUDIO_PROJECT_ID
+  if (!projectId) throw new Error('Set NEXT_PUBLIC_SANITY_PROJECT_ID (or SANITY_STUDIO_PROJECT_ID).')
   const client = createClient({
-    projectId: 'dafhmkyq',
-    dataset: 'production',
+    projectId,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
     apiVersion: '2024-01-01',
     token: getCliToken(),
     useCdn: false,

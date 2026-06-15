@@ -13,7 +13,7 @@ export const settings = defineType({
       description: 'Site title',
       title: 'Title',
       type: 'string',
-      initialValue: 'Wags Stay N Play',
+      initialValue: 'Riverside Pet Resort',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -154,6 +154,54 @@ export const settings = defineType({
       type: 'button',
     }),
     defineField({
+      name: 'transitionBanner',
+      title: 'Transition Banner',
+      type: 'object',
+      description:
+        'Site-wide announcement banner (e.g. the Rio Grooming + Barks & Rec → Riverside transition message). Toggle on/off and edit copy without a deploy. Final copy provided by Brian/Peter.',
+      options: {collapsible: true, collapsed: true},
+      fields: [
+        defineField({
+          name: 'enabled',
+          title: 'Show banner',
+          type: 'boolean',
+          initialValue: false,
+        }),
+        defineField({
+          name: 'content',
+          title: 'Banner Content',
+          type: 'array',
+          description: 'Short rich-text message shown in the banner',
+          of: [
+            defineArrayMember({
+              type: 'block',
+              styles: [],
+              lists: [],
+              marks: {
+                decorators: [
+                  {title: 'Bold', value: 'strong'},
+                  {title: 'Italic', value: 'em'},
+                ],
+                annotations: [],
+              },
+            }),
+          ],
+        }),
+        defineField({
+          name: 'linkUrl',
+          title: 'Link URL',
+          type: 'url',
+          description: 'Optional — makes the banner clickable',
+        }),
+        defineField({
+          name: 'linkLabel',
+          title: 'Link Label',
+          type: 'string',
+          description: 'Optional call-to-action text for the link',
+        }),
+      ],
+    }),
+    defineField({
       name: 'footerSticker',
       title: 'Footer Sticker',
       type: 'image',
@@ -216,7 +264,7 @@ export const settings = defineType({
       name: 'footerText',
       title: 'Footer Copyright Text',
       type: 'string',
-      description: 'e.g. "© 2026 Wags Stay N Play. Part of the Embark Pet Services family."',
+      description: 'e.g. "© 2026 Riverside Pet Resort. Part of the Embark Pet Services family."',
     }),
     defineField({
       name: 'footerTextLink',
