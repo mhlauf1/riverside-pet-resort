@@ -250,6 +250,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           ctaButton={settings?.ctaButton as any}
           logo={settings?.logo as any}
           phone={settings?.contactInfo?.phone ?? undefined}
+          transitionBanner={(settings as any)?.transitionBanner}
         />
         <main id="main-content">{children}</main>
         <Footer

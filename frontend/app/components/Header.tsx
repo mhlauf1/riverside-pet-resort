@@ -6,6 +6,7 @@ import {usePathname} from 'next/navigation'
 import {useState, useEffect, useRef, useCallback} from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 import Button from '@/app/components/ui/Button'
+import TransitionBanner, {type TransitionBannerData} from '@/app/components/TransitionBanner'
 
 type NavChild = {
   _key: string
@@ -25,9 +26,10 @@ type HeaderProps = {
   ctaButton?: {buttonText?: string; link?: any}
   logo?: {asset?: {_ref: string}}
   phone?: string
+  transitionBanner?: TransitionBannerData
 }
 
-export default function Header({navItems, ctaButton, logo, phone}: HeaderProps) {
+export default function Header({navItems, ctaButton, logo, phone, transitionBanner}: HeaderProps) {
   const phoneHref = phone ? `tel:${phone.replace(/\D/g, '')}` : undefined
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
@@ -182,6 +184,7 @@ export default function Header({navItems, ctaButton, logo, phone}: HeaderProps) 
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-cream ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+        <TransitionBanner banner={transitionBanner} />
         <div className="px-2 md:px-12 border-b border-black/20">
           <div className="flex lg:grid lg:grid-cols-3 bg-cream/95 backdrop-blur-sm items-center justify-between py-3">
             {/* Logo */}
