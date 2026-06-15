@@ -1,120 +1,62 @@
-# Milestones
+# Milestones — Riverside Pet Resort
 
-## Overview
+Hard dates: **tested by 6/23 · live by 6/30 · rebrand 7/3**. Today's plan assumes kickoff 6/12.
 
-The Wags Stay N' Play website is built in milestones, not features. Each milestone represents a meaningful, deployable chunk of work. The site should be viewable on Vercel after every milestone.
+## M0 — Setup & Investigation (6/12–6/13)
 
-Wags is a straightforward facility site with some unique features (cat services, assessment process, 4 kennel sizes). The milestone plan reflects the standard Embark build cadence.
+- Clone base decision: Wags Stay N' Play (preferred — has Goose POS settings pattern) if stable; otherwise Kingdom Canine + port the Goose singleton pattern.
+- Clone with clean git history → push to `mhlauf1/riverside-pet-resort`.
+- New Sanity project (`riverside-pet-resort`), CORS for localhost + Vercel preview. New Vercel project from the repo. Custom domain waits until launch.
+- **Investigation pass (Claude Code):** grep entire repo for predecessor brand names, content, URLs, Sanity project ID, hardcoded values. Produce a written map of CMS-driven vs. hardcoded content before any edits.
+- Exit criteria: repo builds and deploys to Vercel preview with predecessor content; investigation map documented.
 
----
+## M1 — Brand Swap & Strip (6/13–6/15)
 
-## Milestone 1: Foundation & Cleanup
+- Swap brand tokens: Navy #0B1D3A, Maroon #8B1E2D, Stone #F5F5F2; Cinzel Bold / Montserrat SemiBold; logo assets from brand pack.
+- Strip all predecessor content; replace with intake content or `[TBD]` markers.
+- Wire new Sanity project; seed settings singleton (site identity, banner toggle/copy, booking URLs as placeholders).
+- Exit criteria: zero predecessor brand strings in repo (verified by grep); preview shows Riverside shell.
 
-**Status:** In Progress
-**Branch:** `feature/foundation`
+## M2 — Resort Pages (6/15–6/17)
 
-### Goals
-- Strip all Kingdom Canine-specific content, images, and references from the cloned codebase
-- Connect new Sanity project and set up environment
-- Update all meta tags, site title, phone numbers for Wags Stay N' Play
-- Establish tan/burgundy color palette
-- Rewrite all context files for Wags
-- Remove transportation service content
+- Home (hero, CTAs, intro, services overview, Why Riverside, banner component).
+- Boarding, Daycare (pricing tables as structured CMS content), Grooming (4 sub-sections), About, Careers, Contact (form via Gmail app-password SMTP pattern, destination pending).
+- Imagery pass from Facebook pages + existing sites.
+- Exit criteria: all resort pages content-complete except PENDING business details.
 
-### What was done
-- All KC text references replaced with "Wags Stay N' Play" across source files
-- KC phone number (314-631-6738) replaced with Wags phone (218-287-2000)
-- Logo references updated from kingdom-logo.png to wags-logo.png
-- Site URL updated to wagsstaynplay.com
-- package.json name updated to "wags-stay-n-play"
-- Color palette replaced: KC purple/gold → Wags tan/burgundy
-- All context files rewritten for Wags
-- Transportation service content removed
-- Sanity configs updated
+## M3 — School Section (6/17–6/19)
 
-### Still needed
-- New Sanity project created and connected
-- Logo file (waiting on source from client)
+- `/school` route group: own layout, nav, theme tokens derived from riogrooming.com's look (with Amy's refreshes).
+- School home + 7 sub-pages; enrollment/tour/info funnels and forms.
+- Exit criteria: school section navigable end-to-end with its own visual language; forms submit.
 
----
+## M4 — SEO Scope Items + Redirects (6/19–6/21)
 
-## Milestone 2: Sanity Schema & Content Seeding
+- Location page layout + per-suburb content (list from Brian/Peter); excluded from nav, included in sitemap.
+- FAQ section with `FAQPage` JSON-LD; validate schema.
+- Crawl riogrooming.com indexed pages → build path-aware 301 map (school deep links → `/school/...`, rest → `/`). Implement in Next config/middleware; activates at DNS cutover.
+- Exit criteria: location pages + FAQ live on preview, schema validates, 301 map written and reviewed.
 
-**Status:** Complete (on branch `content/sanity-seed`)
-**Branch:** `content/sanity-seed`
+## M5 — QA Milestone: "Ships Complete" (6/21–6/23) ⚠️ non-negotiable
 
-### Goals
-- Rewrite all pricing data with Wags values (4 boarding tiers, cat services, punch cards)
-- Update calculator components for Wags service structure
-- Seed all Sanity content
-- Deploy schema to cloud
+- Full click-through of every page, desktop + mobile.
+- Submit-test every form: contact, appointment request, tour request, info request — confirm delivery to the real destination address.
+- Verify every booking link (Goose or Gingr per Brian's answer).
+- Verify every redirect in the 301 map against the crawl list.
+- Validate FAQ schema; Lighthouse pass; sitemap + robots include location pages and exclude nothing unintended.
+- Exit criteria: written QA checklist completed and archived. **This commitment justified the rate — it must visibly happen.**
 
-### What was done
-- pricingData.ts completely rewritten: daycare (full/half/cat + 4 punch cards + assessment), boarding (4 tiers + cat + $5 discount + punch cards), grooming (3 service types + cat display + à la carte)
-- All 3 calculator components updated for Wags service structure
-- 8 Sanity documents seeded and published (settings, 3 services, 4 pages)
-- Schema deployed to cloud
-- Build passes clean
+## M6 — Launch (by 6/30)
 
----
+- Cloudflare zone for the confirmed canonical domain under the Embark account (domain + registrar pending Peter). Gray cloud (DNS only) on all Vercel records. A 216.150.1.1 / CNAME per current Vercel docs.
+- **24-hour notice to Brian before DNS cutover** (standing Embark rule — POS pricing/config updates in step).
+- Cutover; verify SSL, redirects live, forms still deliver.
+- riogrooming.com 301s activated (separate DNS session; email records untouched — Rio M365 on external CSP, do not touch).
+- Post-launch smoke test.
 
-## Milestone 3: Core Pages — Homepage, About & Services
+## Out of scope (do not absorb)
 
-**Status:** Complete (on branch `feature/core-pages`)
-**Branch:** `feature/core-pages`
-
-### Goals
-- Homepage: hero with facility photos, service cards, about teaser, hours, gallery, CTA
-- About Us page (NEW): team grid, facility narrative, differentiators
-- Daycare page: hero, 4 play yards, structured play, cat daycare, pricing calculator
-- Boarding page: hero, 4 kennel tiers, cat boarding, daily schedule, pricing calculator
-- Grooming page: hero, service categories (Full Groom, Bath & Works, Exit Bath, Cat), pricing calculator
-
-### What was done
-- Updated logo references to new wags-logo-no-bg.png, removed stale logo files
-- Added teamGrid and valuePillars GROQ query expansions
-- Seeded About page in Sanity (heroMinimal + splitContent + teamGrid + valuePillars + ctaBanner)
-- All 8 pages verified rendering with correct Wags content
-- Fixed Boxers Bed & Biscuits reference in HeroMarquee.tsx
-- Build passes clean
-
----
-
-## Milestone 4: Supporting Pages & New Clients Flow
-
-**Status:** Complete (content seeded in M2, pages verified in M3)
-**Branch:** `feature/core-pages`
-
-### Goals
-- New Clients / Getting Started: assessment process, vaccination requirements, breakaway collars, downloadable forms
-- Pricing page: comprehensive pricing overview with all services
-- Contact page: form, Google Maps, hours, phone/email
-- Gallery page: facility photos from Wix scrape
-
-### What was done
-- All pages seeded and rendering: New Clients (processSteps + featureCards + ctaBanner), Pricing (pricingPageTabs), Contact (contactForm with hours)
-- Gallery page not yet seeded (waiting on facility photos from client)
-
----
-
-## Milestone 5: Polish & Launch Prep
-
-**Status:** In Progress (on branch `feature/core-pages`)
-**Branch:** `feature/core-pages`
-
-### Goals
-- SEO optimization (meta tags, structured data, sitemap.xml, robots.txt)
-- Performance audit (Lighthouse 90+ all categories)
-- Accessibility audit (WCAG AA compliance)
-- Cross-browser testing
-- Custom 404 page
-- Final content review
-- Vercel deployment
-- DNS cutover plan (Wix → Vercel)
-- POS coordination (Goose timeline)
-
-### What was done
-- Added skip-to-content accessibility link in layout.tsx
-- Fixed remaining sister site reference (Boxers B&B alt text in HeroMarquee)
-- Verified: sitemap.ts, robots.ts, structured data (JSON-LD), metadata, favicon all present and correct
-- Verified: ARIA attributes, keyboard nav, focus traps already comprehensive from design system
+- Additional SEO recommendations beyond the two scoped items — separate scoping, agreed in writing with Peter.
+- Portfolio rollout of location-page/FAQ patterns — separate, per site.
+- riogroomingschool.com transfer (Network Solutions, location unknown) — separate infrastructure track.
+- Any Rio email/M365 work — frozen until CSP renewal.

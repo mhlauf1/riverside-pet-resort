@@ -1,169 +1,45 @@
-# Coding Standards
+# Coding Standards — Riverside Pet Resort
 
-## TypeScript
+## Stack (Embark portfolio standard)
 
-- Strict mode enabled
-- No `any` types — use proper typing or `unknown`
-- Define interfaces for all props, API responses, and data models
-- Use type inference where obvious, explicit types where helpful
+- **Next.js (App Router)** + TypeScript
+- **Sanity CMS** (project: `riverside-pet-resort`)
+- **Vercel** hosting · **Cloudflare** DNS (gray cloud on all Vercel records)
+- Tailwind (version per cloned base — confirm during investigation)
+- GitHub: `mhlauf1/riverside-pet-resort`
 
-## React
+## Conventions
 
-- Functional components only (no class components)
-- Use hooks for state and side effects
-- Keep components focused — one job per component
-- Extract reusable logic into custom hook
+- Follow the cloned base's existing patterns. This repo descends from the Hound Around → HAFH → Kingdom Canine → Wags lineage; consistency across the portfolio matters more than local preference. **Document any deliberate divergence from the template pattern** in investigation-map.md or commit messages.
+- No hardcoded content where the base is CMS-driven. No hardcoded pricing or booking URLs anywhere, full stop.
+- Brand tokens centralized (Tailwind theme/CSS vars): `navy: #0B1D3A`, `maroon: #8B1E2D`, `stone: #F5F5F2`. Fonts: Cinzel (Bold) for RIVERSIDE display, Montserrat (SemiBold) for supporting display, script font per brand pack for "Rio" (likely served as an asset/lockup rather than live text — match the pack).
+- Accessible by default: semantic headings, alt text on all imagery, form labels, focus states.
 
-## Next.js
+## School section architecture
 
-- Server components by default
-- Only use `'use client'` when needed (interactivity, hooks, browser APIs)
-- Use Server Actions for form submissions (contact form, newsletter, etc.)
-- Fetch Sanity data directly in server components using GROQ queries
-- Dynamic routes for service pages
-- Static generation for all pages (ISR with Sanity webhook revalidation)
+- Route group: `app/(school)/school/...` (or the base's equivalent) with its **own root layout**: school nav, school footer, school theme.
+- School theme tokens derived from existing riogrooming.com visual language (with Amy's refreshes) — kept separate from resort tokens. Two design languages, one codebase; don't let them bleed.
+- Cross-links: resort nav links *into* the school ("Learn About Grooming School"); school layout carries a clear path back to the resort. A visitor should always know which "building" they're in.
 
-## Sanity CMS
+## Forms / SMTP
 
-- All user-facing content comes from Sanity — no hardcoded copy in components
-- GROQ queries live in `frontend/sanity/lib/queries.ts`
-- Sanity client config in `frontend/sanity/lib/client.ts`
-- Type definitions generated from Sanity schema or manually maintained in `frontend/sanity/lib/types.ts`
-- Image URLs built with Sanity's image URL builder — never construct CDN URLs manually
-- Portable Text rendered with `@portabletext/react` for rich text fields
-- Schema files live in the `studio/` directory at project root (Sanity Studio embedded in the Next.js project)
+- Gmail app-password SMTP pattern (same as Boxers): `smtp.gmail.com:465`, credentials in env vars, never committed.
+- Forms: contact, appointment request, tour request, info request. Destination from Sanity settings (pending Brian).
+- Honeypot/spam protection per the base's pattern.
 
-## Tailwind CSS v4
+## Redirects
 
-**CRITICAL**: We are using Tailwind CSS v4, which uses CSS-based configuration.
+- Path-aware 301 map in `next.config` redirects or middleware (version-controlled).
+- Map built from a crawl of riogrooming.com's indexed pages before implementation.
 
-- **DO NOT** create `tailwind.config.ts` or `tailwind.config.js` files (those are for v3)
-- All theme configuration must be done in CSS using the `@theme` directive in `frontend/app/globals.css`
-- Use CSS custom properties for all colors, fonts, and spacing tokens
-- No JavaScript-based Tailwind config allowed
+## SEO
 
-### Theme token system
+- Location pages: indexable, in sitemap, out of main nav. Real content per suburb — no doorway-page shortcuts, no noindex.
+- `FAQPage` JSON-LD generated from Sanity FAQ docs; must pass Google Rich Results validation.
+- Per-page metadata via the base's SEO pattern; canonical domain from a single config constant (domain unconfirmed as of 6/12 — see intake-content.md).
 
-Wags uses a single color palette defined as CSS custom properties in `globals.css`. Components use semantic token names mapped via the Tailwind `@theme` block — never raw hex values.
+## Git
 
-```css
-@import 'tailwindcss';
-
-:root {
-  --theme-cream: #faf6f1;
-  --theme-forest: #4a1c2a; /* deep burgundy (primary dark) */
-  --theme-terracotta: #8b2f3a; /* burgundy (accent) */
-  --theme-gold: #c49a3c; /* gold (highlight) */
-  --theme-charcoal: #361520; /* darker burgundy */
-  --theme-sage: #c4a882; /* warm tan */
-  /* ... etc */
-  --theme-font-heading: var(--font-bricolage, 'Bricolage Grotesque', ...);
-  --theme-font-body: var(--font-geist, 'Geist', ...);
-}
-
-@theme {
-  --color-cream: var(--theme-cream);
-  --color-forest: var(--theme-forest);
-  --color-terracotta: var(--theme-terracotta);
-  /* ... mapped tokens */
-}
-```
-
-- **Never use hardcoded color values** in components — always reference semantic tokens
-- No multi-theme system — Wags has a single design direction (no theme toggle, no `data-theme` switching)
-
-## File Organization
-
-```
-frontend/
-├── app/
-│   ├── page.tsx                  # Homepage
-│   ├── [slug]/page.tsx           # Dynamic CMS pages (pricing, gallery, new-clients, contact, about)
-│   ├── services/[slug]/page.tsx  # Dynamic service pages (daycare, boarding, grooming)
-│   ├── studio/[[...tool]]/page.tsx # Embedded Sanity Studio
-│   ├── api/
-│   │   ├── contact/route.ts      # Contact form submission
-│   │   └── draft-mode/           # Sanity draft mode toggle
-│   ├── layout.tsx
-│   ├── globals.css               # Tailwind v4 config + single theme tokens
-│   ├── components/
-│   │   ├── Header.tsx, Footer.tsx, TextLogo.tsx  # Layout
-│   │   ├── sections/             # Page sections (Hero, ServiceCards, Stats, etc.)
-│   │   ├── pricing/              # Pricing calculators (Daycare, Boarding, Grooming)
-│   │   └── ui/                   # Reusable primitives (Button, Badge, FadeIn, etc.)
-│   └── data/
-│       └── pricingData.ts        # Wags pricing data (daycare, boarding, grooming)
-├── sanity/
-│   └── lib/
-│       ├── client.ts             # Sanity client configuration
-│       ├── queries.ts            # All GROQ queries
-│       ├── api.ts                # Sanity API config (projectId, dataset, apiVersion)
-│       └── token.ts              # Sanity API read token
-└── public/
-    ├── illustrations/            # Sticker/badge SVGs and PNGs
-    └── images/                   # Static images (logo, fallbacks)
-
-studio/
-├── src/
-│   ├── schemaTypes/
-│   │   ├── documents/            # page, service, testimonial
-│   │   ├── objects/              # 45+ page builder block types
-│   │   ├── singletons/          # settings
-│   │   └── index.ts              # Schema registry
-│   └── structure.ts              # Custom Studio structure
-└── sanity.config.ts
-```
-
-## Naming
-
-- Components: PascalCase (`ServiceHero.tsx`)
-- Files: Match component name or kebab-case for non-components
-- Functions: camelCase
-- Constants: SCREAMING_SNAKE_CASE
-- Types/Interfaces: PascalCase (no I or T prefix)
-- CSS custom properties: kebab-case (`--color-primary`, `--theme-surface`)
-- Sanity document types: camelCase (`servicePage`, `pricingTier`)
-
-## Styling
-
-- Tailwind CSS for all styling
-- Use semantic theme tokens for all colors and fonts
-- No inline styles
-- Framer Motion for animations (page transitions, scroll reveals, hover effects)
-- All animations respect `prefers-reduced-motion`
-
-## Data Fetching
-
-- Server components fetch directly from Sanity
-- GROQ queries are the only way to read content — no REST API
-- Use `next: { revalidate }` or on-demand revalidation via Sanity webhooks
-- Validate contact form inputs with Zod
-
-## Error Handling
-
-- Graceful fallbacks for missing Sanity content (don't crash if a field is empty)
-- 404 pages for invalid routes
-- Loading states for any client-side data fetching
-
-## Code Quality
-
-- No commented-out code unless specified
-- No unused imports or variables
-- Keep functions under 50 lines when possible
-- No KC, HAFH, or Hound Around references in any user-facing content, meta tags, alt text, or comments
-
-## Performance
-
-- All images served through Sanity CDN with proper sizing (`w`, `h`, `fit`, `auto=format`)
-- Use `next/image` with Sanity loader for optimized delivery
-- Lazy load below-fold images and sections
-- Font files preloaded for active theme only
-- Lighthouse target: 90+ across all categories
-
-## Accessibility
-
-- Semantic HTML throughout
-- ARIA labels on interactive elements
-- Keyboard navigation for all interactive components (nav, accordions, pricing calculators)
-- Color contrast meets WCAG AA minimum
-- Skip-to-content link
+- Clean history at init (template clone, history wiped).
+- Small, scoped commits; messages state what changed and why when diverging from template.
+- No secrets in the repo, ever.

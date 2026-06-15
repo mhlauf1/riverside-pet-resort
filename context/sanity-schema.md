@@ -1,113 +1,54 @@
-# Sanity Schema Reference
+# Sanity Schema — Riverside Pet Resort
 
-> **This file is a living document.** Update it whenever the Sanity schema changes so Claude Code always has an accurate picture of the content model.
+One Sanity project for the whole site, including the school section. Schema below is the target model; reconcile against the cloned base's existing schema during investigation (extend, don't fork patterns, unless documented).
 
-## Status
+## Settings singleton (`siteSettings`) — portfolio standard
 
-Schema deployed to cloud. All content seeded and published. Pricing data rewritten in pricingData.ts for Wags service structure (4 boarding tiers, cat services, punch cards, 3 grooming service types).
+Single document, single source of truth for swappable config:
 
-## Sanity Project Details
+- `siteName`, `tagline`
+- `address`, `phone`, `email` — **seed with `[TBD]` markers until Brian confirms; never the brand pack placeholders**
+- `bookingUrls` (object): `boarding`, `daycare`, `grooming` — **Goose URLs** (confirmed; Riverside is already on Goose). Pending from Hung and Caitlin. No dedicated Rio school booking link (Brian, 6/12). Still the single-point POS swap — do not hardcode booking URLs anywhere in components.
+- `transitionBanner` (object): `enabled` (boolean), `content` (rich text/portable text), optional `linkUrl` — Brian/Peter finalize copy without a deploy
+- `socialLinks`, `hoursOfOperation` (school + resort hours may differ — model both)
 
-- **Project ID:** `3h90m8qu`
-- **Dataset:** `production`
-- **Studio URL:** `http://localhost:3333` (dev) / embedded at `/studio` in frontend
-- **API version:** `2025-09-25`
+## Pricing (CMS-driven, structured — never hardcoded)
 
-## Architecture
+- `pricingItem`: `label`, `price`, `unit` (e.g., "/night", "/day"), `note`
+- `pricingTable`: `title`, array of `pricingItem`, optional footnote
+- Boarding uses footnote for the renovation/$129 note. Daycare packages table: rows of (days, full price, half price) — model as a dedicated `packageTable` if cleaner.
 
-This is a **page builder** architecture. Pages and services have a `pageBuilder` array field that accepts 40+ block types. There are no standalone `pricingTier` or `faq` documents — pricing, FAQs, team members, and feature cards are all inline arrays within pageBuilder blocks.
+## Pages
 
-The only standalone reference document is `testimonial`.
+Follow the cloned base's page-document pattern (likely page builder / section blocks). Required content types to support:
 
-## Document Types
+- Hero (heading, subheading, CTA array)
+- Rich text / narrative sections
+- Highlights list (icon + label)
+- Services overview grid
+- Sub-section blocks (Grooming page has 4 distinct sub-services)
+- Image galleries (Facebook-sourced photos)
+- Team/person feature ("Meet the Dean" — Amy Ericson: portrait, bio, legacy narrative)
 
-### `settings` (singleton)
-Global site config: title, tagline, logo, nav items, CTA button, footer columns, contact info, social links, **POS/booking URLs** (portalUrl, registrationUrl, per-service booking URLs), business hours, SEO (OG image, favicon, GA4, GTM, GSC), local business structured data.
+## School section
 
-**Wags-specific:** POS portal URLs stored here for single-point swap when Goose goes live. The `posUrls` object field includes transportationBookingUrl which can be removed or left unused.
+- School documents either typed distinctly (`schoolPage`) or flagged (`section: "school"`) — decide during investigation based on what the base's routing expects; document the choice in investigation-map.md.
+- School nav is its own structure (not derived from resort nav).
+- Funnel forms: enrollment info request, tour request, general info — form destination email comes from `siteSettings.email` (or a school-specific override field if Amy's funnels route elsewhere).
 
-### `page`
-Generic pages (homepage, pricing, gallery, new-clients, contact, about). Fields: name, slug, seo, pageBuilder (42 block types).
+## FAQ
 
-### `service`
-Service detail pages (daycare, boarding, grooming). Fields: title, slug, sticker, shortDescription, tabImage, tabCta, heading, seo, pageBuilder (35 block types).
+- `faqItem`: `question`, `answer` (portable text)
+- `faqSection`: title + array of `faqItem`
+- Frontend renders `FAQPage` JSON-LD from these documents. Schema must validate (Google Rich Results test) — part of QA.
 
-### `testimonial`
-Customer reviews. Fields: quote, authorName, authorLabel, rating (1-5, default 5).
+## Location pages (suburb SEO)
 
-## Key Object Types (PageBuilder Blocks)
+- `locationPage`: `suburbName`, `slug`, `intro` (portable text), `servicesBlurb`, optional `faqItems`, `seoTitle`, `seoDescription`
+- One layout component renders all of them.
+- **Excluded from main nav. Included in sitemap. Fully indexable.** No noindex, no cloaking — these are real pages.
+- Suburb list pending from Brian/Peter; build the type and layout now, populate when the list arrives.
 
-- `hero` / `heroSplit` / `heroBanner` / `heroMinimal` — Hero sections
-- `featureCards` / `featureGrid` / `featureList` — Feature displays
-- `pricingTable` / `pricingList` / `pricingMatrix` / `pricingCalculator` / `pricingPageTabs` — Pricing
-- `faqAccordion` — Inline Q&A (not standalone documents)
-- `testimonials` — References `testimonial` documents
-- `teamGrid` — Inline team members (name, role, bio, certifications, image)
-- `serviceTabs` / `serviceCards` — Service displays (reference `service` documents)
-- `contactForm` — Dynamic form builder
-- `galleryGrid` / `galleryCarousel` / `galleryShowcase` / `galleryPage` — Gallery
-- `processSteps` / `whatsIncluded` / `requirementsList` — Lists/timelines
-- `splitContent` / `contentColumns` — Content layouts
-- `callToAction` / `ctaBanner` / `ctaStrip` — CTAs
-- `statsBar` — Stats counter
-- `iconGrid` / `valuePillars` / `logoBar` — Misc
+## Redirects
 
-## Reusable Object Types
-
-- `link` — Flexible link (internal page/service reference or external URL)
-- `button` — Button with text + link
-- `blockContent` — Rich text (Portable Text)
-- `blockContentTextOnly` — Text-only rich text
-- `seo` — Per-page SEO overrides (metaTitle, metaDescription, ogImage, noIndex)
-
-## GROQ Query Patterns
-
-All queries live in `frontend/sanity/lib/queries.ts`.
-
-```groq
-// Homepage
-*[_type == 'page' && slug.current == 'homepage'][0]{ ... }
-
-// Page by slug
-*[_type == 'page' && slug.current == $slug][0]{ ... }
-
-// Service by slug
-*[_type == 'service' && slug.current == $slug][0]{ ... }
-
-// Settings (singleton)
-*[_type == 'settings'][0]{ ..., posUrls, ... }
-
-// Services for nav
-*[_type == 'service']{ title, "slug": slug.current }
-```
-
-## Pricing Calculator
-
-The pricing calculator (`pricingCalculator` block type) has a `calculatorType` field (`daycare` | `boarding` | `grooming`) and supports `single` or `tabbed` display mode. **Actual pricing data is hardcoded in `frontend/app/data/pricingData.ts`**, not in Sanity. The Sanity block only configures which calculator to show and the CTA link.
-
-**Wags pricing structure (implemented in M2):**
-- Daycare: Assessment $20, Full Day $29, Half Day $19, Cat $18, punch cards (10/20/30/90-day unlimited)
-- Boarding: 4 tiers (Standard $44, Junior $48, Queen $52, Master $57), Cat $28, additional pet $5 discount, punch cards (buy X get Y free)
-- Grooming: Full Groom ($65–$130), Bath & Works ($55–$150), Exit Bath ($18–$37), Cat grooming (display only), à la carte ($8 each), exit bath add-ons ($5 each)
-
-## Seeded Content Reference
-
-| Document | Type | Slug | Sanity ID |
-|----------|------|------|-----------|
-| Settings | settings | — | `aa441a64-cbec-43e1-bd7b-1ac637d0a119` |
-| Daycare | service | daycare | `32d065b8-fa8f-4036-abaa-a07d75ec638f` |
-| Boarding | service | boarding | `d56ab06d-89fd-4e54-84a7-4df2b54f49ee` |
-| Grooming | service | grooming | `39a1ed77-7ef9-438d-9f25-0c8932400086` |
-| Homepage | page | homepage | `4422f53e-b3ae-4991-baa3-049fa1093329` |
-| Pricing | page | pricing | `cbdc3e6d-03f6-4116-a411-b93b8f3153ee` |
-| Contact | page | contact | `286ecd70-41ab-4b1a-90c9-d5ee1fb08220` |
-| New Clients | page | new-clients | `4af8f51f-0678-41be-a8b4-8458449a58db` |
-| About Us | page | about | `a9fc51c5-e7bd-4f62-ab96-18c13c29aa52` |
-
-## Notes
-
-- Keep schemas structurally aligned with other Embark sites for future template extraction
-- Don't add fields you don't need yet — only add what the current content requires
-- Schema deployed to cloud via `npx sanity schema deploy` from `studio/` directory
-- Wags has no transportation service — don't seed a transportation service document
-- Cat services are integrated into daycare, boarding, and grooming pages, not separate documents
+301 map lives in Next config/middleware, not Sanity (deterministic, version-controlled). Path-aware: riogrooming.com school/enrollment paths → `/school/...`; everything else → `/`. Built from a crawl of riogrooming.com's indexed pages.

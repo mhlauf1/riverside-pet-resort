@@ -1,277 +1,157 @@
-# Wags Stay N' Play Intake Content
+# Intake Content — Riverside Pet Resort
 
-> Source: Wix site scrape (wagsstaynplay.com, scraped 2026-05-11) + current site content. All pricing is baseline — final numbers come from Goose POS transition.
+All content below is from Brian's development brief (June 2026), corrected per final decisions:
+- Every "Academy" in the source brief has been corrected to **"School"** (Amy Ericson's decision).
+- All contact data in the brand pack is **placeholder** and excluded (see "Confirmed business details").
 
----
+## Confirmed business details
 
-## 1. Basic Location Information
+> ⚠️ NEVER use the brand pack's Austin, TX placeholder data (1234 Riverside Drive / (512) 555-0123 / info@riversidepetresort.com). Confirmed values below are from Brian's email, 6/12/26.
 
-- **Facility Name:** Wags Stay N' Play
-- **Address:** 1601 Main Ave SE, Moorhead, MN 56560
-- **Phone:** (218) 287-2000
-- **Email:** office@wagsstaynplay.com
-- **Service Area:** Moorhead, MN / Fargo-Moorhead metro area
-- **Location:** Industrial park in Moorhead, MN
-- **Facebook:** facebook.com/wagsstaynplay
-- **Locally owned**
+- Address: **12260 Margo Avenue, Hastings, MN 55033** ✓
+- Phone: **651-480-4726** ✓
+- Form destination email: **PENDING** — Brian did not answer this; follow-up sent. Use `[EMAIL-TBD]` marker.
+- Canonical domain: **⚠️ UNCONFIRMED** — working assumption was riversidepetmn.com, but Brian's 6/12 email referenced "RiversidePet.com." Confirming with Peter. **Do not bake the domain into redirects, schema, canonical tags, or sitemap config until Peter confirms** — keep it in one env var / config constant.
+- Booking system at launch: **Goose** ✓ — booking links coming from Hung and Caitlin (Goose). No dedicated Rio school booking link needed (Brian, 6/12, superseding earlier note).
+- Suburb list for location pages: ✓ **Hastings MN · Cottage Grove MN · Woodbury MN · Afton MN · Prescott WI · Ellsworth WI · Lakeville MN**
+- Broader SEO framing (per Brian): grooming and the school draw from the greater Twin Cities market, greater Minnesota, western Wisconsin, and beyond — reflect this in school and grooming page copy/metadata, not just the suburb pages.
 
----
+## Content sources
 
-## 2. Hours of Operation
+- riogrooming.com (existing site — also the visual reference for the school section)
+- Barks & Rec Hastings website
+- Hound Around Resort site (boarding/daycare structure reference)
+- **Rio Grooming + Barks & Rec Facebook pages — best client photos; use heavily**
+- Riverside brand pack (logos, colors, type; contact data on collateral is placeholder)
 
-- **Monday–Saturday:** 6:30 AM – 7:00 PM
-- **Sunday:** 8:00 AM – 12:00 PM & 2:00 PM – 6:00 PM
+## Brand tokens
 
-> ⚠️ Hours appear on homepage but not contact page on current Wix site. Verify with client.
-
----
-
-## 3. Homepage Content (from current site)
-
-**Tagline:** "Caring for Your Furry Friends"
-**Headline:** Here for you and your fur baby
-**CTA:** Contact us today!
-
-**Content blocks:**
-- Our Story: "Wags Stay N Play is locally owned!" → links to About Us
-- What We Do: "We offer daycare, boarding, and grooming services!" → links to Services
-- Opening Hours block
-
-**Gallery:** 12 facility photos (available in scrape assets)
+- Navy `#0B1D3A` · Maroon `#8B1E2D` · Stone `#F5F5F2`
+- RIVERSIDE: Cinzel Bold · PET RESORT: Montserrat SemiBold · "Rio": script font per pack
+- Paw icon brand identifier · "Boarding • Daycare • Grooming" tagline line
+- Logo: dog on a riverbank with pines under an arch; variants for sign, letterhead, card, embroidery, text-forward lockup
 
 ---
 
-## 4. About Us
+## HOME
 
-Wags Stay N' Play is a locally owned cat and dog boarding, daycare, grooming, and training (as possible) facility located in the industrial park in Moorhead, MN. We strive to offer you and your pet a different kind of daycare experience by providing our animals with weekly activities, and a variety of play areas to ensure your pet is playing safely and happily!
+**Hero:**
+Riverside Pet Resort
+Home of the Rio Grooming School
+Premier Boarding • Daycare • Grooming • Grooming Education
 
-We offer different activities, structured stimulation, and full transparency! Our staff spends every moment of the day ensuring your pet is as comfortable as can be in their time away from home. We are a fun loving and dedicated team of dog and cat lovers and take a lot of pride in caring for each one of our guests as if they were our very own. We understand it is never easy to leave your pet, so we make the safety and happiness of your pet our top priority. Your family is our family!
+**CTAs:** Book Boarding · Book Daycare · Book Grooming · Learn About Grooming School
 
-### Team
+**Intro (approved copy):**
+"Riverside Pet Resort combines decades of pet care experience with a commitment to safety, education, enrichment, and exceptional guest experiences. Whether your pet is visiting for daycare, boarding, grooming, or professional grooming education, our team is dedicated to creating a clean, safe, and engaging environment where pets thrive."
 
-| Name | Role |
-|------|------|
-| Cindy Holtan | Manager |
-| Whitney Nelson | Grooming Manager |
-| Akaysha Delzer | Assistant Manager |
-| Ashley Harn | Grooming Associate |
+**Services overview:** Boarding · Daycare · Grooming · Cat Grooming · Self-Serve Dog Wash · Rio Grooming School
 
-> ⚠️ Team photos exist but filenames are scrambled (tank1.jpg, Roger and Lois.jpg, Ebon.jpg, Poppy.jpg, Doug.jpg, Whitney.JPG). Need client to confirm which photo belongs to which person.
+**Why Riverside:** Safety · Sanitation · Enrichment · Experienced Staff · Professional Grooming · Industry-Leading Grooming Education · Community Reputation
 
----
-
-## 5. Services & Pricing
-
-> ⚠️ ALL PRICING WILL BE REPLACED — Goose POS transition. Use as baseline for service structure only.
-
-### Daycare
-
-**Description:**
-Dogs and cats, seven days a week. 4 separate play yards allowing creation of play groups by play style and size. Every dog gets at least one nap during the day. Play groups taken outside on weather-permitting days.
-
-**Play schedule:** 2-hour increments: 9–11am, 11am–1pm, 1–3pm, 3–5pm. Dogs nap and/or have lunch between rotations.
-
-**Pricing:**
-
-| Service | Price |
-|---------|-------|
-| Assessment Day | $20 |
-| Full Day | $29 |
-| Half Day (5 hours or less) | $19 |
-| Cat Daycare | $18 |
-
-**Punch Cards:**
-
-| Package | Price | Notes |
-|---------|-------|-------|
-| 10-Day | $265 | — |
-| 20-Day | $475 | — |
-| 30-Day | $640 | — |
-| 90-Day Unlimited | $1,350 | Expires after 90 days |
-
-**Requirements:**
-- All dogs must pass assessment before daycare
-- Cat daycare is separate from dogs in a dedicated room
+**Transition banner:** site-wide, CMS-editable (toggle + rich text). Copy TBD by Brian/Peter — build the component, stay out of the wording.
 
 ---
 
-### Boarding
+## BOARDING
 
-**Description:**
-All boarders participate in daycare play groups during the day. 4 different kennel sizes available. Dogs from the same family may share a kennel or have separate ones.
+**Headline:** A Comfortable Stay Away From Home
 
-**Daily schedule:**
-- 6:30 AM: Wake up, potty break
-- Breakfast while play groups organized
-- 9 AM – 5 PM: Supervised play groups
-- 5 PM: Supper and rest
-- 8 PM – 10 PM: Final potty break and water
+**Narrative (approved copy):**
+"At Riverside Pet Resort, your dog's comfort, safety, and happiness are our top priorities. Our boarding program combines personalized care, structured routines, enrichment activities, and attentive supervision to ensure every guest enjoys a safe and comfortable stay. Whether staying for one night or an extended vacation, each guest receives individualized attention from our experienced pet care team."
 
-**Pricing (per night, includes daycare):**
+**Highlights:** Clean and sanitized accommodations · Daily enrichment activities · Individualized care · Medication administration available · Trained pet care professionals · Comfortable overnight accommodations
 
-| Room Type | Price |
-|-----------|-------|
-| Standard | $44 |
-| Junior Suite | $48 |
-| Queen Suite | $52 |
-| Master Suite | $57 |
-| Cat Boarding | $28 |
-| Additional Pet | $5 discount in shared kennel |
-
-**Punch Cards (any suite type):**
-
-| Package | Deal |
-|---------|------|
-| 10-Pack | Buy 9, get 1 free |
-| 20-Pack | Buy 17, get 3 free |
-| 30-Pack | Buy 24, get 6 free |
-
-**Requirements:**
-- All dogs must pass assessment before boarding
-- Dogs must be up to date on Rabies, Distemper, and Bordetella
-- Spayed/neutered after 7 months (unless vet states otherwise)
-
-**Cat Boarding:**
-- Dedicated cat room, individual attention from staff
-- Cats from different families kept separate
-- No assessment needed for cats
-- Cats must be up to date on Rabies and Distemper
+**Pricing (CMS-editable — renovation price change expected):**
+- Standard Boarding: $52/night
+- Luxury Boarding: $69/night
+- Note: luxury suite renovations planned; premium tier expected ~$129/night upon completion
 
 ---
 
-### Grooming
+## DAYCARE
 
-**Service Categories:**
+**Headline:** A Better Day for Your Best Friend
 
-#### Full Groom
-Includes: nail trim, ear cleaning, anal gland expression, bath with shampoo/conditioner, blow dry, brush out, full hair trim.
+**Narrative (approved copy):**
+"Our daycare experience blends socialization, enrichment, free-form off-leash play, and structured rest periods to create a balanced and enjoyable day. Every dog is unique. Our team carefully evaluates play styles, energy levels, and personalities to help ensure a safe and positive experience."
 
-| Size | Price |
-|------|-------|
-| Small | $65 + tax |
-| Medium | $70–$80 |
-| Large | $90–$125 |
-| Extra Large | $130–$180 |
-| Puppy Package | $300 (10 week program) |
-| Senior Package | $20–$30 |
+**Highlights:** Supervised off-leash play · Socialization opportunities · Enrichment activities · Structured rest periods · Safe group management · Clean and sanitized environment
 
-Can add nail file for $5.
+**Pricing:** Full Day $39 · Half Day $29
 
-#### Bath & Works
-Includes: nail trim, ear cleaning, anal gland expression, bath with shampoo/conditioner, blow dry, brush out, trimming around feet/face/butt/panty line (optional).
+**Packages (pricing table component):**
 
-| Size | Price |
-|------|-------|
-| Small | $55 + tax |
-| Medium | $60–$90 |
-| Large/XL | $100–$150 |
-
-#### Exit Baths
-Includes: bath with shampoo/conditioner, blow dry.
-
-| Size | Price |
-|------|-------|
-| Small | $18 |
-| Medium | $23 |
-| Large | $28 |
-| Extra Large | varies |
-
-Add nail trim, teeth brushing, ear cleaning, or anal gland expression for $5 each.
-
-#### Cat Grooming
-
-| Service | Price |
-|---------|-------|
-| Lion Cut | $80 |
-| Lion Cut (no bath) | $70 |
-| Cat Bath & Works | $70 |
-| Foam Bath | $15 |
-
-Add nail trim or teeth brushing for $5 each.
-
-#### Individual Services
-Walk-in or add to any groom:
-
-| Service | Price |
-|---------|-------|
-| Nail Trim | $8 |
-| Ear Cleaning | $8 |
-| Anal Gland Expression | $8 |
-| Teeth Brushing | $8 |
-| Nail Trim & File | $20 |
-| Blueberry Facial | $8 |
-| Trims & Brush-out | varies |
-
-*Prices may change depending on size, hair length, matting, or add-on services.*
+| Days | Full | Half |
+|---|---|---|
+| 5 | $165 | $115 |
+| 10 | $320 | $225 |
+| 20 | $600 | $425 |
+| 30 | $830 | $595 |
 
 ---
 
-### Extras
+## GROOMING
 
-| Item | Price |
-|------|-------|
-| Frozen Kong (peanut butter or pumpkin) | $3 |
-| Breakaway Collars | $21–$26 |
-| Paper Rental Collars | $1/day |
-| Medication Fee (per pet/day) | $5 |
+**Headline:** Professional Grooming for Dogs and Cats
 
----
+**Narrative (approved copy):**
+"Our grooming team provides professional pet styling services designed to keep pets looking and feeling their best. Regular grooming promotes healthier skin, healthier coats, reduced shedding, reduced odors, and improved overall wellness."
 
-## 6. Assessment Process
+**Services list:** Haircuts · Bathing · Nail Trims · De-Shedding · Specialty Treatments · Cat Grooming · Creative Grooming Options
 
-All dogs must pass an assessment before daycare or boarding.
+**Sub-sections:**
 
-- **When:** Mondays through Thursdays, 10 AM – 2 PM
-- **Duration:** Minimum 4 hours (longer is fine, no extra fee)
-- **Cost:** $20 per dog
-- **Process:** Dog acclimates to environment → introduced to staff → introduced to other dogs at their pace. Some dogs need more time than others.
-- **Purpose:** Discover which dogs get along well, ensure environment isn't too stressful/overwhelming
-- **Requirements:** Dogs must be up to date on Rabies, Distemper, and Bordetella. Spayed/neutered after 7 months unless vet states otherwise.
+1. **Professional Grooming** — Appointments Monday–Friday. Professional stylists provide complete grooming services tailored to each pet.
+2. **Student Grooming** (unique differentiator) — Affordable grooming performed by grooming students under direct instructor supervision. Valuable hands-on experience, quality grooming at discounted rates.
+3. **Cat Grooming** — Bath & Brush · Lion Cuts · Comb Cuts · Nail Caps · De-Shedding · Mat Removal
+4. **24-Hour Self-Serve Dog Wash** — Quick, convenient, available whenever it fits your schedule. Features: Shampoo · Tearless Shampoo · Conditioner · Rinse · Dryer · Treat Vending. **$20 for 20 minutes.**
 
 ---
 
-## 7. Breakaway Collars
+## RIO GROOMING SCHOOL (site-within-a-site)
 
-Breakaway collars are required for all daycare and boarding dogs (safety — releases under pressure to prevent choking during play).
+Distinct look/feel matching existing riogrooming.com with minor refreshes per Amy. Own nav, own funnels (enrollment, tours, info requests) — different conversion logic than consumer pages.
 
-- Available at the facility: $21–$26
-- Paper rental collars: $1/day
-- Online purchase links: Chewy, Amazon, Etsy (PetSafe KeepSafe Breakaway)
+**Headline:**
+The Rio Grooming School
+A Legacy of Professional Grooming Education
 
----
+**Introduction (approved copy, corrected to School):**
+"Since 2009, Rio Grooming School has helped aspiring pet stylists develop the skills, confidence, and professionalism needed to succeed in the pet care industry. Through hands-on education, small class sizes, industry exposure, and career placement support, students graduate prepared to enter a rewarding and growing profession."
 
-## 8. Forms / Documents
+**Program highlights:** Small class sizes · Hands-on learning · Professional instructors · Career placement assistance · Financial aid options · Student housing options · Industry networking
 
-All forms need to be filled out before or on assessment day. Can be emailed to office@wagsstaynplay.com.
+**Meet the Dean:** Feature Amy Ericson prominently — family legacy, Rio history, grooming experience, educational leadership, student development.
 
-| Form | Type |
-|------|------|
-| Registration | PDF |
-| Additional Pet Registration | PDF (for families with 2+ pets) |
-| Policies and Procedures | DOCX |
-| Waiver | DOCX |
+**Sub-pages:** Why Become a Groomer? · Enrollment & Financing · Scholarships · Student Housing · Career Placement · Request Information · Schedule a Tour
 
-> ⚠️ Waiver file on Wix server is named "meds and add ins.docx" — may be mislabeled. Verify with client.
+> Content carry-over from riogrooming.com vs. rewrite: PENDING (Amy/Brian).
 
 ---
 
-## 9. POS Transition Note
+## ABOUT US
 
-Wags Stay N' Play is transitioning to **Goose POS**. Go-live date is TBD.
-
-**Build strategy:** Launch with current booking flow (likely direct contact). Store all POS-related URLs in a single Sanity `settings` document field so the Goose swap is one content update, not a code change. Pattern already established on other Embark sites.
+Tell the story of Riverside Pet Resort. Emphasize: community roots · local reputation · commitment to pets · professional growth · future investment.
 
 ---
 
-## 10. Content Still Needed
+## CAREERS
 
-- [ ] **Logo source file** — current logo is Wix-hosted; need high-res or vector
-- [ ] **Team photo ↔ name confirmation** — filenames scrambled on Wix
-- [ ] **Goose POS go-live date** — determines booking URLs and final pricing
-- [ ] **Updated pricing from Goose** — current prices are baseline only
-- [ ] **Training status** — offered or not? (Assumed no — dropped from build)
-- [ ] **Hours confirmation** — verify Mon-Sat 6:30am-7pm, Sun 8am-12pm & 2pm-6pm
-- [ ] **Waiver document** — confirm "meds and add ins.docx" is the actual waiver
-- [ ] **Vaccination requirements detail** — any beyond Rabies, Distemper, Bordetella?
-- [ ] **Cancellation / late pickup policy** — not on current site
-- [ ] **Holiday closure schedule** — not on current site
+Feature: Grooming Careers · Pet Care Careers · Client Experience Careers · Student Opportunities.
+
+---
+
+## CONTACT
+
+Single consolidated page: Location · Phone · Email · Appointment Requests · Tour Requests · General Inquiries.
+All values from "Confirmed business details" above — never from brand pack collateral.
+
+---
+
+## SEO ADDITIONS (in the $3,500 scope per Peter)
+
+1. **Suburb location pages** — one repeatable layout, content per suburb. Real, indexable; excluded from main nav; included in sitemap. Suburb list PENDING from Brian/Peter (do not guess).
+2. **FAQ section** — commonly-searched questions with `FAQPage` JSON-LD structured data.
+
+Anything beyond these two items is out of scope for this build.
