@@ -82,10 +82,13 @@ type IconGridProps = {
   pageType: string
 }
 
-const columnClasses: Record<number, string> = {
-  2: 'grid-cols-1 sm:grid-cols-2',
-  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
-  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+// Per-item widths (flex-basis) so the row uses `justify-center` and any
+// incomplete trailing row (e.g. 7 items at 4-up → a row of 3) centers neatly
+// instead of hanging left. gap-4 = 1rem, split across each row's items.
+const itemWidthClasses: Record<number, string> = {
+  2: 'w-full sm:w-[calc(50%-0.5rem)]',
+  3: 'w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]',
+  4: 'w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]',
 }
 
 const bgColors: Record<string, string> = {
@@ -97,7 +100,7 @@ const bgColors: Record<string, string> = {
 export default function IconGrid({block}: IconGridProps) {
   const {eyebrow, heading, description, items, columns, accentImage, backgroundColor} = block
   const cols = stegaClean(columns) || 3
-  const gridClass = columnClasses[cols] || columnClasses[3]
+  const itemWidth = itemWidthClasses[cols] || itemWidthClasses[3]
   const bg = bgColors[stegaClean(backgroundColor) || 'cream'] || bgColors.cream
   const isDark = stegaClean(backgroundColor) === 'forest'
 
@@ -123,21 +126,21 @@ export default function IconGrid({block}: IconGridProps) {
         </FadeIn>
 
         {items && items.length > 0 && (
-          <div className={`grid ${gridClass} gap-4`}>
+          <div className="flex flex-wrap justify-center gap-4">
             {items.map((item, i) => (
-              <FadeIn key={item._key} delay={0.05 * i}>
+              <FadeIn key={item._key} delay={0.05 * i} className={itemWidth}>
                 <div
-                  className={`rounded-md p-6 h-full ${
+                  className={`rounded-md p-6 h-full transition-all duration-200 hover:-translate-y-1 ${
                     isDark
-                      ? 'bg-forest-card border border-border-dark'
-                      : 'bg-white/60 border border-border-light'
+                      ? 'bg-forest-card border border-border-dark hover:border-gold/50'
+                      : 'bg-white/60 border border-border-light hover:border-terracotta/40 hover:shadow-card-hover'
                   }`}
                 >
                   {item.icon && (
                     <div
                       className={`w-12 h-12 rounded-md flex items-center justify-center mb-4 ${
                         isDark
-                          ? 'bg-terracotta/20 text-terracotta'
+                          ? 'bg-gold/15 text-gold'
                           : 'bg-terracotta/10 text-terracotta'
                       }`}
                     >
