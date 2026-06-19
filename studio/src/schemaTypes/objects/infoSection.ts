@@ -18,9 +18,18 @@ export const infoSection = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'body',
+      title: 'Body Text',
+      type: 'text',
+      rows: 6,
+      description:
+        'Simple paragraph text — just type. Leave a blank line between paragraphs. For links or bold/rich formatting, use the Content field below instead.',
+    }),
+    defineField({
       name: 'content',
-      title: 'Content',
+      title: 'Content (rich text)',
       type: 'blockContent',
+      description: 'Optional rich text. Use this only if you need links or formatting; otherwise use Body Text above.',
     }),
   ],
   preview: {

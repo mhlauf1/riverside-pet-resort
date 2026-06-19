@@ -41,6 +41,13 @@ export const heroMarquee = defineType({
       type: 'button',
     }),
     defineField({
+      name: 'belowCtaText',
+      title: 'Text Below Buttons',
+      type: 'text',
+      rows: 3,
+      description: 'Optional centered paragraph shown below the hero buttons',
+    }),
+    defineField({
       name: 'reviewRating',
       title: 'Review Star Rating',
       type: 'number',

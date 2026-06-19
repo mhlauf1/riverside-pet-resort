@@ -18,6 +18,7 @@ type HeroMarqueeProps = {
     subtext?: string
     primaryCta?: {buttonText?: string; link?: any}
     secondaryCta?: {buttonText?: string; link?: any}
+    belowCtaText?: string
     reviewRating?: number
     reviewText?: string
     trustLine?: string
@@ -38,6 +39,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
     subtext,
     primaryCta,
     secondaryCta,
+    belowCtaText,
     reviewRating,
     reviewText,
     trustLine,
@@ -140,6 +142,16 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
               )}
             </div>
           </Wrap>
+
+          {belowCtaText && (
+            <div className="bg-neutral-200 p-4 mt-5">
+              <Wrap delay={0.3}>
+                <p className="font-sans  text-center text-sm md:text-md text-text-muted leading-[150%] max-w-2xl mx-auto ">
+                  {belowCtaText}
+                </p>
+              </Wrap>
+            </div>
+          )}
 
           {reviewRating && (
             <Wrap delay={0.35}>
