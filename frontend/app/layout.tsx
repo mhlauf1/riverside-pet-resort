@@ -23,10 +23,8 @@ import {VisualEditing} from 'next-sanity/visual-editing'
 import {Toaster} from 'sonner'
 
 import DraftModeToast from '@/app/components/DraftModeToast'
-import Footer from '@/app/components/Footer'
-import Header from '@/app/components/Header'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
-import {settingsQuery, servicesNavQuery} from '@/sanity/lib/queries'
+import {settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage, urlForImage} from '@/sanity/lib/utils'
 import Script from 'next/script'
 import {handleError} from '@/app/client-utils'
@@ -133,10 +131,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {isEnabled: isDraftMode} = await draftMode()
-  const [{data: settings}, {data: services}] = await Promise.all([
-    sanityFetch({query: settingsQuery}),
-    sanityFetch({query: servicesNavQuery}),
-  ])
+  const {data: settings} = await sanityFetch({query: settingsQuery})
 
   const localBusinessJsonLd = buildLocalBusinessJsonLd(settings)
   const ga4Id = settings?.ga4MeasurementId
@@ -145,21 +140,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   try {
     if (settings?.logo?.asset?._ref) logoUrl = urlForImage(settings.logo).width(600).url()
   } catch {}
-
-  // Inject services as dropdown children into the "Services" nav item
-  const navItems = settings?.navItems?.map((item: any) => {
-    if (item.label === 'Services' && services && services.length > 0) {
-      return {
-        ...item,
-        children: services.map((service: any) => ({
-          _key: service._id,
-          label: service.title,
-          link: {linkType: 'href', href: `/services/${service.slug}`},
-        })),
-      }
-    }
-    return item
-  })
 
   return (
     <html lang="en" className={`${cinzel.variable} ${montserrat.variable} bg-cream text-forest`}>
@@ -245,25 +225,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         >
           Skip to main content
         </a>
-        <Header
-          navItems={navItems as any}
-          ctaButton={settings?.ctaButton as any}
-          logo={settings?.logo as any}
-          phone={settings?.contactInfo?.phone ?? undefined}
-          transitionBanner={(settings as any)?.transitionBanner}
-        />
-        <main id="main-content">{children}</main>
-        <Footer
-          tagline={settings?.footerTagline ?? undefined}
-          columns={settings?.footerColumns as any}
-          contactInfo={settings?.contactInfo as any}
-          footerText={settings?.footerText ?? undefined}
-          footerTextLink={settings?.footerTextLink as any}
-          bottomLinks={settings?.footerBottomLinks as any}
-          logo={settings?.logo as any}
-          socialLinks={settings?.socialLinks as any}
-          footerSticker={settings?.footerSticker as any}
-        />
+        {/* Section layouts — (site) and (school) — render their own Header,
+            <main id="main-content">, and Footer. */}
+        {children}
         <SpeedInsights />
       </body>
     </html>

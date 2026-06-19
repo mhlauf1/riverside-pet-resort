@@ -1,5 +1,7 @@
 import {page} from './documents/page'
 import {service} from './documents/service'
+import {schoolPage} from './documents/schoolPage'
+import {locationPage} from './documents/locationPage'
 import {testimonial} from './documents/testimonial'
 import {callToAction} from './objects/callToAction'
 import {infoSection} from './objects/infoSection'
@@ -46,6 +48,7 @@ import {photoMarquee} from './objects/photoMarquee'
 import {spacer} from './objects/spacer'
 import {seo} from './objects/seo'
 import {settings} from './singletons/settings'
+import {schoolSettings} from './singletons/schoolSettings'
 import {link} from './objects/link'
 import {blockContent} from './objects/blockContent'
 import button from './objects/button'
@@ -54,9 +57,12 @@ import {blockContentTextOnly} from './objects/blockContentTextOnly'
 export const schemaTypes = [
   // Singletons
   settings,
+  schoolSettings,
   // Documents
   page,
   service,
+  schoolPage,
+  locationPage,
   testimonial,
   // Objects
   seo,

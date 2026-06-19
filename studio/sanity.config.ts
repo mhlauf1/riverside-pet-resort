@@ -38,6 +38,9 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
       return slug ? `/posts/${slug}` : undefined
     case 'page':
       return slug ? `/${slug}` : undefined
+    case 'schoolPage':
+      if (!slug) return undefined
+      return slug === 'home' ? '/school' : `/school/${slug}`
     default:
       console.warn('Invalid document type:', documentType)
       return undefined
@@ -76,6 +79,14 @@ export default defineConfig({
             route: '/posts/:slug',
             filter: `_type == "post" && slug.current == $slug || _id == $slug`,
           },
+          {
+            route: '/school',
+            filter: `_type == "schoolPage" && slug.current == "home" || _id == $slug`,
+          },
+          {
+            route: '/school/:slug',
+            filter: `_type == "schoolPage" && slug.current == $slug || _id == $slug`,
+          },
         ]),
         // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/visual-editing/presentation-resolver-api#8d8bca7bfcd7
         locations: {
@@ -96,6 +107,24 @@ export default defineConfig({
                   href: resolveHref('page', doc?.slug)!,
                 },
               ],
+            }),
+          }),
+          schoolPage: defineLocations({
+            select: {
+              name: 'name',
+              slug: 'slug.current',
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.name || 'Untitled',
+                  href: resolveHref('schoolPage', doc?.slug)!,
+                },
+                {
+                  title: 'Rio Grooming School',
+                  href: '/school',
+                } satisfies DocumentLocation,
+              ].filter(Boolean) as DocumentLocation[],
             }),
           }),
           post: defineLocations({
