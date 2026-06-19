@@ -14,6 +14,7 @@ type HeroSplitProps = {
     image?: {asset?: {_ref: string}; crop?: any; hotspot?: any; alt?: string}
     stickerImage?: {asset?: {_ref: string}; alt?: string}
     imagePosition?: 'left' | 'right'
+    imageAspect?: 'square' | 'landscape' | 'wide' | 'portrait'
     backgroundColor?: 'cream' | 'sand' | 'forest'
   }
   index: number
@@ -37,11 +38,26 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
     image,
     stickerImage,
     imagePosition,
+    imageAspect,
     backgroundColor,
   } = block
   const isImageLeft = stegaClean(imagePosition) === 'left'
   const bg = bgColors[stegaClean(backgroundColor) || 'cream'] || bgColors.cream
   const isDark = stegaClean(backgroundColor) === 'forest'
+
+  // Image shape. Square keeps the original 600px-capped look; landscape/wide
+  // fill the column width so a wider-than-tall photo reads properly.
+  const aspect = stegaClean(imageAspect) || 'square'
+  const aspectClass =
+    aspect === 'landscape'
+      ? 'aspect-[4/3]'
+      : aspect === 'wide'
+        ? 'aspect-[16/9]'
+        : aspect === 'portrait'
+          ? 'aspect-[3/4]'
+          : 'aspect-square'
+  const isWide = aspect === 'landscape' || aspect === 'wide'
+  const imageWidthClass = isWide ? 'w-full' : 'w-full md:w-[600px]'
   const isFirst = index === 0
   const Wrap = isFirst
     ? ({
@@ -101,14 +117,14 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
           {/* Image side */}
           <div className={`${isImageLeft ? 'lg:order-1' : 'lg:order-2'} flex justify-end flex-1`}>
             {image?.asset?._ref && (
-              <Wrap delay={0.1} className="relative">
+              <Wrap delay={0.1} className={`relative ${isWide ? 'w-full' : ''}`}>
                 <Image
                   id={image.asset._ref}
                   alt={image.alt || heading || 'Hero image'}
-                  width={600}
+                  width={isWide ? 900 : 600}
                   crop={image.crop}
                   hotspot={image.hotspot}
-                  className="rounded-lg md:w-[600px] aspect-square w-full object-cover"
+                  className={`rounded-lg ${imageWidthClass} ${aspectClass} object-cover`}
                   sizes="(max-width: 768px) 100vw, 600px"
                   {...(isFirst && {loading: 'eager' as const, fetchPriority: 'high' as const})}
                 />

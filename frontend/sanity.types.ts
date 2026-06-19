@@ -608,6 +608,7 @@ export type HeroSplit = {
     _type: 'image'
   }
   imagePosition?: 'left' | 'right'
+  imageAspect?: 'square' | 'landscape' | 'wide' | 'portrait'
   backgroundColor?: 'cream' | 'sand' | 'forest'
 }
 
@@ -3187,6 +3188,7 @@ export type GetPageQueryResult = {
           _type: 'image'
         }
         imagePosition?: 'left' | 'right'
+        imageAspect?: 'landscape' | 'portrait' | 'square' | 'wide'
         backgroundColor?: 'cream' | 'forest' | 'sand'
       }
     | {
@@ -4502,6 +4504,7 @@ export type HomepageQueryResult = {
           _type: 'image'
         }
         imagePosition?: 'left' | 'right'
+        imageAspect?: 'landscape' | 'portrait' | 'square' | 'wide'
         backgroundColor?: 'cream' | 'forest' | 'sand'
       }
     | {
@@ -5837,6 +5840,7 @@ export type GetServiceQueryResult = {
           _type: 'image'
         }
         imagePosition?: 'left' | 'right'
+        imageAspect?: 'landscape' | 'portrait' | 'square' | 'wide'
         backgroundColor?: 'cream' | 'forest' | 'sand'
       }
     | {
@@ -7141,6 +7145,7 @@ export type GetLocationPageQueryResult = {
           _type: 'image'
         }
         imagePosition?: 'left' | 'right'
+        imageAspect?: 'landscape' | 'portrait' | 'square' | 'wide'
         backgroundColor?: 'cream' | 'forest' | 'sand'
       }
     | {
@@ -8565,6 +8570,7 @@ export type GetSchoolPageQueryResult = {
           _type: 'image'
         }
         imagePosition?: 'left' | 'right'
+        imageAspect?: 'landscape' | 'portrait' | 'square' | 'wide'
         backgroundColor?: 'cream' | 'forest' | 'sand'
       }
     | {
@@ -9880,6 +9886,7 @@ export type SchoolHomeQueryResult = {
           _type: 'image'
         }
         imagePosition?: 'left' | 'right'
+        imageAspect?: 'landscape' | 'portrait' | 'square' | 'wide'
         backgroundColor?: 'cream' | 'forest' | 'sand'
       }
     | {

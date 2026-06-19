@@ -77,6 +77,22 @@ export const heroSplit = defineType({
       initialValue: 'right',
     }),
     defineField({
+      name: 'imageAspect',
+      title: 'Image Shape',
+      type: 'string',
+      description: 'Aspect ratio of the hero image. Use Landscape/Wide for a wider-than-tall photo.',
+      options: {
+        list: [
+          {title: 'Square (1:1)', value: 'square'},
+          {title: 'Landscape (4:3)', value: 'landscape'},
+          {title: 'Wide (16:9)', value: 'wide'},
+          {title: 'Portrait (3:4)', value: 'portrait'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'square',
+    }),
+    defineField({
       name: 'backgroundColor',
       title: 'Background Color',
       type: 'string',
