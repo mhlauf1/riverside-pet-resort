@@ -120,14 +120,15 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
             </Wrap>
           )}
 
-          {subtext && (
-            <Wrap delay={0.2}>
-              <p className="font-sans md:text-[18px] lg:text-[20px] text-text-muted leading-[150%] max-w-4xl mb-6">
-                {subtext}
+          {belowCtaText && (
+            // <div className="bg-neutral-200 p-4 mt-5">
+            <Wrap delay={0.3}>
+              <p className="font-sans  text-center text-sm mb-7 md:text-[17px] text-text-muted leading-[150%] max-w-3xl mx-auto ">
+                {belowCtaText}
               </p>
             </Wrap>
+            // </div>
           )}
-
           <Wrap className="w-full md:w-auto" delay={0.25}>
             <div className="flex flex-col w-full md:flex-row items-center gap-2 md:gap-3 mb-3 md:mb-4">
               {primaryCta?.buttonText && (
@@ -142,15 +143,12 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
               )}
             </div>
           </Wrap>
-
-          {belowCtaText && (
-            <div className="bg-neutral-200 p-4 mt-5">
-              <Wrap delay={0.3}>
-                <p className="font-sans  text-center text-sm md:text-md text-text-muted leading-[150%] max-w-2xl mx-auto ">
-                  {belowCtaText}
-                </p>
-              </Wrap>
-            </div>
+          {subtext && (
+            <Wrap delay={0.2}>
+              <p className="font-sans md:text-[18px] lg:text-[14px] text-text-muted leading-[150%] max-w-4xl mt-3">
+                {subtext}
+              </p>
+            </Wrap>
           )}
 
           {reviewRating && (
@@ -252,7 +250,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
       )}
 
       {hasImages && (
-        <div className="mt-4 lg:mt-6 pb-4 lg:pb-12 overflow-hidden">
+        <div className="mt-4 lg:mt-2 pb-4 lg:pb-12 overflow-hidden">
           <div
             className="marquee-track flex gap-3 md:gap-4"
             style={{
