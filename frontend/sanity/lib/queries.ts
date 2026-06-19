@@ -319,7 +319,7 @@ export const homepageQuery = defineQuery(`
 `)
 
 export const sitemapData = defineQuery(`
-  *[_type in ["page", "service", "locationPage"] && defined(slug.current)] | order(_type asc) {
+  *[_type in ["page", "service", "locationPage", "schoolPage"] && defined(slug.current)] | order(_type asc) {
     "slug": slug.current,
     _type,
     _updatedAt,

@@ -23,12 +23,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (p.noIndex) continue
       if (p.slug === 'homepage') continue
 
-      const prefix =
-        p._type === 'service' ? '/services' : p._type === 'locationPage' ? '/locations' : ''
+      // School pages live under /school; the school home uses slug "home" and
+      // renders at /school (not /school/home).
+      let url: string
+      if (p._type === 'schoolPage') {
+        url = p.slug === 'home' ? `${domain}/school` : `${domain}/school/${p.slug}`
+      } else {
+        const prefix =
+          p._type === 'service' ? '/services' : p._type === 'locationPage' ? '/locations' : ''
+        url = `${domain}${prefix}/${p.slug}`
+      }
       sitemap.push({
-        url: `${domain}${prefix}/${p.slug}`,
+        url,
         lastModified: p._updatedAt || new Date(),
-        priority: p._type === 'service' ? 0.7 : p._type === 'locationPage' ? 0.6 : 0.8,
+        priority:
+          p._type === 'service'
+            ? 0.7
+            : p._type === 'locationPage'
+              ? 0.6
+              : p._type === 'schoolPage'
+                ? 0.6
+                : 0.8,
         changeFrequency: 'monthly',
       })
     }
