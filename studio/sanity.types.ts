@@ -1065,6 +1065,154 @@ export type Testimonial = {
   rating?: number
 }
 
+export type SchoolPage = {
+  _id: string
+  _type: 'schoolPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  seo?: Seo
+  pageBuilder?: Array<
+    | ({
+        _key: string
+      } & CallToAction)
+    | ({
+        _key: string
+      } & InfoSection)
+    | ({
+        _key: string
+      } & Hero)
+    | ({
+        _key: string
+      } & ImageRow)
+    | ({
+        _key: string
+      } & FeatureCards)
+    | ({
+        _key: string
+      } & ServiceTabs)
+    | ({
+        _key: string
+      } & StatsBar)
+    | ({
+        _key: string
+      } & Testimonials)
+    | ({
+        _key: string
+      } & CtaBanner)
+    | ({
+        _key: string
+      } & SplitContent)
+    | ({
+        _key: string
+      } & FaqAccordion)
+    | ({
+        _key: string
+      } & PricingTable)
+    | ({
+        _key: string
+      } & TeamGrid)
+    | ({
+        _key: string
+      } & GalleryGrid)
+    | ({
+        _key: string
+      } & ContactForm)
+    | ({
+        _key: string
+      } & HeroSplit)
+    | ({
+        _key: string
+      } & HeroBanner)
+    | ({
+        _key: string
+      } & HeroMarquee)
+    | ({
+        _key: string
+      } & HeroMinimal)
+    | ({
+        _key: string
+      } & ServiceCards)
+    | ({
+        _key: string
+      } & ExpandingCardsRow)
+    | ({
+        _key: string
+      } & FeatureList)
+    | ({
+        _key: string
+      } & ProcessSteps)
+    | ({
+        _key: string
+      } & ContentColumns)
+    | ({
+        _key: string
+      } & IconGrid)
+    | ({
+        _key: string
+      } & VideoSection)
+    | ({
+        _key: string
+      } & FullWidthMedia)
+    | ({
+        _key: string
+      } & CtaStrip)
+    | ({
+        _key: string
+      } & LogoBar)
+    | ({
+        _key: string
+      } & PricingMatrix)
+    | ({
+        _key: string
+      } & PricingList)
+    | ({
+        _key: string
+      } & PolicyNotes)
+    | ({
+        _key: string
+      } & FeatureGrid)
+    | ({
+        _key: string
+      } & PricingCalculator)
+    | ({
+        _key: string
+      } & WhatsIncluded)
+    | ({
+        _key: string
+      } & RequirementsList)
+    | ({
+        _key: string
+      } & GalleryCarousel)
+    | ({
+        _key: string
+      } & GalleryShowcase)
+    | ({
+        _key: string
+      } & GalleryPage)
+    | ({
+        _key: string
+      } & ValuePillars)
+    | ({
+        _key: string
+      } & PricingPageTabs)
+    | ({
+        _key: string
+      } & PhotoMarquee)
+    | ({
+        _key: string
+      } & Spacer)
+  >
+}
+
+export type Slug = {
+  _type: 'slug'
+  current: string
+  source?: string
+}
+
 export type Service = {
   _id: string
   _type: 'service'
@@ -1236,10 +1384,67 @@ export type SanityImageHotspot = {
   width: number
 }
 
-export type Slug = {
-  _type: 'slug'
-  current: string
-  source?: string
+export type SchoolSettings = {
+  _id: string
+  _type: 'schoolSettings'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  tagline?: string
+  description?: string
+  logo?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  backToResort?: {
+    label?: string
+    href?: string
+  }
+  navItems?: Array<{
+    label: string
+    link?: Link
+    children?: Array<{
+      label?: string
+      link?: Link
+      _key: string
+    }>
+    _type: 'navItem'
+    _key: string
+  }>
+  ctaButton?: Button
+  footerTagline?: string
+  footerColumns?: Array<{
+    title?: string
+    links?: Array<{
+      label?: string
+      link?: Link
+      _key: string
+    }>
+    _key: string
+  }>
+  footerText?: string
+  contactInfo?: {
+    address?: string
+    phone?: string
+    email?: string
+  }
+  formEmail?: string
+  hours?: Array<{
+    days?: string
+    open?: string
+    close?: string
+    _key: string
+  }>
+  socialLinks?: {
+    facebook?: string
+    instagram?: string
+    google?: string
+  }
 }
 
 export type Settings = {
@@ -1291,6 +1496,25 @@ export type Settings = {
     _key: string
   }>
   ctaButton?: Button
+  transitionBanner?: {
+    enabled?: boolean
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'normal'
+      listItem?: never
+      markDefs?: null
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    linkUrl?: string
+    linkLabel?: string
+  }
   footerSticker?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -1823,10 +2047,12 @@ export type AllSanitySchemaTypes =
   | Button
   | Seo
   | Testimonial
+  | SchoolPage
+  | Slug
   | Service
   | SanityImageCrop
   | SanityImageHotspot
-  | Slug
+  | SchoolSettings
   | Settings
   | Page
   | SanityAssistInstructionTask
