@@ -1,6 +1,7 @@
 import {Link} from '@/sanity.types'
 import {dataset, projectId, studioUrl} from '@/sanity/lib/api'
-import {createDataAttribute, CreateDataAttributeProps} from 'next-sanity'
+import {createDataAttribute, CreateDataAttributeProps, toPlainText} from 'next-sanity'
+import type {PortableTextBlock} from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 import type {SanityImageSource} from '@sanity/image-url/lib/types/types'
 import {DereferencedLink} from '@/sanity/lib/types'
@@ -64,4 +65,58 @@ export function dataAttr(config: DataAttributeConfig) {
     dataset,
     baseUrl: studioUrl,
   }).combine(config)
+}
+
+type FaqLike = {
+  question?: string | null
+  answer?: PortableTextBlock[] | null
+}
+
+/**
+ * Build FAQPage JSON-LD (schema.org) from one or more `faqAccordion` blocks.
+ *
+ * Answers are portable text, so they're flattened to plain text — Google's
+ * FAQPage spec wants the answer as text/HTML, not rich objects. Returns null
+ * when there are no valid question/answer pairs, so the caller can skip the
+ * <script> entirely.
+ */
+export function buildFaqPageJsonLd(faqs: FaqLike[] | null | undefined) {
+  const mainEntity = (faqs || [])
+    .filter((f): f is FaqLike => Boolean(f?.question && f?.answer?.length))
+    .map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: toPlainText(f.answer as PortableTextBlock[]),
+      },
+    }))
+
+  if (mainEntity.length === 0) return null
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity,
+  }
+}
+
+/**
+ * Collect every FAQ entry from a page's resolved `pageBuilder`, across any
+ * number of `faqAccordion` blocks. Used to emit a single FAQPage script.
+ */
+export function collectFaqs(pageBuilder: unknown): FaqLike[] {
+  if (!Array.isArray(pageBuilder)) return []
+  const faqs: FaqLike[] = []
+  for (const block of pageBuilder) {
+    if (
+      block &&
+      typeof block === 'object' &&
+      (block as {_type?: string})._type === 'faqAccordion' &&
+      Array.isArray((block as {faqs?: unknown}).faqs)
+    ) {
+      faqs.push(...((block as {faqs: FaqLike[]}).faqs))
+    }
+  }
+  return faqs
 }

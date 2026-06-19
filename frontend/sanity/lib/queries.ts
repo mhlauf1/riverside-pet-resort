@@ -69,6 +69,7 @@ const pageBuilderExpansion = /* groq */ `
       button ${buttonFields}
     },
     _type == "infoSection" => {
+      ...,
       content[]{
         ...,
         markDefs[]{
@@ -318,7 +319,7 @@ export const homepageQuery = defineQuery(`
 `)
 
 export const sitemapData = defineQuery(`
-  *[_type in ["page", "service"] && defined(slug.current)] | order(_type asc) {
+  *[_type in ["page", "service", "locationPage"] && defined(slug.current)] | order(_type asc) {
     "slug": slug.current,
     _type,
     _updatedAt,
@@ -353,4 +354,78 @@ export const servicesNavQuery = defineQuery(`
   *[_type == "service" && defined(slug.current)] | order(title asc) {
     _id, title, "slug": slug.current
   }
+`)
+
+// ─── Suburb location pages (SEO scope item) ─────────────────────────────────
+
+export const getLocationPageQuery = defineQuery(`
+  *[_type == 'locationPage' && slug.current == $slug][0]{
+    _id,
+    _type,
+    suburb,
+    slug,
+    seo,
+    ${pageBuilderExpansion},
+  }
+`)
+
+export const locationPageSlugs = defineQuery(`
+  *[_type == "locationPage" && defined(slug.current)]
+  {"slug": slug.current}
+`)
+
+// ─── Rio Grooming School (site-within-a-site) ───────────────────────────────
+
+export const schoolSettingsQuery = defineQuery(`*[_type == "schoolSettings"][0]{
+  ...,
+  navItems[]{
+    ...,
+    ${linkFields},
+    children[]{
+      ...,
+      ${linkFields}
+    }
+  },
+  ctaButton {
+    ...,
+    ${linkFields}
+  },
+  footerColumns[]{
+    ...,
+    links[]{
+      ...,
+      ${linkFields}
+    }
+  },
+  backToResort,
+  contactInfo,
+  hours,
+  socialLinks
+}`)
+
+export const getSchoolPageQuery = defineQuery(`
+  *[_type == 'schoolPage' && slug.current == $slug][0]{
+    _id,
+    _type,
+    name,
+    slug,
+    seo,
+    ${pageBuilderExpansion},
+  }
+`)
+
+export const schoolHomeQuery = defineQuery(`
+  *[_type == 'schoolPage' && slug.current == 'home'][0]{
+    _id,
+    _type,
+    name,
+    slug,
+    seo,
+    ${pageBuilderExpansion},
+  }
+`)
+
+export const schoolPageSlugs = defineQuery(`
+  *[_type == "schoolPage" && defined(slug.current) && slug.current != "home"]
+  {"slug": slug.current}
 `)

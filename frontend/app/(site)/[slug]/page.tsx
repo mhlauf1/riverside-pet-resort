@@ -3,7 +3,7 @@ import type {Metadata} from 'next'
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
 import {getPageQuery, pagesSlugs} from '@/sanity/lib/queries'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+import {buildFaqPageJsonLd, collectFaqs, resolveOpenGraphImage} from '@/sanity/lib/utils'
 
 type Props = {
   params: Promise<{slug: string}>
@@ -51,5 +51,18 @@ export default async function Page(props: Props) {
     )
   }
 
-  return <PageBuilderPage page={page} />
+  // Emit FAQPage JSON-LD when the page contains one or more FAQ accordions.
+  const faqJsonLd = buildFaqPageJsonLd(collectFaqs(page.pageBuilder))
+
+  return (
+    <>
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{__html: JSON.stringify(faqJsonLd)}}
+        />
+      )}
+      <PageBuilderPage page={page} />
+    </>
+  )
 }

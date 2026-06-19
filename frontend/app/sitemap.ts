@@ -23,11 +23,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (p.noIndex) continue
       if (p.slug === 'homepage') continue
 
-      const prefix = p._type === 'service' ? '/services' : ''
+      const prefix =
+        p._type === 'service' ? '/services' : p._type === 'locationPage' ? '/locations' : ''
       sitemap.push({
         url: `${domain}${prefix}/${p.slug}`,
         lastModified: p._updatedAt || new Date(),
-        priority: p._type === 'service' ? 0.7 : 0.8,
+        priority: p._type === 'service' ? 0.7 : p._type === 'locationPage' ? 0.6 : 0.8,
         changeFrequency: 'monthly',
       })
     }
