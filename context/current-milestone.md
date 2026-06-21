@@ -96,7 +96,8 @@ School not Academy · no placeholder contact data · pricing/booking via CMS onl
 - [x] **Location pages — content** — 7 `locationPage` docs seeded + published (`location-<slug>`): Hastings · Cottage Grove · Woodbury · Afton MN; Prescott · Ellsworth WI; Lakeville MN. Real per-suburb intro (relationship to the Hastings campus + greater-TC/western-WI framing) + shared services `iconGrid` + per-suburb SEO. **Not doorway pages.** Seeded via `scripts/seed-m4-content.js`.
 - [x] **FAQ page + JSON-LD** — `page` doc `page-faq` (slug `faq`, `/faq`): heroMinimal + `faqAccordion` (8 Q&A, no hardcoded pricing/booking URLs). `buildFaqPageJsonLd` + `collectFaqs` helpers (`sanity/lib/utils.ts`) emit `FAQPage` JSON-LD from any page containing an `faqAccordion`, wired in `(site)/[slug]/page.tsx` (same inline-script pattern as layout's LocalBusiness schema). **Verified:** `/faq` 200, FAQPage script with all 8 questions present. ⚠️ Still needs Google Rich Results validation in M5 QA.
 - [x] **FAQ discoverability** — `/faq` link added to the footer "Company" column (kept out of main nav). Verified rendering.
-- [x] **301 redirect scaffolding (mechanism; URLs deferred)** — `frontend/middleware.ts` + `frontend/app/redirect-map.ts`. Path-aware: keyed off **legacy Host** (`riogrooming.com`, `riogroomingschool.com`; Barks & Rec TODO) so canonical traffic is never touched; school/enrollment-shaped paths → `/school`, everything else → `/`; redirects to `SITE_URL` (single config constant). **Verified:** legacy host → 301 to /school or /; canonical host → 200 (no redirect). `EXPLICIT_REDIRECTS` table + Barks & Rec host are `// TODO: populate from riogrooming.com crawl`.
+- [x] **301 redirect scaffolding (mechanism; URLs deferred)** — `frontend/middleware.ts` + `frontend/app/redirect-map.ts`. Path-aware: keyed off **legacy Host** (`riogrooming.com`, `riogroomingschool.com`; Barks & Rec TODO) so canonical traffic is never touched; school/enrollment-shaped paths → `/school`, everything else → `/`; redirects to `SITE_URL` (single config constant). **Verified:** legacy host → 301 to /school or /; canonical host → 200 (no redirect).
+- [x] **301 map populated from riogrooming.com crawl (6/20)** — crawled page/post/portfolio sitemaps (27 pages + 5 posts + ~30 job-board URLs). `EXPLICIT_REDIRECTS` now lands legacy URLs on the precise new page: 6 `/grooming-school/*` deep links → matching `/school/*` sub-pages; all `/grooming-services/*` + appointment-request pages → `/services/grooming`; `/rooms` → `/services/boarding`; `/about-us/*` → `/about`. Added `CAREERS_PREFIXES` (`/jobs`, `/submit-a-job-posting`) → `/careers` for the external job board. Blog/legal/template artifacts fall through to `/`. Verified all 30 sampled legacy paths resolve correctly; canonical host untouched; type-check clean. **Still TODO:** add Barks & Rec legacy host once Peter confirms the domain.
 
 ## Documented divergences (template → this repo)
 
@@ -105,7 +106,7 @@ School not Academy · no placeholder contact data · pricing/booking via CMS onl
 
 ## M4 pending inputs / follow-ups
 
-- riogrooming.com crawl → populate `EXPLICIT_REDIRECTS` + add the Barks & Rec legacy host (before M6).
+- ~~riogrooming.com crawl → populate `EXPLICIT_REDIRECTS`~~ ✓ (6/20). Remaining: add the Barks & Rec legacy host once Peter confirms the domain (before M6).
 - FAQPage schema → run Google Rich Results validation (M5 QA).
 - Suburb pages currently use a shared services grid + per-suburb intro; richer per-suburb imagery/blurbs can be layered in during the imagery pass.
 

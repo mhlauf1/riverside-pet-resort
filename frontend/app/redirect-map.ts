@@ -10,9 +10,10 @@
  * middleware.ts). Canonical-domain traffic is never rewritten, so the live
  * Riverside routes are unaffected.
  *
- * ⚠️ The exhaustive old→new pairs come from a crawl of riogrooming.com's indexed
- * pages — deferred until that crawl is run (before M6 launch). The explicit map
- * below is a placeholder; the path-aware fallback already handles the general case.
+ * The exhaustive old→new pairs come from a crawl of riogrooming.com's indexed
+ * pages (page/post/portfolio sitemaps, 6/20). EXPLICIT_REDIRECTS below carries the
+ * precise equity transfers; the path-aware prefix fallback handles anything not
+ * enumerated (e.g. blog posts, legal, template artifacts → resort home).
  */
 
 /**
@@ -29,15 +30,44 @@ export const LEGACY_HOSTS = [
 ]
 
 /**
- * Exact legacy path → new path. Populate from the riogrooming.com crawl.
- * Keys are pathnames without trailing slash, lowercased.
- *
- * TODO: populate from riogrooming.com crawl (deferred — see file header).
+ * Exact legacy path → new path, built from the riogrooming.com crawl (6/20).
+ * Keys are pathnames without trailing slash, lowercased. Explicit entries win
+ * over the prefix fallbacks below — use them to land legacy URLs on the precise
+ * new page (school sub-page, specific service) instead of a generic section root.
  */
 export const EXPLICIT_REDIRECTS: Record<string, string> = {
-  // '/grooming-academy': '/school',
-  // '/enroll': '/school/enrollment-financing',
-  // '/about-rio': '/school',
+  // Rio Grooming School — deep links to the matching school sub-pages.
+  '/grooming-school': '/school',
+  '/grooming-school/request-school-info': '/school/request-information',
+  '/grooming-school/student-housing': '/school/student-housing',
+  '/grooming-school/why-dog-grooming': '/school/why-become-a-groomer',
+  '/grooming-school/tours': '/school/schedule-a-tour',
+  '/grooming-school/scholarships': '/school/scholarships',
+  '/grooming-school/enroll-financing': '/school/enrollment-financing',
+
+  // Grooming services — all sub-services consolidate onto the one resort
+  // grooming page (which carries professional / student / cat / self-serve
+  // sub-sections). Appointment-request pages land on grooming (booking CTA).
+  '/grooming-services': '/services/grooming',
+  '/grooming-services/professional-grooming': '/services/grooming',
+  '/grooming-services/grooming-students': '/services/grooming',
+  '/grooming-services/cat-grooming': '/services/grooming',
+  '/grooming-services/dog-services': '/services/grooming',
+  '/grooming-services/self-service-dog-wash': '/services/grooming',
+  '/grooming-appointment-request': '/services/grooming',
+  '/rio-grooming-appointment-request': '/services/grooming',
+
+  // Boarding — Rio's "rooms" = overnight accommodations.
+  '/rooms': '/services/boarding',
+
+  // About — staff/partners/birthday-club folded into the single About page.
+  '/about-us': '/about',
+  '/about-us/staff': '/about',
+  '/about-us/partners': '/about',
+  '/about-us/doggy-birthday-club': '/about',
+
+  // Contact.
+  '/contact': '/contact',
 }
 
 /**
@@ -60,9 +90,16 @@ const SCHOOL_PREFIXES = [
 ]
 
 /**
+ * Legacy path prefixes for the Rio job board (other companies' postings) +
+ * employer job submission. No per-posting equivalent on the new site; the
+ * closest topical home is the resort Careers page.
+ */
+const CAREERS_PREFIXES = ['/jobs', '/submit-a-job-posting']
+
+/**
  * Resolve the redirect target for a legacy pathname.
  * Returns the destination path (e.g. '/school' or '/'), always defined for
- * legacy hosts. Explicit map wins; otherwise path-aware fallback.
+ * legacy hosts. Explicit map wins; otherwise path-aware prefix fallback.
  */
 export function resolveLegacyRedirect(pathname: string): string {
   const clean = pathname.replace(/\/+$/, '').toLowerCase() || '/'
@@ -71,6 +108,10 @@ export function resolveLegacyRedirect(pathname: string): string {
 
   if (SCHOOL_PREFIXES.some((p) => clean === p || clean.startsWith(`${p}/`))) {
     return '/school'
+  }
+
+  if (CAREERS_PREFIXES.some((p) => clean === p || clean.startsWith(`${p}/`))) {
+    return '/careers'
   }
 
   return '/'
