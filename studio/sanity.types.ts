@@ -608,6 +608,7 @@ export type HeroSplit = {
     _type: 'image'
   }
   imagePosition?: 'left' | 'right'
+  imageAspect?: 'square' | 'landscape' | 'wide' | 'portrait'
   backgroundColor?: 'cream' | 'sand' | 'forest'
 }
 

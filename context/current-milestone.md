@@ -112,3 +112,10 @@ School not Academy · no placeholder contact data · pricing/booking via CMS onl
 ## Out-of-milestone note (M2 imagery)
 
 - **Homepage hero swapped `hero` → `heroMarquee`** with 6 **placeholder Unsplash dog photos** uploaded as Sanity assets (approved copy + CTAs preserved). ⚠️ Placeholder only — replace with curated Rio/Barks & Rec Facebook photos in the imagery pass. Reproducible via `scripts/seed-home-marquee.js`.
+
+## School visual polish pass (6/20)
+
+- **School heroes → `heroSplit`.** All 8 `schoolPage` docs converted from bare centered `heroMinimal` to `heroSplit` (image right, top funnel CTAs) — bringing the school section to the same visual bar as the resort pages. Approved eyebrow/heading preserved verbatim; home's `headingAccent` folded into the hero body. **Copy-agnostic: the 7 sub-page `[TBD]` `infoSection` bodies were left untouched** (pending Amy/Brian). Home keeps its approved "Since 2009…" intro + highlights + dean. Reproducible via `scripts/seed-school-split-heroes.js`. ⚠️ Hero images are placeholder Unsplash — swap in the imagery pass.
+- **Funnel `ctaStrip` appended** to each of the 7 sub-pages (generic enrollment-funnel chrome → Request Information / Schedule a Tour; never points a page at itself). `sand` bg for AA-safe contrast + separation from the dark footer.
+- **`.theme-school` lightly tuned** (`globals.css`): deeper pine, richer antique gold, warmer ivory; `terracotta-dark` (primary-button bg) + `text-muted` kept AA-safe. Still PROVISIONAL — full retune pending Amy's riogrooming.com-derived refresh.
+- Verified: clean production build (8 school routes SSG); type-check clean both workspaces; `/school` + sub-pages 200 with heroSplit image + CTAs; `[TBD]` bodies intact; no `theme-school` bleed into resort routes. Sanity types regenerated.

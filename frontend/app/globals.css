@@ -111,36 +111,38 @@
    page-builder block inside the subtree — no per-component work,
    and the resort theme is untouched (no bleed).
 
-   ⚠️ PROVISIONAL PALETTE — pine green + warm gold + ivory, chosen
-   as a tasteful, clearly-distinct starting point. The real school
-   visual language derives from riogrooming.com with Amy Ericson's
-   refreshes (pending). Retune these values in this one block when
-   that reference lands.
+   ⚠️ PROVISIONAL PALETTE — pine green + antique gold + ivory, chosen
+   as a tasteful, clearly-distinct starting point. Lightly tuned 6/20
+   for warmth + contrast (deeper pine, richer gold, AA-safe button/text
+   pairings). The real school visual language still derives from
+   riogrooming.com with Amy Ericson's refreshes (pending) — retune
+   these values in this one block when that reference lands.
    ============================================================ */
 .theme-school {
-  /* Light backgrounds */
-  --color-cream: #f7f4ec; /* warm ivory */
-  --color-sand: #e8e1d1;
+  /* Light backgrounds — warm ivory */
+  --color-cream: #f8f4ea;
+  --color-sand: #ebe2cf;
 
-  /* Primary dark — pine green (replaces navy) */
-  --color-forest: #233d2e;
-  --color-forest-card: #2e5140;
-  --color-charcoal: #1a2d22;
-  --color-black: #14211a;
-  --color-black-card: #1f3328;
+  /* Primary dark — pine green (replaces navy), richer/deeper */
+  --color-forest: #21412f;
+  --color-forest-card: #2c543d;
+  --color-charcoal: #18271d;
+  --color-black: #111d15;
+  --color-black-card: #1c2e22;
 
-  /* Accent — warm gold (replaces maroon) */
-  --color-terracotta: #b0822f;
-  --color-terracotta-dark: #8a6526;
-  --color-terracotta-light: #d8be86;
-  --color-gold: #c8a24a;
-  --color-rose: #a86b3c;
-  --color-sage: #a7ae92;
+  /* Accent — antique gold (replaces maroon). terracotta-dark is the
+     primary-button bg (white text), so it stays deep enough for AA. */
+  --color-terracotta: #a9781f;
+  --color-terracotta-dark: #80591a;
+  --color-terracotta-light: #d9bf83;
+  --color-gold: #cba74e; /* brighter secondary gold for highlights */
+  --color-rose: #9c5f33;
+  --color-sage: #9aa585;
 
-  /* Derived neutrals */
-  --color-border-light: rgba(35, 61, 46, 0.15);
-  --color-text-muted: rgba(35, 61, 46, 0.8);
-  --color-text-muted-dark: rgba(247, 244, 236, 0.72);
+  /* Derived neutrals (pine-based; text-muted darkened for AA on cream) */
+  --color-border-light: rgba(33, 65, 47, 0.16);
+  --color-text-muted: rgba(33, 65, 47, 0.82);
+  --color-text-muted-dark: rgba(248, 244, 234, 0.74);
 }
 
 @layer base {
