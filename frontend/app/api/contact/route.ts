@@ -45,7 +45,10 @@ export async function POST(request: Request) {
 
     if (!toEmail || !fromEmail) {
       console.error('Email environment variables are not configured')
-      return NextResponse.json({error: 'Contact form is not configured'}, {status: 500})
+      // 503: request is valid but the service is unconfigured (no SMTP/
+      // destination env yet) — not a server fault. Distinguishes the expected
+      // pre-launch "not wired" state from a real send failure (500 below).
+      return NextResponse.json({error: 'Contact form is not configured'}, {status: 503})
     }
 
     const senderName = (body.name as string) || 'Website Visitor'
