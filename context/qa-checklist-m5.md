@@ -19,7 +19,7 @@ This is the M5 "ships complete" QA record (contractual in spirit). This pass cov
 | **Location pages in sitemap, out of nav** | ✓ all 7 in sitemap; 0 in rendered nav |
 | **Internal links** | 0 broken (non-200) among crawled internal links |
 | **type-check** (both workspaces) | Clean |
-| **Production build** | Green; locations SSG-prerendered, middleware registered |
+| **Production build** | Green; locations SSG-prerendered, proxy redirect layer registered |
 | **Touched-file lint** | Clean (my M3/M4/UX files have no new lint errors) |
 
 ---
@@ -32,7 +32,7 @@ This is the M5 "ships complete" QA record (contractual in spirit). This pass cov
 
 ## ⚠️ Findings / decisions
 
-1. **School pages are absent from the sitemap** *(decision needed)*. `sitemapData` only includes `page`/`service`/`locationPage`, so `/school` + 8 sub-pages aren't listed. `/school` (home) is real content and should be indexed. The 7 sub-pages still have `[TBD]` bodies (pending Amy) — indexing placeholders is bad. **Recommendation:** add `schoolPage` to `sitemapData` once school content lands, or add `/school` now and `noindex` the placeholder sub-pages until their copy is in. Not auto-changed — confirms SEO intent first.
+1. **School indexing policy.** `/school` is indexable. The 7 school sub-pages remain live for review but should stay `seo.noIndex: true` while their bodies contain placeholder copy. Re-run `node scripts/mark-school-placeholders-noindex.js` after any school reseed until Amy/Brian-approved copy is in.
 
 2. **Contact form renders client-side only.** `/contact` form fields aren't in the SSR/no-JS HTML because `ContactForm` uses `useSearchParams()` (correctly wrapped in Suspense — no build warning). Works fine for real users with JS. Acceptable for a contact form; flagged for awareness (no-JS visitors see no form).
 
@@ -46,9 +46,9 @@ This is the M5 "ships complete" QA record (contractual in spirit). This pass cov
 
 ## ⛔ Blocked on pending human inputs
 
-- **Submit-test every form** (contact + school funnels) — blocked on `CONTACT_FORM_TO_EMAIL` + SMTP creds (Brian). API currently returns "not configured" by design.
+- **Submit-test every form** (contact + school funnels) — blocked on `CONTACT_FORM_TO_EMAIL` + SMTP creds (Brian). API currently returns "not configured" by design. Form submissions now include form/page context so school funnels can reuse `/api/contact`.
 - **Verify every booking link** — hero/CTA booking buttons are `#` placeholders pending Goose URLs (Hung/Caitlin). Confirmed only the expected placeholders exist (homepage hero).
-- **Verify every redirect** — middleware logic verified (legacy host → `/school` or `/`; canonical host untouched), but the exhaustive old→new pairs await the riogrooming.com crawl.
+- **Verify every redirect** — proxy logic verified (legacy host → `/school` or `/`; canonical host untouched). Add the Barks & Rec legacy host once confirmed.
 - **Canonical domain** — sitemap/robots/canonicals resolve to the single `SITE_URL` constant (`riversidepetmn.com` default); final values land when Peter confirms.
 
 ## 🖐 Manual follow-ups (need a browser / deploy)
@@ -65,3 +65,4 @@ This is the M5 "ships complete" QA record (contractual in spirit). This pass cov
 - Route sweep / link crawl / a11y greps: see this session's QA run against `localhost:3000` (clean prod build).
 - Redirect check: `curl -H "Host: riogrooming.com" -I localhost:3000/enrollment` → 301 → `/school`.
 - FAQ JSON-LD: fetch `/faq`, parse `application/ld+json`, assert `@type==FAQPage`.
+- Production readiness audit: `node scripts/audit-production-readiness.js`.

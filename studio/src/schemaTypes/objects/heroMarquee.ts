@@ -8,6 +8,20 @@ export const heroMarquee = defineType({
   icon: HomeIcon,
   fields: [
     defineField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Cream', value: 'cream'},
+          {title: 'Sand', value: 'sand'},
+          {title: 'Dark / Forest', value: 'forest'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'cream',
+    }),
+    defineField({
       name: 'eyebrow',
       title: 'Eyebrow Text',
       type: 'string',
@@ -83,6 +97,27 @@ export const heroMarquee = defineType({
           type: 'string',
         }),
       ],
+    }),
+    defineField({
+      name: 'showIllustrations',
+      title: 'Show Decorative Dog Illustrations',
+      type: 'boolean',
+      description: 'Decorative side illustrations used on the resort homepage. Turn off for the Rio school marquee.',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'verticalSpacing',
+      title: 'Vertical Spacing',
+      type: 'string',
+      description: 'Controls the amount of space above the hero content.',
+      options: {
+        list: [
+          {title: 'Standard', value: 'standard'},
+          {title: 'Compact', value: 'compact'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'standard',
     }),
     defineField({
       name: 'marqueeImages',

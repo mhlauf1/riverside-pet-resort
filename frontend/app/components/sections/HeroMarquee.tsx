@@ -2,6 +2,7 @@ import Badge from '@/app/components/ui/Badge'
 import Button from '@/app/components/ui/Button'
 import Image from '@/app/components/SanityImage'
 import {FadeIn} from '@/app/components/ui/FadeIn'
+import {stegaClean} from '@sanity/client/stega'
 
 type MarqueeImage = {
   _key: string
@@ -25,11 +26,20 @@ type HeroMarqueeProps = {
     bubbleText?: string
     marqueeImages?: MarqueeImage[]
     heroLogo?: {asset?: {_ref: string}; alt?: string}
+    showIllustrations?: boolean
+    verticalSpacing?: 'standard' | 'compact'
     headingAccent?: string
+    backgroundColor?: 'cream' | 'sand' | 'forest'
   }
   index: number
   pageId: string
   pageType: string
+}
+
+const bgColors: Record<string, string> = {
+  cream: 'bg-cream text-forest',
+  sand: 'bg-sand text-forest',
+  forest: 'bg-forest text-cream',
 }
 
 export default function HeroMarquee({block, index}: HeroMarqueeProps) {
@@ -46,8 +56,18 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
     bubbleText,
     marqueeImages,
     heroLogo,
+    showIllustrations,
+    verticalSpacing,
     headingAccent,
+    backgroundColor,
   } = block
+
+  const bg = bgColors[stegaClean(backgroundColor) || 'cream'] || bgColors.cream
+  const isDark = stegaClean(backgroundColor) === 'forest'
+  const mutedText = isDark ? 'text-text-muted-dark' : 'text-text-muted'
+  const spacing = stegaClean(verticalSpacing) === 'compact'
+    ? 'pt-10 md:pt-12 pb-4 lg:pt-[7vh] lg:pb-10'
+    : 'pt-16 md:pt-20 pb-4 lg:pt-[12vh] lg:pb-12'
 
   const isFirst = index === 0
   const Wrap = isFirst
@@ -65,26 +85,30 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
   const hasImages = marqueeImages && marqueeImages.length > 0
 
   return (
-    <section className="relative pb-8 md:pb-0 pt-18 bg-cream overflow-x-clip">
-      {/* Left dog illustration — aligned with heading */}
-      <img
-        src="/illustrations/hero-left-dog.png"
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        className="absolute left-[6%] xl:left-[8%] top-[28%] w-[70px] lg:w-[90px] pointer-events-none hidden lg:block"
-      />
+    <section className={`relative pb-8 md:pb-0 pt-18 overflow-x-clip ${bg}`}>
+      {showIllustrations !== false && (
+        <>
+          {/* Left dog illustration — aligned with heading */}
+          <img
+            src="/illustrations/hero-left-dog.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute left-[6%] xl:left-[8%] top-[28%] w-[70px] lg:w-[90px] pointer-events-none hidden lg:block"
+          />
 
-      {/* Right dog illustration — aligned with CTA area */}
-      <img
-        src="/illustrations/hero-right-image.png"
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        className="absolute right-[6%] xl:right-[8%] top-[22%] w-[70px] lg:w-[90px] pointer-events-none hidden lg:block"
-      />
+          {/* Right dog illustration — aligned with CTA area */}
+          <img
+            src="/illustrations/hero-right-image.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute right-[6%] xl:right-[8%] top-[22%] w-[70px] lg:w-[90px] pointer-events-none hidden lg:block"
+          />
+        </>
+      )}
 
-      <div className="container relative z-10 pt-16 md:pt-20 pb-4 lg:pt-[12vh] lg:pb-12">
+      <div className={`container relative z-10 ${spacing}`}>
         <div className="flex flex-col items-center max-w-5xl text-center mx-auto">
           {heroLogo?.asset?._ref && (
             <Wrap>
@@ -113,7 +137,9 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                 {headingAccent && (
                   <>
                     <br />
-                    <span className="text-forest-card">{headingAccent}</span>
+                    <span className={isDark ? 'text-terracotta' : 'text-forest-card'}>
+                      {headingAccent}
+                    </span>
                   </>
                 )}
               </h1>
@@ -123,7 +149,9 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
           {belowCtaText && (
             // <div className="bg-neutral-200 p-4 mt-5">
             <Wrap delay={0.3}>
-              <p className="font-sans  text-center text-sm mb-7 md:text-[17px] text-text-muted leading-[150%] max-w-3xl mx-auto ">
+              <p
+                className={`font-sans text-center text-sm mb-7 md:text-[17px] leading-[150%] max-w-3xl mx-auto ${mutedText}`}
+              >
                 {belowCtaText}
               </p>
             </Wrap>
@@ -137,7 +165,11 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                 </Button>
               )}
               {secondaryCta?.buttonText && (
-                <Button variant="outline" link={secondaryCta.link}>
+                <Button
+                  variant="outline"
+                  link={secondaryCta.link}
+                  className={isDark ? '!border-cream !text-cream hover:!bg-cream/10' : ''}
+                >
                   {secondaryCta.buttonText}
                 </Button>
               )}
@@ -145,7 +177,9 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
           </Wrap>
           {subtext && (
             <Wrap delay={0.2}>
-              <p className="font-sans md:text-[18px] lg:text-[14px] text-text-muted leading-[150%] max-w-4xl mt-3">
+              <p
+                className={`font-sans md:text-[18px] lg:text-[14px] leading-[150%] max-w-4xl mt-3 ${mutedText}`}
+              >
                 {subtext}
               </p>
             </Wrap>
@@ -168,11 +202,11 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                     ))}
                   </div>
                   {reviewText && (
-                    <p className="font-sans text-sm md:text-base text-text-muted">{reviewText}</p>
+                    <p className={`font-sans text-sm md:text-base ${mutedText}`}>{reviewText}</p>
                   )}
                 </div>
                 {trustLine && (
-                  <p className="font-sans text-xs md:text-sm text-text-muted">{trustLine}</p>
+                  <p className={`font-sans text-xs md:text-sm ${mutedText}`}>{trustLine}</p>
                 )}
               </div>
             </Wrap>

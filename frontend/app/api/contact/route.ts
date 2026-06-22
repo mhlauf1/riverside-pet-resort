@@ -23,6 +23,10 @@ export async function POST(request: Request) {
     }
 
     const fieldLabels: Record<string, string> = {
+      _formName: 'Form',
+      _pageId: 'Page ID',
+      _pageType: 'Page Type',
+      _pagePath: 'Page Path',
       name: 'Name',
       email: 'Email',
       phone: 'Phone',
@@ -53,12 +57,15 @@ export async function POST(request: Request) {
 
     const senderName = (body.name as string) || 'Website Visitor'
     const senderEmail = (body.email as string) || undefined
+    const formName = typeof body._formName === 'string' && body._formName.trim()
+      ? body._formName.trim()
+      : 'Contact Form'
 
     await transporter.sendMail({
       from: `"Riverside Pet Resort Website" <${fromEmail}>`,
       to: toEmail,
       replyTo: senderEmail,
-      subject: `New Contact Form Submission from ${senderName}`,
+      subject: `New ${formName} Submission from ${senderName}`,
       html: `
         <h2>New Contact Form Submission</h2>
         ${lines}

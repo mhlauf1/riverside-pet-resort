@@ -18,7 +18,7 @@ type ContactFormProps = {
   pageType: string
 }
 
-export default function ContactForm({block}: ContactFormProps) {
+export default function ContactForm({block, pageId, pageType}: ContactFormProps) {
   const {
     eyebrow,
     heading,
@@ -61,10 +61,18 @@ export default function ContactForm({block}: ContactFormProps) {
     setErrorMessage('')
 
     try {
+      const payload = {
+        ...formData,
+        _formName: stegaClean(heading) || 'Contact Form',
+        _pageId: pageId,
+        _pageType: pageType,
+        _pagePath: window.location.pathname,
+      }
+
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
 
       if (!res.ok) {

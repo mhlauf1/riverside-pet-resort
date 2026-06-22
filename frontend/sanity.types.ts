@@ -536,6 +536,7 @@ export type HeroMinimal = {
 
 export type HeroMarquee = {
   _type: 'heroMarquee'
+  backgroundColor?: 'cream' | 'sand' | 'forest'
   eyebrow?: string
   heading: string
   headingAccent?: string
@@ -555,6 +556,8 @@ export type HeroMarquee = {
     alt?: string
     _type: 'image'
   }
+  showIllustrations?: boolean
+  verticalSpacing?: 'standard' | 'compact'
   marqueeImages?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown
@@ -3076,6 +3079,7 @@ export type GetPageQueryResult = {
     | {
         _key: string
         _type: 'heroMarquee'
+        backgroundColor?: 'cream' | 'forest' | 'sand'
         eyebrow?: string
         heading: string
         headingAccent?: string
@@ -3119,6 +3123,8 @@ export type GetPageQueryResult = {
           alt?: string
           _type: 'image'
         }
+        showIllustrations?: boolean
+        verticalSpacing?: 'compact' | 'standard'
         marqueeImages?: Array<{
           asset?: SanityImageAssetReference
           media?: unknown
@@ -4392,6 +4398,7 @@ export type HomepageQueryResult = {
     | {
         _key: string
         _type: 'heroMarquee'
+        backgroundColor?: 'cream' | 'forest' | 'sand'
         eyebrow?: string
         heading: string
         headingAccent?: string
@@ -4435,6 +4442,8 @@ export type HomepageQueryResult = {
           alt?: string
           _type: 'image'
         }
+        showIllustrations?: boolean
+        verticalSpacing?: 'compact' | 'standard'
         marqueeImages?: Array<{
           asset?: SanityImageAssetReference
           media?: unknown
@@ -5728,6 +5737,7 @@ export type GetServiceQueryResult = {
     | {
         _key: string
         _type: 'heroMarquee'
+        backgroundColor?: 'cream' | 'forest' | 'sand'
         eyebrow?: string
         heading: string
         headingAccent?: string
@@ -5771,6 +5781,8 @@ export type GetServiceQueryResult = {
           alt?: string
           _type: 'image'
         }
+        showIllustrations?: boolean
+        verticalSpacing?: 'compact' | 'standard'
         marqueeImages?: Array<{
           asset?: SanityImageAssetReference
           media?: unknown
@@ -7033,6 +7045,7 @@ export type GetLocationPageQueryResult = {
     | {
         _key: string
         _type: 'heroMarquee'
+        backgroundColor?: 'cream' | 'forest' | 'sand'
         eyebrow?: string
         heading: string
         headingAccent?: string
@@ -7076,6 +7089,8 @@ export type GetLocationPageQueryResult = {
           alt?: string
           _type: 'image'
         }
+        showIllustrations?: boolean
+        verticalSpacing?: 'compact' | 'standard'
         marqueeImages?: Array<{
           asset?: SanityImageAssetReference
           media?: unknown
@@ -8458,6 +8473,7 @@ export type GetSchoolPageQueryResult = {
     | {
         _key: string
         _type: 'heroMarquee'
+        backgroundColor?: 'cream' | 'forest' | 'sand'
         eyebrow?: string
         heading: string
         headingAccent?: string
@@ -8501,6 +8517,8 @@ export type GetSchoolPageQueryResult = {
           alt?: string
           _type: 'image'
         }
+        showIllustrations?: boolean
+        verticalSpacing?: 'compact' | 'standard'
         marqueeImages?: Array<{
           asset?: SanityImageAssetReference
           media?: unknown
@@ -9774,6 +9792,7 @@ export type SchoolHomeQueryResult = {
     | {
         _key: string
         _type: 'heroMarquee'
+        backgroundColor?: 'cream' | 'forest' | 'sand'
         eyebrow?: string
         heading: string
         headingAccent?: string
@@ -9817,6 +9836,8 @@ export type SchoolHomeQueryResult = {
           alt?: string
           _type: 'image'
         }
+        showIllustrations?: boolean
+        verticalSpacing?: 'compact' | 'standard'
         marqueeImages?: Array<{
           asset?: SanityImageAssetReference
           media?: unknown

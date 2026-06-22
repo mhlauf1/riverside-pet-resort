@@ -29,7 +29,7 @@
 
 ## Redirects
 
-- Path-aware 301 map in `next.config` redirects or middleware (version-controlled).
+- Path-aware 301 map in `next.config` redirects or `proxy.ts` (version-controlled).
 - Map built from a crawl of riogrooming.com's indexed pages before implementation.
 
 ## SEO

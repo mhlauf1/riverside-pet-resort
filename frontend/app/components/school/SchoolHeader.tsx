@@ -74,7 +74,7 @@ export default function SchoolHeader({
         {/* Back-to-resort bar — always tells the visitor which "building" they're in */}
         {backToResort?.href && (
           <div className="bg-forest text-cream">
-            <div className="container flex items-center justify-end py-1.5">
+            <div className="px-2 md:px-12 flex items-center justify-end py-1.5">
               <Link
                 href={backToResort.href}
                 className="group inline-flex items-center gap-1.5 font-sans text-[12px] tracking-wide text-cream/85 hover:text-cream transition-colors"
@@ -95,7 +95,7 @@ export default function SchoolHeader({
         )}
 
         <div className="border-b border-border-light">
-          <div className="container flex items-center justify-between py-3">
+          <div className="px-2 md:px-12 flex lg:grid lg:grid-cols-3 items-center justify-between py-3">
             {/* Logo / wordmark */}
             <Link href="/school" className="flex items-center" aria-label={`${title} home`}>
               {logoUrl ? (
@@ -115,7 +115,7 @@ export default function SchoolHeader({
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-7">
+            <nav className="hidden lg:flex items-center justify-center gap-7 xl:gap-9">
               {navItems?.map((item) => {
                 const active = isActive(item.link, item.children)
                 const hasChildren = !!item.children?.length
