@@ -18,7 +18,7 @@ type ContactFormProps = {
   pageType: string
 }
 
-export default function ContactForm({block, pageId, pageType}: ContactFormProps) {
+export default function ContactForm({block, index, pageId, pageType}: ContactFormProps) {
   const {
     eyebrow,
     heading,
@@ -90,11 +90,21 @@ export default function ContactForm({block, pageId, pageType}: ContactFormProps)
 
   const validHours = (hours || []).filter((h) => h?.label && h?.value)
   const hasContactInfo =
-    image?.asset?._ref || address || phone || email || validHours.length > 0 || (stegaClean(showMap) && mapEmbedUrl)
+    image?.asset?._ref ||
+    address ||
+    phone ||
+    email ||
+    validHours.length > 0 ||
+    (stegaClean(showMap) && mapEmbedUrl)
+  const isNearPageTop = index <= 1
 
   return (
-    <section className="bg-cream pt-8">
-      <div className="px-6 md:px-24 py-16 lg:py-24">
+    <section className="bg-cream">
+      <div
+        className={`px-6 md:px-24 ${
+          isNearPageTop ? 'pt-8 pb-16 md:pt-10 lg:pt-16 lg:pb-24' : 'py-16 lg:py-24'
+        }`}
+      >
         <FadeIn immediate>
           <div className="mb-10 lg:mb-14">
             {eyebrow && (
@@ -261,7 +271,9 @@ export default function ContactForm({block, pageId, pageType}: ContactFormProps)
                   </div>
                 )}
 
-                <div className={`grid ${validHours.length > 0 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'} gap-6`}>
+                <div
+                  className={`grid ${validHours.length > 0 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'} gap-6`}
+                >
                   <div className="space-y-4">
                     {address && (
                       <div>

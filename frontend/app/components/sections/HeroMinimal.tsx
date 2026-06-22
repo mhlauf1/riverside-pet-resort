@@ -29,8 +29,8 @@ export default function HeroMinimal({block}: HeroMinimalProps) {
   const isDark = stegaClean(backgroundColor) === 'forest'
 
   return (
-    <section className={`${bg}  pt-18 min-h-[50vh] md:min-h-[50vh] flex items-end justify-center`}>
-      <div className="px-6 md:px-24 pb-6 lg:pb-8 pt-24 text-center w-full">
+    <section className={`${bg} min-h-[50vh] md:min-h-[50vh] flex items-center justify-center`}>
+      <div className="px-6 md:px-24 py-20 lg:py-24 text-center w-full">
         <div className="max-w-7xl mx-auto">
           {eyebrow && (
             <FadeIn>
