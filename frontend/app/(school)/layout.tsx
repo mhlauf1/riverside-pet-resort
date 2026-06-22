@@ -22,7 +22,7 @@ export default async function SchoolLayout({children}: {children: React.ReactNod
   } catch {}
 
   return (
-    <div className="theme-school bg-cream text-forest min-h-screen flex flex-col">
+    <div className="theme-school bg-cream text-forest min-h-screen flex flex-col overflow-x-hidden">
       <SchoolHeader
         title={title}
         logoUrl={logoUrl}

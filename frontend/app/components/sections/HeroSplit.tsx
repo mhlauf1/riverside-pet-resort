@@ -72,11 +72,11 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
     : FadeIn
 
   return (
-    <section className={` pt-18 ${bg}`}>
-      <div className="px-6  md:px-24 py-16 lg:py-24">
+    <section className={`pt-18 overflow-x-clip ${bg}`}>
+      <div className="px-4 md:px-24 py-14 md:py-16 lg:py-24">
         <div className="flex flex-col md:flex-row justify-between gap-8 lg:gap-16 items-center">
           {/* Text side */}
-          <div className={`${isImageLeft ? 'lg:order-2' : 'lg:order-1'} flex-1`}>
+          <div className={`${isImageLeft ? 'lg:order-2' : 'lg:order-1'} min-w-0 flex-1`}>
             {eyebrow && (
               <Wrap>
                 <Badge className="mb-3">{eyebrow}</Badge>
@@ -84,7 +84,7 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
             )}
             {heading && (
               <Wrap delay={0.05}>
-                <h1 className="text-[48px] tracking-tight md:text-[56px] md:max-w-[15ch] font-semibold lg:text-[84px] leading-[104%] mb-6">
+                <h1 className="max-w-full text-[clamp(40px,13vw,48px)] tracking-tight md:text-[56px] md:max-w-[15ch] font-semibold lg:text-[84px] leading-[104%] mb-6 [overflow-wrap:anywhere]">
                   {heading}
                 </h1>
               </Wrap>
@@ -99,7 +99,7 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
               </Wrap>
             )}
             <Wrap delay={0.15}>
-              <div className="flex flex-row items-center gap-2 md:gap-3">
+              <div className="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:flex-row sm:items-center md:gap-3">
                 {primaryCta?.buttonText && (
                   <Button variant="primary" link={primaryCta.link}>
                     {primaryCta.buttonText}
@@ -115,7 +115,7 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
           </div>
 
           {/* Image side */}
-          <div className={`${isImageLeft ? 'lg:order-1' : 'lg:order-2'} flex justify-end flex-1`}>
+          <div className={`${isImageLeft ? 'lg:order-1' : 'lg:order-2'} min-w-0 flex justify-end flex-1`}>
             {image?.asset?._ref && (
               <Wrap delay={0.1} className={`relative ${isWide ? 'w-full' : ''}`}>
                 <Image
