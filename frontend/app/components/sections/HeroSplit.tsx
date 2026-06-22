@@ -134,7 +134,7 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
                       id={stickerImage.asset._ref}
                       alt={stickerImage.alt || ''}
                       width={200}
-                      className="w-[40px] lg:w-[50px] aspect-square object-contain"
+                      className="w-[30px] lg:w-[35px] aspect-square object-contain"
                     />
                   </div>
                 )}
