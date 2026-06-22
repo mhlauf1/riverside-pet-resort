@@ -1,5 +1,6 @@
 import {NextResponse} from 'next/server'
 import nodemailer from 'nodemailer'
+import {client} from '@/sanity/lib/client'
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -11,8 +12,34 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-const toEmail = process.env.CONTACT_FORM_TO_EMAIL || ''
 const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER || ''
+
+function isPlaceholderEmail(value?: string) {
+  return !value || value.includes('[') || value.toLowerCase().includes('tbd')
+}
+
+async function getRecipientEmail(body: Record<string, unknown>) {
+  const fallback = process.env.CONTACT_FORM_TO_EMAIL || ''
+  const pagePath = typeof body._pagePath === 'string' ? body._pagePath : ''
+  const pageType = typeof body._pageType === 'string' ? body._pageType : ''
+
+  if (pageType !== 'schoolPage' && !pagePath.startsWith('/school')) {
+    return fallback
+  }
+
+  try {
+    const schoolEmail = await client.fetch<string | null>(
+      '*[_type == "schoolSettings"][0].formEmail',
+      {},
+      {next: {revalidate: 300}},
+    )
+
+    return isPlaceholderEmail(schoolEmail || undefined) ? fallback : schoolEmail || fallback
+  } catch (error) {
+    console.error('Could not load school form recipient:', error)
+    return fallback
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -31,8 +58,15 @@ export async function POST(request: Request) {
       email: 'Email',
       phone: 'Phone',
       service: 'Service',
+      serviceInterest: 'Service Interest',
+      inquiryType: 'Inquiry Type',
       petName: 'Pet Name',
+      programInterest: 'Program Interest',
+      idealStartTiming: 'Ideal Start Timing',
+      preferredTourTiming: 'Preferred Tour Timing',
+      attendees: 'Number Attending',
       message: 'Message',
+      questions: 'Questions',
     }
 
     const lines = Object.entries(body)
@@ -46,6 +80,8 @@ export async function POST(request: Request) {
     if (!lines) {
       return NextResponse.json({error: 'No form data provided'}, {status: 400})
     }
+
+    const toEmail = await getRecipientEmail(body as Record<string, unknown>)
 
     if (!toEmail || !fromEmail) {
       console.error('Email environment variables are not configured')

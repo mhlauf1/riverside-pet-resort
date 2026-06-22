@@ -237,14 +237,15 @@
   }
 
   .bg-forest :is(a, button).border-forest {
-    border-color: var(--color-cream);
-    color: var(--color-cream);
+    background-color: var(--color-terracotta-dark);
+    border-color: var(--color-terracotta-dark);
+    color: var(--color-white);
   }
 
   .bg-forest :is(a, button).border-forest:hover {
-    background-color: color-mix(in srgb, var(--color-cream) 10%, transparent);
-    border-color: var(--color-cream);
-    color: var(--color-cream);
+    background-color: color-mix(in srgb, var(--color-terracotta-dark) 90%, var(--color-forest));
+    border-color: var(--color-terracotta-dark);
+    color: var(--color-white);
   }
 }
 
