@@ -3675,6 +3675,13 @@
                   },
                   "optional": true
                 },
+                "icon": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
                 "title": {
                   "type": "objectAttribute",
                   "value": {

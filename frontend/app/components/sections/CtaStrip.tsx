@@ -50,7 +50,11 @@ export default function CtaStrip({block}: CtaStripProps) {
               <Button
                 variant={isDark ? 'outline' : 'primary'}
                 link={cta.link}
-                className={isDark ? '!border-white !text-white hover:!bg-white/10' : ''}
+                className={
+                  isDark
+                    ? '!border-cream !bg-cream !text-forest hover:!border-cream/90 hover:!bg-cream/90 hover:!text-forest'
+                    : ''
+                }
               >
                 {cta.buttonText}
               </Button>

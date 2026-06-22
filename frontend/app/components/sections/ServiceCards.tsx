@@ -1,8 +1,11 @@
+'use client'
+
 import Button from '@/app/components/ui/Button'
 import Image from '@/app/components/SanityImage'
 import {FadeIn} from '@/app/components/ui/FadeIn'
 import {stegaClean} from '@sanity/client/stega'
 import Badge from '../ui/Badge'
+import {Icon} from '@iconify/react'
 
 type ServiceCardsProps = {
   block: {
@@ -12,6 +15,7 @@ type ServiceCardsProps = {
     cards?: Array<{
       _key: string
       image?: {asset?: {_ref: string}; crop?: any; hotspot?: any}
+      icon?: string
       title?: string
       description?: string
       cta?: {buttonText?: string; link?: any}
@@ -79,6 +83,11 @@ export default function ServiceCards({block}: ServiceCardsProps) {
                     />
                   )}
                   <div className="p-6 flex flex-col flex-1">
+                    {card.icon && (
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-terracotta/10 text-terracotta">
+                        <Icon icon={card.icon} width={28} height={28} />
+                      </div>
+                    )}
                     {card.title && (
                       <h3 className="text-[20px] md:text-[24px] leading-[120%] text-forest mb-2">
                         {card.title}
@@ -131,6 +140,11 @@ export default function ServiceCards({block}: ServiceCardsProps) {
 
                   {/* Content overlay */}
                   <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-7 text-cream">
+                    {card.icon && (
+                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-cream/15 text-cream">
+                        <Icon icon={card.icon} width={26} height={26} />
+                      </div>
+                    )}
                     {card.title && (
                       <h3 className="text-[24px] md:text-[28px] lg:text-[30px] leading-[110%] font-semibold mb-2">
                         {card.title}

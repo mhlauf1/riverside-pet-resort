@@ -513,6 +513,7 @@ export type ServiceCards = {
   description?: string
   cards?: Array<{
     image?: ServiceCardImage
+    icon?: string
     title: string
     description?: string
     cta?: Button
@@ -536,6 +537,7 @@ export type HeroMinimal = {
 
 export type HeroMarquee = {
   _type: 'heroMarquee'
+  backgroundColor?: 'cream' | 'sand' | 'forest'
   eyebrow?: string
   heading: string
   headingAccent?: string
@@ -555,6 +557,8 @@ export type HeroMarquee = {
     alt?: string
     _type: 'image'
   }
+  showIllustrations?: boolean
+  verticalSpacing?: 'standard' | 'compact'
   marqueeImages?: Array<{
     asset?: SanityImageAssetReference
     media?: unknown

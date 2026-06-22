@@ -26,32 +26,43 @@ export default function PricingMatrixDisplay({tables, footnotes}: PricingMatrixD
 
   return (
     <>
-      {tables.map((table, ti) => (
-        <FadeIn key={table._key} delay={0.1 * ti} className={ti < tables.length - 1 ? 'mb-20' : ''}>
-          <div>
+      {tables.map((table, ti) => {
+        const headers = table.columnHeaders || []
+        const firstRowCellCount = table.rows?.[0]?.cells?.length || 0
+        const hasRowHeader = headers.length === firstRowCellCount + 1
+        const rowHeader = hasRowHeader ? headers[0] : ''
+        const valueHeaders = hasRowHeader ? headers.slice(1) : headers
+
+        return (
+          <FadeIn
+            key={table._key}
+            delay={0.1 * ti}
+            className={ti < tables.length - 1 ? 'mb-20' : ''}
+          >
+            <div className="mx-auto max-w-5xl">
             {table.tableName && (
-              <h3 className="text-[24px] md:text-[32px] leading-[120%] text-forest mb-2">
+              <h3 className="text-[22px] md:text-[28px] leading-[120%] text-forest mb-4 text-center">
                 {table.tableName}
               </h3>
             )}
             {table.tableDescription && (
-              <p className="font-sans text-[14px] md:text-[16px] text-charcoal/60 mb-6">
+              <p className="font-sans text-[14px] md:text-[16px] text-charcoal/60 mb-6 text-center">
                 {table.tableDescription}
               </p>
             )}
 
             {/* Desktop: full table */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full border-collapse">
+              <table className="w-full table-fixed overflow-hidden rounded-lg border border-border-light bg-white/60 shadow-sm">
                 <thead>
                   <tr className="bg-forest text-cream">
-                    <th className="text-left font-sans text-[14px] font-medium uppercase tracking-wider px-4 py-3 rounded-tl-lg">
-                      &nbsp;
+                    <th className="text-left font-sans text-[13px] font-semibold uppercase tracking-wider px-5 py-4">
+                      {rowHeader || ' '}
                     </th>
-                    {table.columnHeaders?.map((header, hi) => (
+                    {valueHeaders.map((header, hi) => (
                       <th
                         key={hi}
-                        className={`w-[200px] text-center font-sans text-[14px] font-medium px-4 py-3 ${hi === (table.columnHeaders?.length ?? 0) - 1 ? 'rounded-tr-lg' : ''}`}
+                        className="text-center font-sans text-[13px] font-semibold uppercase tracking-wider px-5 py-4"
                       >
                         {header}
                       </th>
@@ -60,15 +71,18 @@ export default function PricingMatrixDisplay({tables, footnotes}: PricingMatrixD
                 </thead>
                 <tbody>
                   {table.rows?.map((row, ri) => (
-                    <tr key={row._key} className={ri % 2 === 0 ? 'bg-sand/30' : 'bg-cream'}>
-                      <td className="font-sans text-[14px] md:text-[16px] font-medium text-forest px-4 py-3">
+                    <tr
+                      key={row._key}
+                      className={`border-b border-border-light last:border-b-0 ${ri % 2 === 0 ? 'bg-cream' : 'bg-white'}`}
+                    >
+                      <td className="font-sans text-[15px] md:text-[17px] font-semibold text-forest px-5 py-4">
                         {row.rowLabel}
                       </td>
                       {row.cells?.map((cell) => (
-                        <td key={cell._key} className="text-center px-4 py-3">
+                        <td key={cell._key} className="text-center px-5 py-4">
                           {cell.value ? (
                             <div>
-                              <span className="font-sans text-[16px] md:text-[18px] font-medium text-terracotta">
+                              <span className="font-sans text-[17px] md:text-[20px] font-semibold text-terracotta">
                                 {cell.value}
                               </span>
                               {cell.note && (
@@ -123,12 +137,15 @@ export default function PricingMatrixDisplay({tables, footnotes}: PricingMatrixD
                 /* Multi-column (Grooming by Size) — stacked cards */
                 <div className="space-y-4">
                   {table.rows?.map((row) => (
-                    <div key={row._key} className="bg-sand/30 rounded-lg p-4">
+                    <div
+                      key={row._key}
+                      className="rounded-md border border-border-light bg-white/70 p-4 shadow-sm"
+                    >
                       <h4 className="font-sans text-[15px] font-semibold text-forest mb-2">
-                        {row.rowLabel}
+                        {rowHeader ? `${rowHeader}: ${row.rowLabel}` : row.rowLabel}
                       </h4>
                       <div className="space-y-1.5">
-                        {table.columnHeaders?.map((header, hi) => {
+                        {valueHeaders.map((header, hi) => {
                           const cell = row.cells?.[hi]
                           return (
                             <div key={hi} className="flex items-baseline justify-between">
@@ -161,9 +178,10 @@ export default function PricingMatrixDisplay({tables, footnotes}: PricingMatrixD
                 </div>
               )}
             </div>
-          </div>
-        </FadeIn>
-      ))}
+            </div>
+          </FadeIn>
+        )
+      })}
 
       {footnotes && footnotes.length > 0 && (
         <FadeIn delay={0.2}>

@@ -248,7 +248,7 @@ export default function Header({navItems, ctaButton, logo, phone, transitionBann
                     ) : (
                       <Link
                         href={resolveNavLink(item.link) || '#'}
-                        className={`relative font-sans cursor-pointer text-[14px] transition-colors whitespace-nowrap pb-1 ${
+                        className={`relative flex items-center font-sans cursor-pointer text-[14px] transition-colors whitespace-nowrap pb-1 ${
                           active
                             ? 'text-terracotta font-medium after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-terracotta after:rounded-full'
                             : 'text-forest hover:text-forest/70'

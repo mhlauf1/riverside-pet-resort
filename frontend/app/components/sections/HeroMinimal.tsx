@@ -48,7 +48,7 @@ export default function HeroMinimal({block}: HeroMinimalProps) {
                         <div className="flex items-center gap-1 px-3">
                           <div className="flex items-center gap-0.5">
                             {[...Array(5)].map((_, i) => (
-                              <Icon key={i} icon="mdi:star" className="w-3 h-3 text-gold" />
+                              <Icon key={i} icon="mdi:star" className="w-3 h-3 text-terracotta" />
                             ))}
                           </div>
                           <span className="font-sans text-[12px] font-medium text-terracotta-dark">

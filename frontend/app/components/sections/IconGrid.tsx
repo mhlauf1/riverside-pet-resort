@@ -132,7 +132,7 @@ export default function IconGrid({block}: IconGridProps) {
                 <div
                   className={`rounded-md p-6 h-full transition-all duration-200 hover:-translate-y-1 ${
                     isDark
-                      ? 'bg-forest-card border border-border-dark hover:border-gold/50'
+                      ? 'bg-forest-card border border-border-dark hover:border-terracotta-light/50'
                       : 'bg-white/60 border border-border-light hover:border-terracotta/40 hover:shadow-card-hover'
                   }`}
                 >
@@ -140,7 +140,7 @@ export default function IconGrid({block}: IconGridProps) {
                     <div
                       className={`w-12 h-12 rounded-md flex items-center justify-center mb-4 ${
                         isDark
-                          ? 'bg-gold/15 text-gold'
+                          ? 'bg-terracotta-light/15 text-terracotta-light'
                           : 'bg-terracotta/10 text-terracotta'
                       }`}
                     >

@@ -40,6 +40,12 @@ export const serviceCards = defineType({
               options: {hotspot: true},
             }),
             defineField({
+              name: 'icon',
+              title: 'Icon',
+              type: 'string',
+              description: 'Iconify icon name (e.g. "mdi:dog-service", "mdi:content-cut").',
+            }),
+            defineField({
               name: 'title',
               title: 'Title',
               type: 'string',

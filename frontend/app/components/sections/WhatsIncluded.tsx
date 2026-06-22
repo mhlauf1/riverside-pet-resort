@@ -4,7 +4,6 @@ import {Icon} from '@iconify/react'
 import {FadeIn} from '@/app/components/ui/FadeIn'
 import {stegaClean} from '@sanity/client/stega'
 import Badge from '../ui/Badge'
-import TextLogo from '@/app/components/TextLogo'
 
 type WhatsIncludedProps = {
   block: {
@@ -162,12 +161,6 @@ export default function WhatsIncluded({block}: WhatsIncludedProps) {
             ))}
           </div>
         )}
-
-        <FadeIn>
-          <div className="flex justify-center mt-12 lg:mt-16">
-            <TextLogo />
-          </div>
-        </FadeIn>
       </div>
     </section>
   )

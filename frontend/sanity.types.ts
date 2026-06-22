@@ -513,6 +513,7 @@ export type ServiceCards = {
   description?: string
   cards?: Array<{
     image?: ServiceCardImage
+    icon?: string
     title: string
     description?: string
     cta?: Button
@@ -3507,6 +3508,7 @@ export type GetPageQueryResult = {
         description?: string
         cards: Array<{
           image?: ServiceCardImage
+          icon?: string
           title: string
           description?: string
           cta: {
@@ -4826,6 +4828,7 @@ export type HomepageQueryResult = {
         description?: string
         cards: Array<{
           image?: ServiceCardImage
+          icon?: string
           title: string
           description?: string
           cta: {
@@ -6138,6 +6141,7 @@ export type GetServiceQueryResult = {
         description?: string
         cards: Array<{
           image?: ServiceCardImage
+          icon?: string
           title: string
           description?: string
           cta: {
@@ -7473,6 +7477,7 @@ export type GetLocationPageQueryResult = {
         description?: string
         cards: Array<{
           image?: ServiceCardImage
+          icon?: string
           title: string
           description?: string
           cta: {
@@ -8901,6 +8906,7 @@ export type GetSchoolPageQueryResult = {
         description?: string
         cards: Array<{
           image?: ServiceCardImage
+          icon?: string
           title: string
           description?: string
           cta: {
@@ -10220,6 +10226,7 @@ export type SchoolHomeQueryResult = {
         description?: string
         cards: Array<{
           image?: ServiceCardImage
+          icon?: string
           title: string
           description?: string
           cta: {

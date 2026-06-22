@@ -65,9 +65,10 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
   const bg = bgColors[stegaClean(backgroundColor) || 'cream'] || bgColors.cream
   const isDark = stegaClean(backgroundColor) === 'forest'
   const mutedText = isDark ? 'text-text-muted-dark' : 'text-text-muted'
-  const spacing = stegaClean(verticalSpacing) === 'compact'
-    ? 'pt-10 md:pt-12 pb-4 lg:pt-[7vh] lg:pb-10'
-    : 'pt-16 md:pt-20 pb-4 lg:pt-[12vh] lg:pb-12'
+  const spacing =
+    stegaClean(verticalSpacing) === 'compact'
+      ? 'pt-10 md:pt-12 pb-4 lg:pt-[7vh] lg:pb-10'
+      : 'pt-16 md:pt-20 pb-4 lg:pt-[12vh] lg:pb-12'
 
   const isFirst = index === 0
   const Wrap = isFirst
@@ -132,7 +133,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
 
           {heading && (
             <Wrap delay={0.1}>
-              <h1 className="text-[42px] md:text-[60px] lg:text-[84px] leading-[104%]  tracking-tight font-medium mb-5">
+              <h1 className="text-[42px] md:text-[60px] lg:text-[84px] leading-[104%]  tracking-tight  mb-5">
                 {heading}
                 {headingAccent && (
                   <>
@@ -168,7 +169,11 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                 <Button
                   variant="outline"
                   link={secondaryCta.link}
-                  className={isDark ? '!border-cream !text-cream hover:!bg-cream/10' : ''}
+                  className={
+                    isDark
+                      ? '!border-cream !bg-transparent !text-cream hover:!border-terracotta-light hover:!bg-transparent hover:!text-terracotta-light'
+                      : ''
+                  }
                 >
                   {secondaryCta.buttonText}
                 </Button>
