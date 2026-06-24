@@ -26,7 +26,7 @@ This is the M5 "ships complete" QA record (contractual in spirit). This pass cov
 
 ## 🔧 Fixed during QA
 
-- **Soft-404 → real 404.** All three dynamic routes (`(site)/[slug]`, `(site)/locations/[suburb]`, `(school)/school/[slug]`) returned **HTTP 200** with an inline "not found" `<div>` for unknown slugs — a soft-404 that pollutes the index. Replaced with Next's `notFound()`; unknown URLs now return **404** and render the app `not-found` page. Verified: `/nope`, `/locations/nope`, `/school/nope` → 404; real routes still 200. *(Inherited from the base template.)*
+- **Soft-404 → real 404.** Dynamic content routes (`(site)/[slug]`, `(site)/locations/[suburb]`, `(site)/services/[slug]`, `(school)/school/[slug]`) returned or could return **HTTP 200** with an inline "not found" `<div>` for unknown slugs — a soft-404 that pollutes the index. Replaced with Next's `notFound()`; unknown URLs now return **404** and render the app `not-found` page. Verified: `/nope`, `/locations/nope`, `/school/nope` → 404; `/services/nope` added to the re-check list. *(Inherited from the base template.)*
 
 ---
 
@@ -36,7 +36,7 @@ This is the M5 "ships complete" QA record (contractual in spirit). This pass cov
 
 2. **Contact form renders client-side only.** `/contact` form fields aren't in the SSR/no-JS HTML because `ContactForm` uses `useSearchParams()` (correctly wrapped in Suspense — no build warning). Works fine for real users with JS. Acceptable for a contact form; flagged for awareness (no-JS visitors see no form).
 
-3. **`/api/contact` returns HTTP 500** when unconfigured (`{"error":"Contact form is not configured"}`). Expected until SMTP/email env is set, but 500 is a slightly off status for a config state (503 would be more correct). The client catches it and shows a friendly message. Low priority.
+3. **`/api/contact` returns HTTP 503** when unconfigured (`{"error":"Contact form is not configured"}`). Expected until SMTP/email env is set, and the status now correctly reflects a temporarily unavailable service/config state. The client catches it and shows the returned message.
 
 4. **Inherited lint debt:** 142 problems (131 errors / 11 warnings) — `no-explicit-any`, `error.tsx` `<a>` vs `<Link>`, `<img>` vs `next/image`. All pre-existing from the base (documented in investigation-map). Non-blocking for build. Optional cleanup pass before launch.
 
