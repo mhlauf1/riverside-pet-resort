@@ -60,7 +60,7 @@ School content is a **distinct `schoolPage` doc type** (not a `section: "school"
 - [x] **School Header/Footer** — `app/components/school/SchoolHeader.tsx` (back-to-resort bar, logo/wordmark text fallback, nav w/ dropdown support, CTA, mobile menu, a11y) + `SchoolFooter.tsx` (columns, contact + school hours, social, back-to-resort). Frontend queries added: `schoolSettingsQuery`, `schoolHomeQuery`, `getSchoolPageQuery`, `schoolPageSlugs`. (Resort nav → school cross-link already exists via the "Grooming School" nav item → `/school`.)
 - [x] **School home page** — `schoolPage` `school-home` (slug `home`) published, rendered at `/school` (verified 200): heroMinimal (forest, "The Rio Grooming School" + accent "A Legacy of Professional Grooming Education"), infoSection (approved "Since 2009…" verbatim), iconGrid (7 program highlights), teamGrid Meet the Dean (Amy Ericson — themes-based bio, no invented credentials; portrait pending photo pass). Verified rendering under `theme-school` with school chrome; no theme bleed into resort.
 - [x] **7 sub-pages** — `schoolPage` docs published (`school-<slug>`): Why Become a Groomer? · Enrollment & Financing · Scholarships · Student Housing · Career Placement · Request Information · Schedule a Tour. Approved titles + heroMinimal headers; bodies are `[TBD — content pending Amy/Brian]` placeholders. Nav/footer links resolve; `/school/[slug]` routes 200 (verified). Grouped under nav: Home · Why Become a Groomer? · Admissions (dropdown: Enrollment, Scholarships, Housing, Career) · Schedule a Tour; CTA → Request Information.
-- [ ] **Funnel forms** — enrollment / tour / info-request; destination from `schoolSettings.formEmail` (falls back to resort email). **Deferred:** Request Information + Schedule a Tour pages are informational placeholders for now; `contactForm` blocks not added until `formEmail` is confirmed (currently `[EMAIL-TBD]`). Same SMTP "not configured until env set" caveat as the resort contact form. `/api/contact` now includes form/page context in submissions, so school funnels can reuse the existing endpoint once blocks are added.
+- [x] **Funnel forms** — Request Information + Schedule a Tour now render `contactForm` blocks via `scripts/seed-intake-forms.js`; destination resolves from `schoolSettings.formEmail` and falls back to `CONTACT_FORM_TO_EMAIL`. Same SMTP "not configured until env set" caveat as the resort contact form; real submit-test remains blocked until SMTP + destination email are configured. `/api/contact` includes form/page context in submissions.
 
 ## M3 pending inputs
 
@@ -107,7 +107,7 @@ School not Academy · no placeholder contact data · pricing/booking via CMS onl
 ## M4 pending inputs / follow-ups
 
 - ~~riogrooming.com crawl → populate `EXPLICIT_REDIRECTS`~~ ✓ (6/20). Remaining: add the Barks & Rec legacy host once Peter confirms the domain (before M6).
-- FAQPage schema → run Google Rich Results validation (M5 QA).
+- FAQPage schema → structurally validated in local QA; still run Google Rich Results validation on preview.
 - Suburb pages currently use a shared services grid + per-suburb intro; richer per-suburb imagery/blurbs can be layered in during the imagery pass.
 
 ## Out-of-milestone note (M2 imagery)
@@ -121,3 +121,17 @@ School not Academy · no placeholder contact data · pricing/booking via CMS onl
 - **Funnel `ctaStrip` appended** to each of the 7 sub-pages (generic enrollment-funnel chrome → Request Information / Schedule a Tour; never points a page at itself). `sand` bg for AA-safe contrast + separation from the dark footer.
 - **`.theme-school` lightly tuned** (`globals.css`): deeper pine, richer antique gold, warmer ivory; `terracotta-dark` (primary-button bg) + `text-muted` kept AA-safe. Still PROVISIONAL — full retune pending Amy's riogrooming.com-derived refresh.
 - Verified: clean production build (8 school routes SSG); type-check clean both workspaces; `/school` + sub-pages 200 with heroSplit image + CTAs; `[TBD]` bodies intact; no `theme-school` bleed into resort routes. Sanity types regenerated.
+
+---
+
+# Client revision round 1 (6/24 — Brian)
+
+All edits made directly in Sanity (`7ze0boy4`/production) via MCP and **published**.
+
+- **Daycare pricing corrected** (`service-daycare`): Full Day $39 → **$35**, Half Day $29 → **$25**. Package matrix + boarding left unchanged per Brian. Added a per-row `note` on the 5-Day package row: *"Special introductory pricing for first-time daycare clients."*
+- **Scholarship page assessed + fixed** (`school-scholarships`): the flagged sentence read strange for two reasons — (1) meta/reporting voice ("Rio's existing scholarship page says…"), (2) a garbled fact: the original riogrooming.com page funds *tuition up to $5,000* with *$200–$500* individual awards, and our copy had dropped the $5,000. Rewrote the whole page into Rio's own voice, restored $5,000, kept all facts (MN/WI residency, 2.0 GPA, Jan 1–Nov 15 window, 200/436-hr programs, Nov 16 award notice).
+- **Rio school narrative alignment — all 8 school pages** rewritten out of the hedged "Rio currently lists…/this page avoids guarantees" voice into Rio's own voice, grounded in a fresh read of riogrooming.com (home, why-dog-grooming, enroll-financing, student-housing, tours, scholarships). Facts preserved/restored: founded 2009; Amy Ericson = President & Dean, at Rio since age five, grad 2009; programs 436-hr Pet Stylist $10,000 + $100 app fee, 200-hr Bather/Brusher $5,000, tool kit $2,800+tax, TFC financing up to $5,000, ~$223.64/mo; 3 partner hotels w/ addresses; tour days Mon–Wed 8–5 + FaceTime/Zoom virtual; full career-paths list. Removed an internal-scaffolding leak in career-placement FAQ ("The current project source supports…").
+
+⚠️ **Needs client confirmation** — these facts were pulled from the *live (legacy) riogrooming.com* and may be stale for Riverside: tuition/tool-kit/financing figures, the 3 partner hotels, and tour hours. Flag to Brian/Amy before launch.
+
+Pending from original Brian note: Olivia sending current photos (imagery pass); end-of-week final review.
