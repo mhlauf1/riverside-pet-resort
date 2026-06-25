@@ -134,4 +134,16 @@ All edits made directly in Sanity (`7ze0boy4`/production) via MCP and **publishe
 
 ⚠️ **Needs client confirmation** — these facts were pulled from the *live (legacy) riogrooming.com* and may be stale for Riverside: tuition/tool-kit/financing figures, the 3 partner hotels, and tour hours. Flag to Brian/Amy before launch.
 
-Pending from original Brian note: Olivia sending current photos (imagery pass); end-of-week final review.
+Pending from original Brian note: ~~Olivia sending current photos (imagery pass)~~ ✓ (see round 2); end-of-week final review.
+
+---
+
+# Client revision round 2 — imagery pass (6/25 — Brian)
+
+Brian: homepage scroller felt grooming-heavy; Boarding/Daycare hero images were grooming-focused; incorporate Olivia's new photos. Received **31 real customer photos** ("Pup Pics" batch — overwhelmingly daycare/boarding, only one true grooming shot). Categorized by eye (unsorted/generic filenames). Excluded the one photo showing a **"Barks & Rec"-branded harness** (pre-rebrand identity). All edits to `7ze0boy4`/production, **published**, via `scripts/seed-real-photos.js` (uploads local files as Sanity assets; surgical image-only block patches; `PHOTOS_DIR` env points at the source folder).
+
+- **Homepage de-placeholdered** (replaced all Unsplash): top `heroMarquee` (`hero1`) → balanced 7 (3 daycare · 2 boarding · 1 indoor · 1 grooming — grooming present, not dominant); bottom `photoMarquee` (`home-photo-marquee`) → 8 daycare/boarding; both `splitContent` images (`home-campus-intro`, `home-rio-bridge`) → real photos. Directly answers "scroller feels grooming-heavy" (handled **both** homepage scrollers since the note was ambiguous).
+- **Service hero images swapped** off grooming-y Unsplash → on-subject: Boarding (`bh`) → two goldens on a raised cot (suite/rest); Daycare (`dh`) → border collie in the play yard; Grooming (`gh`) → real grooming-tub bath shot (upgrade from Unsplash).
+- All real alt text written (a11y). Verified live via re-query. 19 unique assets uploaded (grooming bath reused on homepage marquee + grooming hero).
+
+Still pending: Brian's final booking-link review (he's connecting Goose + Amy separately); group final approval; **target go-live Friday 6/26**.
