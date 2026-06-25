@@ -11,7 +11,7 @@ M0 (investigation) and M1 (brand swap & strip) are complete. Sanity project `Riv
 - [ ] Vercel project from repo; confirm preview deploy builds (add prod CORS origin when domain known)
 - [ ] Form destination email (Brian) → `CONTACT_FORM_TO_EMAIL`
 - [ ] Canonical domain (Peter) → `NEXT_PUBLIC_SITE_URL`
-- [ ] Goose booking links (Hung/Caitlin) → `settings.posUrls` (hero/CTA booking links are placeholder `#` until these arrive)
+- [x] Goose booking links (Huong/Goose, 6/25) → wired to all "Book Now" CTAs (homepage + boarding + daycare heroes) + recorded in `settings.posUrls`. Single portal link: `https://booking.goose.pet/riverside-pet-resort/search/daycare/pets`. ⚠️ Daycare-search URL used for boarding too — follow-up to Huong for a boarding-specific deep link. Grooming = **Booker phone-only** (no booking link); grooming hero CTA → "Call to Book" `tel:651-480-4726`.
 - [x] Brand-pack logo added → `frontend/public/images/riverside-logo.png` (serves 200; header/footer render it)
 - [ ] Best client photos from Rio + Barks & Rec Facebook (imagery pass)
 
