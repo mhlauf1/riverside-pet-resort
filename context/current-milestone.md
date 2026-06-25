@@ -147,3 +147,22 @@ Brian: homepage scroller felt grooming-heavy; Boarding/Daycare hero images were 
 - All real alt text written (a11y). Verified live via re-query. 19 unique assets uploaded (grooming bath reused on homepage marquee + grooming hero).
 
 Still pending: Brian's final booking-link review (he's connecting Goose + Amy separately); group final approval; **target go-live Friday 6/26**.
+
+---
+
+# Client revision round 3 — homepage CTAs + grooming booking (6/25 — Brian)
+
+Brian: the single homepage "Book Now" implies one portal books everything (it doesn't); replace with three distinct entry points. And the grooming booking CTA needs clearer wording + a destination that works everywhere (the `tel:` link reads as "leads nowhere" on desktop). **Launch proposed for midday 6/26** pending a final leadership pass.
+
+**Code changes (need a deploy — not just CMS):**
+- `heroMarquee` schema: added optional **`tertiaryCta`** (`studio/.../objects/heroMarquee.ts`). Types regenerated both workspaces.
+- `HeroMarquee.tsx`: render `tertiaryCta` (outline, mirrors secondary; dark-mode aware). Button row now `md:flex-wrap` so three CTAs wrap gracefully instead of overflowing on narrow desktops.
+- `sanity/lib/queries.ts`: added `tertiaryCta ${buttonFields}` to the `heroMarquee` projection (was dropping the field).
+
+**Content (Sanity `7ze0boy4`/production, published):**
+- Homepage hero (`hero1`) → three buttons: **Book Boarding & Daycare** → Goose portal (`…/search/daycare/pets`) · **Book a Grooming Appointment** → `/services/grooming` · **Grooming School** → `/school`. (Decorative `bubbleText` "All-inclusive care under one roof" left as-is.)
+- Grooming hero (`gh`) primaryCta: **"Call to Book" → "Make an Appointment"**, still `tel:651-480-4726` (grooming is Booker phone-only per Amy). Homepage routes to the grooming page (works on every device); the page itself offers the direct-dial action.
+
+Verified: type-check clean both workspaces; production build green (all routes prerendered); dev render confirms 3 hero buttons + grooming "Make an Appointment". Note: persistent **header** "Book Now" CTA is separate and unchanged (not in Brian's scope).
+
+⚠️ These are **repo code changes** — must be committed + pushed so Vercel deploys before the homepage shows three buttons in production.

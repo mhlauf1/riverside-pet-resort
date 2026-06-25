@@ -19,6 +19,7 @@ type HeroMarqueeProps = {
     subtext?: string
     primaryCta?: {buttonText?: string; link?: any}
     secondaryCta?: {buttonText?: string; link?: any}
+    tertiaryCta?: {buttonText?: string; link?: any}
     belowCtaText?: string
     reviewRating?: number
     reviewText?: string
@@ -49,6 +50,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
     subtext,
     primaryCta,
     secondaryCta,
+    tertiaryCta,
     belowCtaText,
     reviewRating,
     reviewText,
@@ -159,12 +161,14 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
             // </div>
           )}
           <Wrap className="w-full md:w-auto" delay={0.25}>
-            <div className="flex flex-col w-full md:flex-row items-center gap-2 md:gap-3 mb-3 md:mb-4">
+            <div className="flex flex-col w-full md:flex-row md:flex-wrap items-center gap-2 md:gap-3 mb-3 md:mb-4">
+              {/* Primary action — solid maroon */}
               {primaryCta?.buttonText && (
                 <Button variant="primary" link={primaryCta.link}>
                   {primaryCta.buttonText}
                 </Button>
               )}
+              {/* Secondary — solid navy on light bg; cream outline on dark/school marquee */}
               {secondaryCta?.buttonText && (
                 <Button
                   variant="outline"
@@ -172,10 +176,24 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                   className={
                     isDark
                       ? '!border-cream !bg-transparent !text-cream hover:!border-terracotta-light hover:!bg-transparent hover:!text-terracotta-light'
-                      : ''
+                      : '!border-forest !bg-forest !text-white hover:!brightness-110'
                   }
                 >
                   {secondaryCta.buttonText}
+                </Button>
+              )}
+              {/* Tertiary — outline */}
+              {tertiaryCta?.buttonText && (
+                <Button
+                  variant="outline"
+                  link={tertiaryCta.link}
+                  className={
+                    isDark
+                      ? '!border-cream !bg-transparent !text-cream hover:!border-terracotta-light hover:!bg-transparent hover:!text-terracotta-light'
+                      : ''
+                  }
+                >
+                  {tertiaryCta.buttonText}
                 </Button>
               )}
             </div>

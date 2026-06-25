@@ -544,6 +544,7 @@ export type HeroMarquee = {
   subtext?: string
   primaryCta?: Button
   secondaryCta?: Button
+  tertiaryCta?: Button
   belowCtaText?: string
   reviewRating?: number
   reviewText?: string

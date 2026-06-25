@@ -3935,6 +3935,14 @@
           },
           "optional": true
         },
+        "tertiaryCta": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "button"
+          },
+          "optional": true
+        },
         "belowCtaText": {
           "type": "objectAttribute",
           "value": {

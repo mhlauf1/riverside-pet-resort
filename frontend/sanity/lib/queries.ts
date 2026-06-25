@@ -168,7 +168,8 @@ const pageBuilderExpansion = /* groq */ `
     _type == "heroMarquee" => {
       ...,
       primaryCta ${buttonFields},
-      secondaryCta ${buttonFields}
+      secondaryCta ${buttonFields},
+      tertiaryCta ${buttonFields}
     },
     _type == "heroMinimal" => {
       ...

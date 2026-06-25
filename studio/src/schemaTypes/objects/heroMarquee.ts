@@ -55,6 +55,13 @@ export const heroMarquee = defineType({
       type: 'button',
     }),
     defineField({
+      name: 'tertiaryCta',
+      title: 'Tertiary CTA',
+      type: 'button',
+      description:
+        'Optional third button. The resort homepage uses three entry points: Boarding & Daycare, Grooming, and Grooming School.',
+    }),
+    defineField({
       name: 'belowCtaText',
       title: 'Text Below Buttons',
       type: 'text',

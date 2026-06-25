@@ -104,7 +104,7 @@ export default function ServiceCards({block}: ServiceCardsProps) {
                         link={card.cta.link}
                         className="!px-0 !py-0 !border-0 !justify-start text-terracotta hover:!bg-transparent hover:opacity-70"
                       >
-                        {card.cta.buttonText} &rarr;
+                        {card.cta.buttonText}
                       </Button>
                     )}
                   </div>
