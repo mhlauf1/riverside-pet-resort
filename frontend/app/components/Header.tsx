@@ -25,7 +25,14 @@ type HeaderCta = {
   label: string
   href: string
   openInNewTab?: boolean
-  variant?: 'primary' | 'outline'
+  /** red = maroon, blue = navy, white = navy-on-white (Brian, 6/26). */
+  color?: 'red' | 'blue' | 'white'
+}
+
+const CTA_COLOR: Record<NonNullable<HeaderCta['color']>, string> = {
+  red: 'bg-terracotta-dark text-white border-terracotta-dark hover:brightness-90',
+  blue: 'bg-forest text-white border-forest hover:brightness-110',
+  white: 'bg-white text-forest border-forest hover:bg-forest/5',
 }
 
 type HeaderProps = {
@@ -319,10 +326,8 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
                       href={cta.href}
                       target={cta.openInNewTab ? '_blank' : undefined}
                       rel={cta.openInNewTab ? 'noopener noreferrer' : undefined}
-                      className={`inline-flex items-center justify-center rounded-md px-3 py-2 font-sans font-medium text-[12px] xl:text-[13px] tracking-[0.01em] whitespace-nowrap transition-all border-[1.5px] ${
-                        cta.variant === 'outline'
-                          ? 'bg-transparent text-forest border-forest hover:bg-forest/5'
-                          : 'bg-terracotta-dark text-white border-terracotta-dark hover:brightness-90'
+                      className={`inline-flex items-center justify-center rounded-md px-3.5 py-2 font-sans font-medium text-[12px] 2xl:text-[13px] tracking-[0.01em] whitespace-nowrap transition-all border-[1.5px] ${
+                        CTA_COLOR[cta.color || 'red']
                       }`}
                     >
                       {cta.label}
@@ -529,14 +534,17 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
                 )}
                 {ctaButtons && ctaButtons.length > 0
                   ? ctaButtons.map((cta) => (
-                      <Button
+                      <Link
                         key={cta.label}
-                        variant={cta.variant === 'outline' ? 'outline' : 'primary'}
                         href={cta.href}
-                        className="w-full"
+                        target={cta.openInNewTab ? '_blank' : undefined}
+                        rel={cta.openInNewTab ? 'noopener noreferrer' : undefined}
+                        className={`flex w-full items-center justify-center rounded-lg px-8 py-4 font-sans font-medium text-[16px] tracking-[0.01em] transition-all border-[1.5px] ${
+                          CTA_COLOR[cta.color || 'red']
+                        }`}
                       >
                         {cta.label}
-                      </Button>
+                      </Link>
                     ))
                   : ctaButton?.buttonText && (
                       <Button variant="primary" link={ctaButton.link} className="w-full">

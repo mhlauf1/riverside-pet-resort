@@ -33,18 +33,18 @@ export default async function SiteLayout({children}: {children: React.ReactNode}
     return item
   })
 
-  // Persistent header CTAs (Brian, 6/26): three buttons on every page. The
-  // boarding/daycare booking URL stays CMS-driven (settings.posUrls); the other
-  // two are internal routes.
+  // Persistent header CTAs (Brian, 6/26): two booking buttons on every page —
+  // red + blue. ("Grooming School" dropped from the header since it's already a
+  // nav item.) The boarding/daycare booking URL stays CMS-driven; grooming is an
+  // internal route.
   const daycareBookingUrl =
     (settings as any)?.posUrls?.daycareBookingUrl || (settings as any)?.posUrls?.portalUrl
   const headerCtas = [
     daycareBookingUrl
-      ? {label: 'Book Boarding & Daycare', href: daycareBookingUrl, openInNewTab: true, variant: 'primary' as const}
+      ? {label: 'Book Boarding & Daycare', href: daycareBookingUrl, openInNewTab: true, color: 'red' as const}
       : null,
-    {label: 'Book a Grooming Appointment', href: '/services/grooming', variant: 'outline' as const},
-    {label: 'Grooming School', href: '/school', variant: 'outline' as const},
-  ].filter(Boolean) as {label: string; href: string; openInNewTab?: boolean; variant: 'primary' | 'outline'}[]
+    {label: 'Book a Grooming Appointment', href: '/services/grooming', color: 'blue' as const},
+  ].filter(Boolean) as {label: string; href: string; openInNewTab?: boolean; color: 'red' | 'blue' | 'white'}[]
 
   return (
     <>

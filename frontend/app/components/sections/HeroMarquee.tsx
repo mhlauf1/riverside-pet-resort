@@ -168,7 +168,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                   {primaryCta.buttonText}
                 </Button>
               )}
-              {/* Secondary — solid navy on light bg; cream outline on dark/school marquee */}
+              {/* Secondary — white on light bg (red/white/blue order); cream outline on dark/school marquee */}
               {secondaryCta?.buttonText && (
                 <Button
                   variant="outline"
@@ -176,13 +176,13 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                   className={
                     isDark
                       ? '!border-cream !bg-transparent !text-cream hover:!border-terracotta-light hover:!bg-transparent hover:!text-terracotta-light'
-                      : '!border-forest !bg-forest !text-white hover:!brightness-110'
+                      : '!border-forest !bg-white !text-forest hover:!bg-forest/5'
                   }
                 >
                   {secondaryCta.buttonText}
                 </Button>
               )}
-              {/* Tertiary — outline */}
+              {/* Tertiary — solid navy on light bg (the "blue"); cream outline on dark/school marquee */}
               {tertiaryCta?.buttonText && (
                 <Button
                   variant="outline"
@@ -190,7 +190,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
                   className={
                     isDark
                       ? '!border-cream !bg-transparent !text-cream hover:!border-terracotta-light hover:!bg-transparent hover:!text-terracotta-light'
-                      : ''
+                      : '!border-forest !bg-forest !text-white hover:!brightness-110'
                   }
                 >
                   {tertiaryCta.buttonText}
