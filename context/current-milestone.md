@@ -204,3 +204,19 @@ Verified: type-check clean both workspaces; production build green; dev render c
 ⚠️ **Repo code changes (contactForm override, redirect map) must be committed + pushed** so Vercel deploys before the new forms/redirects work in production. CMS content (copy edits, forms, galleries, nav) is already live in `7ze0boy4`/production.
 
 **Pending human inputs (relay to Brian):** grooming appointment form destination email(s) · school funnel/Job Listings destination email · QuickSchools embed/webhook · grooming photos (2nd email) · curated school student/facility photos.
+
+---
+
+# Client revision round 5 — header CTAs, job-listings move, grooming photo (6/26 — Brian)
+
+**Code changes (need a deploy):**
+- **Persistent header = three CTAs + phone left.** `Header.tsx` now renders a `ctaButtons` array (Book Boarding & Daycare · Book a Grooming Appointment · Grooming School) on every page instead of a single Book Now, and the phone number moved to the **left, next to the logo**. `(site)/layout.tsx` builds the three CTAs — the boarding/daycare URL stays CMS-driven (`settings.posUrls.daycareBookingUrl`); the other two are internal routes (`/services/grooming`, `/school`). Desktop buttons are compact (primary + two outline); mobile menu stacks them full-width. Backward-compatible (`ctaButton` fallback retained). ⚠️ Desktop header is now dense — tune if Brian finds it crowded.
+- **Job Listings moved into the school section.** Redirect map (`/jobs`, `/submit-a-job-posting`) now → `/school/job-listings`.
+
+**Content (Sanity, published — `scripts/seed-round5.js`):**
+- **Job Listings → school page.** New `schoolPage` `school-job-listings` (`/school/job-listings`) built from the old resort page's builder; resort `page-job-listings` **deleted**; removed from the resort footer; added to the **school nav, right after "Schedule a Tour"** (Brian). Keeps visitors in the school "building." Form destination now resolves to the school email (override `[EMAIL-TBD]` → falls through to `schoolSettings.formEmail`).
+- **Grooming hero photo swapped.** `service-grooming` `gh` image: the white-dog bath shot (IMG_7387) → an Amy-supplied finished-groom photo (goldendoodle teddy-bear cut). Rest of the Riverside photos left as-is (Brian: "all good").
+
+**Item 4 (Amy's Studio access for photos + monthly job listings):** handled separately by Mike (Sanity project invite). Note: the job-listings page is currently an employer **submission form** — if Amy needs to *publish* incoming postings for students to see, that needs a small "current openings" content type/section (separate ask).
+
+Verified: type-check clean; production build green; dev render confirms 3 header CTAs persist across pages (homepage + interior), phone next to logo, grooming hero shows the goldendoodle, `/school/job-listings` 200 + in school nav, old `/job-listings` 404, resort footer no longer links it, legacy job paths 301 → `/school/job-listings`.

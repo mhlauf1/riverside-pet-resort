@@ -33,11 +33,24 @@ export default async function SiteLayout({children}: {children: React.ReactNode}
     return item
   })
 
+  // Persistent header CTAs (Brian, 6/26): three buttons on every page. The
+  // boarding/daycare booking URL stays CMS-driven (settings.posUrls); the other
+  // two are internal routes.
+  const daycareBookingUrl =
+    (settings as any)?.posUrls?.daycareBookingUrl || (settings as any)?.posUrls?.portalUrl
+  const headerCtas = [
+    daycareBookingUrl
+      ? {label: 'Book Boarding & Daycare', href: daycareBookingUrl, openInNewTab: true, variant: 'primary' as const}
+      : null,
+    {label: 'Book a Grooming Appointment', href: '/services/grooming', variant: 'outline' as const},
+    {label: 'Grooming School', href: '/school', variant: 'outline' as const},
+  ].filter(Boolean) as {label: string; href: string; openInNewTab?: boolean; variant: 'primary' | 'outline'}[]
+
   return (
     <>
       <Header
         navItems={navItems as any}
-        ctaButton={settings?.ctaButton as any}
+        ctaButtons={headerCtas}
         logo={settings?.logo as any}
         phone={settings?.contactInfo?.phone ?? undefined}
         transitionBanner={(settings as any)?.transitionBanner}

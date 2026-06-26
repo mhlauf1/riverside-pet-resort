@@ -21,15 +21,24 @@ type NavItem = {
   children?: NavChild[]
 }
 
+type HeaderCta = {
+  label: string
+  href: string
+  openInNewTab?: boolean
+  variant?: 'primary' | 'outline'
+}
+
 type HeaderProps = {
   navItems?: NavItem[]
   ctaButton?: {buttonText?: string; link?: any}
+  /** Persistent header CTAs (Brian, 6/26 — three buttons across every page). */
+  ctaButtons?: HeaderCta[]
   logo?: {asset?: {_ref: string}}
   phone?: string
   transitionBanner?: TransitionBannerData
 }
 
-export default function Header({navItems, ctaButton, logo, phone, transitionBanner}: HeaderProps) {
+export default function Header({navItems, ctaButton, ctaButtons, logo, phone, transitionBanner}: HeaderProps) {
   const phoneHref = phone ? `tel:${phone.replace(/\D/g, '')}` : undefined
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
@@ -186,21 +195,31 @@ export default function Header({navItems, ctaButton, logo, phone, transitionBann
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-cream ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <TransitionBanner banner={transitionBanner} />
         <div className="px-2 md:px-12 border-b border-black/20">
-          <div className="flex lg:grid lg:grid-cols-3 bg-cream/95 backdrop-blur-sm items-center justify-between py-3">
-            {/* Logo */}
-            <Link href="/" className="flex items-start">
-              <NextImage
-                src="/images/riverside-logo.png"
-                alt="Riverside Pet Resort"
-                width={150}
-                height={75}
-                className="w-[80px] lg:w-[100px] h-auto"
-                priority
-              />
-            </Link>
+          <div className="flex bg-cream/95 backdrop-blur-sm items-center justify-between gap-4 py-3">
+            {/* Logo + phone (phone sits to the left, next to the logo — Brian, 6/26) */}
+            <div className="flex items-center gap-3 lg:gap-5 shrink-0">
+              <Link href="/" className="flex items-start">
+                <NextImage
+                  src="/images/riverside-logo.png"
+                  alt="Riverside Pet Resort"
+                  width={150}
+                  height={75}
+                  className="w-[80px] lg:w-[100px] h-auto"
+                  priority
+                />
+              </Link>
+              {phone && phoneHref && (
+                <a
+                  href={phoneHref}
+                  className="hidden lg:inline-block font-sans text-[13px] xl:text-[14px] text-forest/80 hover:text-terracotta transition-colors whitespace-nowrap"
+                >
+                  {phone}
+                </a>
+              )}
+            </div>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center justify-center gap-7">
+            <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-7 flex-1 min-w-0">
               {navItems?.map((item) => {
                 const active = isLinkActive(item.link, item.children)
 
@@ -291,21 +310,29 @@ export default function Header({navItems, ctaButton, logo, phone, transitionBann
               })}
             </nav>
 
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center justify-end gap-6 shrink-0">
-              {phone && phoneHref && (
-                <a
-                  href={phoneHref}
-                  className="font-sans text-[14px] text-forest/80 hover:text-terracotta transition-colors whitespace-nowrap"
-                >
-                  {phone}
-                </a>
-              )}
-              {ctaButton?.buttonText && (
-                <Button variant="primary" link={ctaButton.link}>
-                  {ctaButton.buttonText}
-                </Button>
-              )}
+            {/* Desktop CTAs — three persistent buttons (Brian, 6/26) */}
+            <div className="hidden lg:flex items-center justify-end gap-2 shrink-0">
+              {ctaButtons && ctaButtons.length > 0
+                ? ctaButtons.map((cta) => (
+                    <Link
+                      key={cta.label}
+                      href={cta.href}
+                      target={cta.openInNewTab ? '_blank' : undefined}
+                      rel={cta.openInNewTab ? 'noopener noreferrer' : undefined}
+                      className={`inline-flex items-center justify-center rounded-md px-3 py-2 font-sans font-medium text-[12px] xl:text-[13px] tracking-[0.01em] whitespace-nowrap transition-all border-[1.5px] ${
+                        cta.variant === 'outline'
+                          ? 'bg-transparent text-forest border-forest hover:bg-forest/5'
+                          : 'bg-terracotta-dark text-white border-terracotta-dark hover:brightness-90'
+                      }`}
+                    >
+                      {cta.label}
+                    </Link>
+                  ))
+                : ctaButton?.buttonText && (
+                    <Button variant="primary" link={ctaButton.link}>
+                      {ctaButton.buttonText}
+                    </Button>
+                  )}
             </div>
 
             {/* Mobile hamburger */}
@@ -500,11 +527,22 @@ export default function Header({navItems, ctaButton, logo, phone, transitionBann
                     {phone}
                   </a>
                 )}
-                {ctaButton?.buttonText && (
-                  <Button variant="primary" link={ctaButton.link} className="w-full">
-                    {ctaButton.buttonText}
-                  </Button>
-                )}
+                {ctaButtons && ctaButtons.length > 0
+                  ? ctaButtons.map((cta) => (
+                      <Button
+                        key={cta.label}
+                        variant={cta.variant === 'outline' ? 'outline' : 'primary'}
+                        href={cta.href}
+                        className="w-full"
+                      >
+                        {cta.label}
+                      </Button>
+                    ))
+                  : ctaButton?.buttonText && (
+                      <Button variant="primary" link={ctaButton.link} className="w-full">
+                        {ctaButton.buttonText}
+                      </Button>
+                    )}
               </motion.div>
             </motion.div>
           </>

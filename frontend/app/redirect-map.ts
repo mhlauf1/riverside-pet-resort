@@ -70,9 +70,10 @@ export const EXPLICIT_REDIRECTS: Record<string, string> = {
   '/contact': '/contact',
 
   // Job board — the legacy employer submission + listings pages map to the new
-  // Job Listings page (employers submit postings; the school posts them).
-  '/jobs': '/job-listings',
-  '/submit-a-job-posting': '/job-listings',
+  // Job Listings page, which lives inside the Grooming School section
+  // (employers submit postings; the school posts them for students).
+  '/jobs': '/school/job-listings',
+  '/submit-a-job-posting': '/school/job-listings',
 }
 
 /**
@@ -116,7 +117,7 @@ export function resolveLegacyRedirect(pathname: string): string {
   }
 
   if (JOBS_PREFIXES.some((p) => clean === p || clean.startsWith(`${p}/`))) {
-    return '/job-listings'
+    return '/school/job-listings'
   }
 
   return '/'
