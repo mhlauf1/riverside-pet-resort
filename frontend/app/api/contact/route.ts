@@ -22,6 +22,27 @@ async function getRecipientEmail(body: Record<string, unknown>) {
   const fallback = process.env.CONTACT_FORM_TO_EMAIL || ''
   const pagePath = typeof body._pagePath === 'string' ? body._pagePath : ''
   const pageType = typeof body._pageType === 'string' ? body._pageType : ''
+  const pageId = typeof body._pageId === 'string' ? body._pageId : ''
+  const blockKey = typeof body._blockKey === 'string' ? body._blockKey : ''
+
+  // Per-form override: the destination is read from the CMS block itself
+  // (never trusted from the client payload), so a single form can route to a
+  // specific address (e.g. the grooming team) without turning the endpoint
+  // into an open relay.
+  if (pageId && blockKey) {
+    try {
+      const override = await client.fetch<string | null>(
+        '*[_id == $id][0].pageBuilder[_key == $key][0].destinationEmailOverride',
+        {id: pageId, key: blockKey},
+        {next: {revalidate: 300}},
+      )
+      if (override && !isPlaceholderEmail(override)) {
+        return override
+      }
+    } catch (error) {
+      console.error('Could not load form destination override:', error)
+    }
+  }
 
   if (pageType !== 'schoolPage' && !pagePath.startsWith('/school')) {
     return fallback
@@ -64,12 +85,22 @@ export async function POST(request: Request) {
       programInterest: 'Program Interest',
       idealStartTiming: 'Ideal Start Timing',
       preferredTourTiming: 'Preferred Tour Timing',
+      preferredDays: 'Preferred Day(s) / Date Range',
+      preferredTime: 'Preferred Time',
+      addOns: 'Add-On Requests',
+      contactMethod: 'Preferred Contact Method',
       attendees: 'Number Attending',
+      company: 'Company',
+      address: 'Address',
+      city: 'City',
+      state: 'State',
+      zip: 'Zipcode',
       message: 'Message',
       questions: 'Questions',
     }
 
     const lines = Object.entries(body)
+      .filter(([key]) => key !== '_blockKey')
       .filter(([, value]) => typeof value === 'string' && value.trim())
       .map(
         ([key, value]) =>

@@ -622,6 +622,7 @@ export type ContactForm = {
   eyebrow?: string
   heading: string
   description?: BlockContent
+  destinationEmailOverride?: string
   formFields?: Array<{
     fieldName: string
     label: string
@@ -2514,6 +2515,7 @@ export type GetPageQueryResult = {
               markDefs: null
             }
         > | null
+        destinationEmailOverride?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -3847,6 +3849,7 @@ export type HomepageQueryResult = {
               markDefs: null
             }
         > | null
+        destinationEmailOverride?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -5219,6 +5222,7 @@ export type GetServiceQueryResult = {
               markDefs: null
             }
         > | null
+        destinationEmailOverride?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -6522,6 +6526,7 @@ export type GetLocationPageQueryResult = {
               markDefs: null
             }
         > | null
+        destinationEmailOverride?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -7964,6 +7969,7 @@ export type GetSchoolPageQueryResult = {
               markDefs: null
             }
         > | null
+        destinationEmailOverride?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -9297,6 +9303,7 @@ export type SchoolHomeQueryResult = {
               markDefs: null
             }
         > | null
+        destinationEmailOverride?: string
         formFields?: Array<{
           fieldName: string
           label: string

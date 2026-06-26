@@ -4541,6 +4541,13 @@
           },
           "optional": true
         },
+        "destinationEmailOverride": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "formFields": {
           "type": "objectAttribute",
           "value": {

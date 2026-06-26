@@ -24,6 +24,13 @@ export const contactForm = defineType({
       type: 'blockContent',
     }),
     defineField({
+      name: 'destinationEmailOverride',
+      title: 'Destination Email Override',
+      type: 'string',
+      description:
+        'Optional. Route submissions from THIS form to a specific email address (e.g. the grooming team or school administrator). Leave blank to use the site default. Comma-separate to send to multiple addresses. A "[EMAIL-TBD]" marker is treated as unset (form will not deliver until a real address is entered).',
+    }),
+    defineField({
       name: 'formFields',
       title: 'Form Fields',
       type: 'array',

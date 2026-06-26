@@ -622,6 +622,7 @@ export type ContactForm = {
   eyebrow?: string
   heading: string
   description?: BlockContent
+  destinationEmailOverride?: string
   formFields?: Array<{
     fieldName: string
     label: string

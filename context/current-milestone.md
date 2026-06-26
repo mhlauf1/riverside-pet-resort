@@ -166,3 +166,41 @@ Brian: the single homepage "Book Now" implies one portal books everything (it do
 Verified: type-check clean both workspaces; production build green (all routes prerendered); dev render confirms 3 hero buttons + grooming "Make an Appointment". Note: persistent **header** "Book Now" CTA is separate and unchanged (not in Brian's scope).
 
 ⚠️ These are **repo code changes** — must be committed + pushed so Vercel deploys before the homepage shows three buttons in production.
+
+---
+
+# Client revision round 4 — grooming/school edits, forms, galleries (6/26 — Brian)
+
+Brian's consolidated list for the Grooming + Grooming School sections, plus a Job Listings form and a photo gallery. All Sanity edits to `7ze0boy4`/production, **published**. Reproducible via `scripts/seed-revision-round4-copy.js`, `seed-round4-grooming-form.js`, `seed-round4-job-listings.js`, `seed-round4-galleries.js`.
+
+**Code changes (need a deploy — not just CMS):**
+- **Per-form destination-email override.** `contactForm` schema gains optional `destinationEmailOverride` (`studio/.../objects/contactForm.ts`). `ContactForm.tsx` now sends `_blockKey`; `app/api/contact/route.ts` `getRecipientEmail()` reads the override **from the CMS block** (keyed by `_pageId`+`_blockKey`) — never trusted from the client payload, so the endpoint can't be used as an open relay. `isPlaceholderEmail()` guard means `[EMAIL-TBD]` never sends. Added email field labels (company/city/state/zip/preferredDays/etc.); `_blockKey` excluded from the email body. Types regenerated; type-check clean both workspaces.
+- **Redirects** (`app/redirect-map.ts`): `/jobs` + `/submit-a-job-posting` legacy paths now 301 → `/job-listings` (was `/careers`). Verified via legacy-host curl.
+
+**School copy edits (Sanity):**
+- `school-home` `sh-key-info` ("What Training at Rio Looks Like"): removed the "retail and presentation skills" clause (students don't learn retail); "meet the team" → **"meet the instructors"** (Brian's "Next Best Step" line).
+- `school-schedule-a-tour`: tours **Monday–Wednesday → Monday–Friday** (both the `st-overview` prose and the `st-faq` "When are tours offered?" answer).
+- `school-enrollment-financing` `ef-overview` heading: "Start When a Spot Opens" → **"Open Enrollment Year-Round."**
+- `school-scholarships`: removed the **MN/WI residency requirement** (`sc-eligibility` item + `sc-faq` answer clause) and the **"recent high school graduates" preference** (item + answer sentence). ⚠️ These reverse facts preserved in the 6/24 revision (pulled from legacy riogrooming.com) — applied per Brian's explicit request.
+
+**Grooming "Request an Appointment" form (`service-grooming`, `groom-appt-form`):**
+- Recreated the legacy riogrooming.com form (existing-clients request form): name, email, phone, pet(s) name, Service Requested (select), preferred day(s)/time, add-on requests, special notes, preferred contact method. Verbatim "Current Rio clients" intro + **new-customer "please call 651-480-4726"** note + 24-hr cancellation note in the description. `destinationEmailOverride = [EMAIL-TBD]`.
+- ⚠️ Legacy form **auto-books into the POS**; our recreation is **request-by-email** (matches grooming = Booker phone-only per Amy). The legacy Service/add-on dropdown options are rendered from a menu image — exact option lists + submit-button wording to confirm with Brian.
+
+**Job Listings page (`page-job-listings`, `/job-listings`):**
+- Employer job-submission form (email, name, company, address/city/state/zip, phone, job description) recreating the legacy "Submit a Job Posting" page; `destinationEmailOverride = [EMAIL-TBD]` (school administrator). Linked in footer Company column. ⚠️ Net-new beyond the original $3,500 scope — built as goodwill; flag to keep the boundary documented.
+
+**Galleries (boxers-style grids, existing `galleryPage` block):**
+- **Resort `/gallery`** (`page-gallery`, "Pup Pics") — 11 finished-groom dog portraits + wash-station shot. In main nav + footer.
+- **School `/school/gallery`** (`school-gallery`, "Inside Rio Grooming School") — 10 **students/facility/group/hands-on** photos only. In school nav + footer.
+- Applied the client's rule: **single-dog photos go on the resort gallery, never the school pages.** The dropped `school/` folder was ~85% single-dog finished-groom portraits (routed to the resort gallery); only the student/booth/certificate/class shots went to the school gallery.
+
+**Photos:** galleries populated from the dropped batch (`~/Desktop/riverisde pet resort`). ⚠️ **Still pending Brian:** (1) grooming-page service photos (his "second email"); (2) curated school student/facility photos to extend `/school/gallery` and swap school-page hero placeholders — re-run `seed-round4-galleries.js` with new entries to add them.
+
+**QuickSchools (answer for Brian, no build):** the school **Request Information** form currently delivers by **email** (`schoolSettings.formEmail`, `[EMAIL-TBD]`) — it does **not** auto-populate QuickSchools. To replicate the legacy auto-populate, Rio must provide either (a) QuickSchools' embeddable inquiry-form code, or (b) a lead webhook/API endpoint to POST to. Same answer covers "where do Schedule a Tour / Request Info submissions go": currently email to `schoolSettings.formEmail` → falls back to `CONTACT_FORM_TO_EMAIL` (both pending).
+
+Verified: type-check clean both workspaces; production build green; dev render confirms `/gallery`, `/school/gallery`, `/job-listings`, and the grooming appointment form all 200 with correct content; Gallery links in both navs; legacy job + appointment paths 301 correctly; canonical host untouched.
+
+⚠️ **Repo code changes (contactForm override, redirect map) must be committed + pushed** so Vercel deploys before the new forms/redirects work in production. CMS content (copy edits, forms, galleries, nav) is already live in `7ze0boy4`/production.
+
+**Pending human inputs (relay to Brian):** grooming appointment form destination email(s) · school funnel/Job Listings destination email · QuickSchools embed/webhook · grooming photos (2nd email) · curated school student/facility photos.

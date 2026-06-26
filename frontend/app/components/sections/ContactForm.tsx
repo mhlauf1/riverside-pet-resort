@@ -66,6 +66,7 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
         _formName: stegaClean(heading) || 'Contact Form',
         _pageId: pageId,
         _pageType: pageType,
+        _blockKey: block._key,
         _pagePath: window.location.pathname,
       }
 

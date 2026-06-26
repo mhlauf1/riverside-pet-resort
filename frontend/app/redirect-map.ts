@@ -68,6 +68,11 @@ export const EXPLICIT_REDIRECTS: Record<string, string> = {
 
   // Contact.
   '/contact': '/contact',
+
+  // Job board — the legacy employer submission + listings pages map to the new
+  // Job Listings page (employers submit postings; the school posts them).
+  '/jobs': '/job-listings',
+  '/submit-a-job-posting': '/job-listings',
 }
 
 /**
@@ -91,10 +96,10 @@ const SCHOOL_PREFIXES = [
 
 /**
  * Legacy path prefixes for the Rio job board (other companies' postings) +
- * employer job submission. No per-posting equivalent on the new site; the
- * closest topical home is the resort Careers page.
+ * employer job submission. The new Job Listings page carries the employer
+ * submission form; any job-board sub-path lands there.
  */
-const CAREERS_PREFIXES = ['/jobs', '/submit-a-job-posting']
+const JOBS_PREFIXES = ['/jobs', '/submit-a-job-posting']
 
 /**
  * Resolve the redirect target for a legacy pathname.
@@ -110,8 +115,8 @@ export function resolveLegacyRedirect(pathname: string): string {
     return '/school'
   }
 
-  if (CAREERS_PREFIXES.some((p) => clean === p || clean.startsWith(`${p}/`))) {
-    return '/careers'
+  if (JOBS_PREFIXES.some((p) => clean === p || clean.startsWith(`${p}/`))) {
+    return '/job-listings'
   }
 
   return '/'
