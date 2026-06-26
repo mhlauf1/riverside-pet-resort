@@ -539,7 +539,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
                         href={cta.href}
                         target={cta.openInNewTab ? '_blank' : undefined}
                         rel={cta.openInNewTab ? 'noopener noreferrer' : undefined}
-                        className={`flex w-full items-center justify-center rounded-lg px-8 py-4 font-sans font-medium text-[16px] tracking-[0.01em] transition-all border-[1.5px] ${
+                        className={`block w-full text-center rounded-lg px-6 py-4 font-sans font-medium text-[16px] tracking-[0.01em] transition-all border-[1.5px] ${
                           CTA_COLOR[cta.color || 'red']
                         }`}
                       >
