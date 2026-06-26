@@ -220,3 +220,39 @@ Verified: type-check clean both workspaces; production build green; dev render c
 **Item 4 (Amy's Studio access for photos + monthly job listings):** handled separately by Mike (Sanity project invite). Note: the job-listings page is currently an employer **submission form** — if Amy needs to *publish* incoming postings for students to see, that needs a small "current openings" content type/section (separate ask).
 
 Verified: type-check clean; production build green; dev render confirms 3 header CTAs persist across pages (homepage + interior), phone next to logo, grooming hero shows the goldendoodle, `/school/job-listings` 200 + in school nav, old `/job-listings` 404, resort footer no longer links it, legacy job paths 301 → `/school/job-listings`.
+
+---
+
+# Pre-launch readiness review (6/26 — domain cutover prep)
+
+Domain **confirmed: riversidepetmn.com** (Peter loaded it into GoDaddy). It's already the default in `frontend/app/site-config.ts` (single constant). Reviewed the full project for go-live readiness ahead of pointing GoDaddy DNS at Vercel.
+
+## Code state: READY
+
+- Working tree clean; `origin/main` up to date — all round 3/4/5 code changes (contactForm override, redirect map, header CTAs) are committed AND pushed. The "must commit + push" warnings in the round notes above are **satisfied**.
+- Type-check clean both workspaces.
+- Redirects wired via `frontend/proxy.ts` (Next 16 renamed `middleware.ts` → `proxy.ts`; `export function proxy` + matcher correct). Not a missing-middleware bug.
+
+## Emails: CODE-COMPLETE, blocked on destination address + Vercel env
+
+- Delivery path (`app/api/contact/route.ts`) is sound: destination read server-side from the CMS (open-relay-safe), `isPlaceholderEmail()` rejects `[EMAIL-TBD]`/`[`-bearing values, 503 (unconfigured) vs 500 (real failure) distinguished. `ContactForm.tsx` sends all routing fields (`_pageId`/`_pageType`/`_pagePath`/`_blockKey`/`_formName`) — verified.
+- **Live CMS audit (6/26):** ALL 5 forms currently resolve to the env fallback `CONTACT_FORM_TO_EMAIL`, because every per-form `destinationEmailOverride` and `schoolSettings.formEmail` is still `[EMAIL-TBD]`:
+  - `page-contact` (`/contact`), grooming appt (`service-grooming`), school Request Info, Schedule a Tour, Job Listings (`school-*`) → all fall through to `CONTACT_FORM_TO_EMAIL`.
+  - `settings.email` = null, `schoolSettings.formEmail` = `[EMAIL-TBD]`.
+- **Single blocker:** `CONTACT_FORM_TO_EMAIL` is empty in `.env.local` and (presumably) not yet set in Vercel. While it's empty, **every form returns 503 — no form delivers.** Set it + the 5 SMTP vars in Vercel and all forms work.
+- **Emails received (6/26):** `reception@riversidepetmn.com` + `olivia@riversidepetmn.com`. **Interim routing = BOTH addresses on ALL 5 forms** (Mike's call — safest pre-launch; nothing gets missed). Achieved purely via the env fallback — set `CONTACT_FORM_TO_EMAIL="reception@riversidepetmn.com, olivia@riversidepetmn.com"` (nodemailer accepts a comma-separated `to`); leave every per-form `destinationEmailOverride` + `schoolSettings.formEmail` as-is (placeholders → fall through). **No Sanity or code change needed for this state.**
+- **Final split TBD:** drafting a client email to confirm who actually owns what (likely reception → resort forms, olivia → school funnels). Once confirmed, set per-form overrides in Sanity (no deploy).
+- Env vars to set in Vercel (Production + Preview), then **redeploy**: `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=465`, `SMTP_USER`, `SMTP_PASS` (Gmail **app password**, not account pw), `SMTP_FROM`, `CONTACT_FORM_TO_EMAIL` (both addresses, comma-separated). Then submit-test each of the 5 forms on the preview URL (the one thing un-verifiable from code).
+
+## Redirects: READY (two operational notes)
+
+- All 12 redirect targets cross-checked against live CMS slugs (6/26) — every destination resolves to a real published page (6 `/grooming-school/*` → `/school/*`; `/grooming-services/*` + appt paths → `/services/grooming`; `/rooms` → `/services/boarding`; `/about-us/*` → `/about`; `/jobs` + `/submit-a-job-posting` → `/school/job-listings`; prefix fallbacks → `/school` or `/`).
+- ⚠️ **Operational:** host-based 301s only fire if the legacy domains are **added as domains in the Vercel project** (not merely DNS-pointed) — otherwise Vercel 404s before `proxy.ts` runs. Add `riogrooming.com` / `riogroomingschool.com` (+ Barks & Rec) as Vercel project domains.
+- ✅ **Barks & Rec — RESOLVED, no code work (6/26).** Domain is `barksnrec.co`, a **live multi-location** site: `/north-loop` (Minneapolis), `/lakeville`, `/hastings` — all paths on one domain; only **Hastings** becomes Riverside. **Do NOT add `barksnrec.co` to `LEGACY_HOSTS`** — our redirect is host-based, so that would hijack North Loop + Lakeville traffic to Riverside. Its DNS will never point at our Vercel (the other two locations keep running on it). Correct disposition: the `/hastings` → riversidepetmn.com redirect is a **single path redirect on barksnrec.co's own hosting, set up by Peter's side** — outside this repo. The earlier "add Barks & Rec host" assumption (which presumed a dedicated domain like riogrooming.com) is **superseded**. The `// TODO` comment in `redirect-map.ts` should be removed/updated to reflect this.
+
+## Other pre-launch items (not code)
+
+- Sanity CORS origin for `https://riversidepetmn.com` (+ `*.vercel.app` preview) — Mike handling.
+- Confirm Vercel project **Root Directory = `frontend`** (monorepo) and all Sanity env vars present in Vercel.
+- DNS at GoDaddy, not Cloudflare (diverges from CLAUDE.md Cloudflare plan, but works) — add Vercel's A/CNAME records as shown in the Vercel Domains tab. **24h notice to Brian before cutover; never touch Rio M365 email records.**
+- FAQ JSON-LD still needs Google Rich Results validation on preview (M5).

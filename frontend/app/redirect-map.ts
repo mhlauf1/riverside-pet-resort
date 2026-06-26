@@ -18,15 +18,20 @@
 
 /**
  * Hosts whose traffic should be treated as legacy and redirected. Compared
- * case-insensitively, port stripped. Add the Barks & Rec domain once confirmed.
+ * case-insensitively, port stripped. (Barks & Rec is intentionally NOT here — see
+ * the note inside the array; it's a multi-location domain handled on its own host.)
  */
 export const LEGACY_HOSTS = [
   'riogrooming.com',
   'www.riogrooming.com',
   'riogroomingschool.com',
   'www.riogroomingschool.com',
-  // TODO: add the Barks & Rec Hastings domain once Peter confirms it (redirects
-  // to Riverside at launch per Brian, 6/12).
+  // NOTE: do NOT add Barks & Rec here. Its domain (barksnrec.co) is a live
+  // MULTI-location site (/north-loop, /lakeville, /hastings) — only Hastings
+  // becomes Riverside. This redirect is host-based, so adding barksnrec.co would
+  // wrongly redirect the other two locations. The /hastings -> riversidepetmn.com
+  // redirect is a single path redirect on barksnrec.co's own hosting (Peter's
+  // side), not ours. (Confirmed 6/26.)
 ]
 
 /**
