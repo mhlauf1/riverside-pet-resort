@@ -211,7 +211,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
               {phone && phoneHref && (
                 <a
                   href={phoneHref}
-                  className="hidden lg:inline-block font-sans text-[13px] xl:text-[14px] text-forest/80 hover:text-terracotta transition-colors whitespace-nowrap"
+                  className="hidden xl:inline-block font-sans text-[13px] 2xl:text-[14px] text-forest/80 hover:text-terracotta transition-colors whitespace-nowrap"
                 >
                   {phone}
                 </a>
@@ -219,7 +219,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
             </div>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-7 flex-1 min-w-0">
+            <nav className="hidden xl:flex items-center justify-center gap-5 2xl:gap-7 flex-1 min-w-0">
               {navItems?.map((item) => {
                 const active = isLinkActive(item.link, item.children)
 
@@ -311,7 +311,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
             </nav>
 
             {/* Desktop CTAs — three persistent buttons (Brian, 6/26) */}
-            <div className="hidden lg:flex items-center justify-end gap-2 shrink-0">
+            <div className="hidden xl:flex items-center justify-end gap-2 shrink-0">
               {ctaButtons && ctaButtons.length > 0
                 ? ctaButtons.map((cta) => (
                     <Link
@@ -338,7 +338,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden flex flex-col gap-1.5 p-2"
+              className="xl:hidden flex flex-col gap-1.5 p-2"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
@@ -367,7 +367,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
               animate={{opacity: 1}}
               exit={{opacity: 0}}
               transition={{duration: 0.3}}
-              className="fixed inset-0 bg-forest/40 z-[60] lg:hidden"
+              className="fixed inset-0 bg-forest/40 z-[60] xl:hidden"
               onClick={() => setMobileOpen(false)}
             />
 
@@ -382,7 +382,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
               animate={{x: 0}}
               exit={{x: '100%'}}
               transition={{type: 'spring', damping: 30, stiffness: 300}}
-              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-[360px] bg-cream z-[70] lg:hidden flex flex-col shadow-xl"
+              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-[360px] bg-cream z-[70] xl:hidden flex flex-col shadow-xl"
             >
               {/* Close button */}
               <div className="flex justify-end p-5">
