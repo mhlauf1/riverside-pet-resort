@@ -1,6 +1,6 @@
 'use client'
 
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {useSearchParams} from 'next/navigation'
 import {PortableText} from '@portabletext/react'
 
@@ -10,6 +10,23 @@ import {FadeIn} from '@/app/components/ui/FadeIn'
 import {stegaClean} from '@sanity/client/stega'
 import Badge from '../ui/Badge'
 import type {ExtractPageBuilderType} from '@/sanity/lib/types'
+
+/**
+ * Progressively format a US phone number as the user types:
+ * "1234567890" -> "(123) 456-7890". Strips non-digits, tolerates a leading
+ * country-code "1", and caps at 10 digits so the field can't accept garbage.
+ * Applied to every `tel` field so phone formatting is consistent across all forms.
+ */
+function formatUSPhone(value: string): string {
+  let digits = value.replace(/\D/g, '')
+  if (digits.length === 11 && digits.startsWith('1')) digits = digits.slice(1)
+  digits = digits.slice(0, 10)
+  const len = digits.length
+  if (len === 0) return ''
+  if (len < 4) return `(${digits}`
+  if (len < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+}
 
 type ContactFormProps = {
   block: ExtractPageBuilderType<'contactForm'>
@@ -40,9 +57,19 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
   }
 
   const searchParams = useSearchParams()
+  const sectionRef = useRef<HTMLElement>(null)
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+
+  // On successful submit the tall form collapses to a short success message;
+  // scroll back to the top of the section so the thank-you is in view (otherwise
+  // the user is left stranded near the bottom of the now-shorter page).
+  useEffect(() => {
+    if (status === 'success') {
+      sectionRef.current?.scrollIntoView({behavior: 'smooth', block: 'start'})
+    }
+  }, [status])
 
   useEffect(() => {
     const serviceParam = searchParams.get('service')
@@ -100,7 +127,7 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
   const isNearPageTop = index <= 1
 
   return (
-    <section className="bg-cream">
+    <section ref={sectionRef} className="bg-cream">
       <div
         className={`px-6 md:px-24 ${
           isNearPageTop ? 'pt-8 pb-16 md:pt-10 lg:pt-16 lg:pb-24' : 'py-16 lg:py-24'
@@ -170,6 +197,7 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
                             name={fieldName}
                             required={field.required || false}
                             rows={4}
+                            placeholder={stegaClean(field.placeholder) || undefined}
                             value={formData[fieldName] || ''}
                             onChange={(e) => handleChange(fieldName, e.target.value)}
                             className="w-full rounded-md border border-sand bg-white px-4 py-3 font-sans text-[16px] text-forest placeholder:text-charcoal/40 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta transition-colors"
@@ -194,8 +222,18 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
                             type={fieldType}
                             name={fieldName}
                             required={field.required || false}
+                            inputMode={fieldType === 'tel' ? 'tel' : undefined}
+                            autoComplete={fieldType === 'tel' ? 'tel' : undefined}
+                            placeholder={stegaClean(field.placeholder) || undefined}
                             value={formData[fieldName] || ''}
-                            onChange={(e) => handleChange(fieldName, e.target.value)}
+                            onChange={(e) =>
+                              handleChange(
+                                fieldName,
+                                fieldType === 'tel'
+                                  ? formatUSPhone(e.target.value)
+                                  : e.target.value,
+                              )
+                            }
                             className="w-full rounded-md border border-sand bg-white px-4 py-3 font-sans text-[16px] text-forest placeholder:text-charcoal/40 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta transition-colors"
                           />
                         )}

@@ -69,6 +69,13 @@ export const contactForm = defineType({
               initialValue: 'text',
             }),
             defineField({
+              name: 'placeholder',
+              title: 'Placeholder',
+              type: 'string',
+              description:
+                'Optional hint text shown inside the empty field (e.g. "Weekday mornings, or the week of July 7"). Not used for Select fields.',
+            }),
+            defineField({
               name: 'required',
               title: 'Required',
               type: 'boolean',

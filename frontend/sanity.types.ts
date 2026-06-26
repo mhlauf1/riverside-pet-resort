@@ -627,6 +627,7 @@ export type ContactForm = {
     fieldName: string
     label: string
     type?: 'text' | 'email' | 'tel' | 'textarea' | 'select'
+    placeholder?: string
     required?: boolean
     options?: Array<string>
     _type: 'formField'
@@ -2520,6 +2521,7 @@ export type GetPageQueryResult = {
           fieldName: string
           label: string
           type?: 'email' | 'select' | 'tel' | 'text' | 'textarea'
+          placeholder?: string
           required?: boolean
           options?: Array<string>
           _type: 'formField'
@@ -3854,6 +3856,7 @@ export type HomepageQueryResult = {
           fieldName: string
           label: string
           type?: 'email' | 'select' | 'tel' | 'text' | 'textarea'
+          placeholder?: string
           required?: boolean
           options?: Array<string>
           _type: 'formField'
@@ -5227,6 +5230,7 @@ export type GetServiceQueryResult = {
           fieldName: string
           label: string
           type?: 'email' | 'select' | 'tel' | 'text' | 'textarea'
+          placeholder?: string
           required?: boolean
           options?: Array<string>
           _type: 'formField'
@@ -6531,6 +6535,7 @@ export type GetLocationPageQueryResult = {
           fieldName: string
           label: string
           type?: 'email' | 'select' | 'tel' | 'text' | 'textarea'
+          placeholder?: string
           required?: boolean
           options?: Array<string>
           _type: 'formField'
@@ -7974,6 +7979,7 @@ export type GetSchoolPageQueryResult = {
           fieldName: string
           label: string
           type?: 'email' | 'select' | 'tel' | 'text' | 'textarea'
+          placeholder?: string
           required?: boolean
           options?: Array<string>
           _type: 'formField'
@@ -9308,6 +9314,7 @@ export type SchoolHomeQueryResult = {
           fieldName: string
           label: string
           type?: 'email' | 'select' | 'tel' | 'text' | 'textarea'
+          placeholder?: string
           required?: boolean
           options?: Array<string>
           _type: 'formField'
