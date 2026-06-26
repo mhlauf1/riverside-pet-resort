@@ -209,12 +209,10 @@ async function run() {
   console.log(`✓ school-gallery (/school/gallery) — ${schoolImages.length} photos`)
 
   // ---- Nav + footer links ---------------------------------------------------
-  // Resort: add "Gallery" to main nav (after About) + footer Company column.
+  // Resort: "Gallery" lives in the footer Company column only (kept out of the
+  // main nav to keep it lean — Brian, 6/26). Any prior main-nav entry is removed.
   const settings = await client.getDocument('siteSettings')
   const navItems = (settings.navItems || []).filter((n) => n._key !== 'nav-gallery')
-  const aboutIdx = navItems.findIndex((n) => n._key === 'nav-about')
-  const galleryNav = {_type: 'navItem', _key: 'nav-gallery', label: 'Gallery', link: {_type: 'link', href: '/gallery', linkType: 'href'}}
-  navItems.splice(aboutIdx === -1 ? navItems.length : aboutIdx + 1, 0, galleryNav)
 
   const footerColumns = (settings.footerColumns || []).map((col) => {
     if (col.title !== 'Company') return col
@@ -222,7 +220,7 @@ async function run() {
     return {...col, links: [...links, {_key: 'fl-gallery', label: 'Gallery', link: {_type: 'link', href: '/gallery', linkType: 'href'}}]}
   })
   await client.patch('siteSettings').set({navItems, footerColumns}).commit()
-  console.log('✓ siteSettings: Gallery added to main nav + footer')
+  console.log('✓ siteSettings: Gallery in footer Company column (kept out of main nav)')
 
   // School: add "Gallery" to school nav (after Why Become a Groomer?) + footer.
   const school = await client.getDocument('schoolSettings')
