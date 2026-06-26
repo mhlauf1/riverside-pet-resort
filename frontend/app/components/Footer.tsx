@@ -55,10 +55,10 @@ export default function Footer({
             <div>
               <div className="mb-4">
                 <NextImage
-                  src="/images/riverside-logo.png"
+                  src="/images/riverside-logo-2026.png"
                   alt="Riverside Pet Resort"
                   width={160}
-                  height={80}
+                  height={158}
                   className="w-[140px] h-auto"
                 />
               </div>

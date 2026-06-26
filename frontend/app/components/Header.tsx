@@ -45,7 +45,14 @@ type HeaderProps = {
   transitionBanner?: TransitionBannerData
 }
 
-export default function Header({navItems, ctaButton, ctaButtons, logo, phone, transitionBanner}: HeaderProps) {
+export default function Header({
+  navItems,
+  ctaButton,
+  ctaButtons,
+  logo,
+  phone,
+  transitionBanner,
+}: HeaderProps) {
   const phoneHref = phone ? `tel:${phone.replace(/\D/g, '')}` : undefined
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
@@ -199,7 +206,9 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-cream ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-cream ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
+      >
         <TransitionBanner banner={transitionBanner} />
         <div className="px-2 md:px-12 border-b border-black/20">
           <div className="flex xl:grid xl:grid-cols-[1fr_auto_1fr] bg-cream/95 backdrop-blur-sm items-center justify-between gap-4 py-3">
@@ -207,11 +216,11 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
             <div className="flex items-center gap-3 lg:gap-5 shrink-0 xl:justify-self-start">
               <Link href="/" className="flex items-start">
                 <NextImage
-                  src="/images/riverside-logo.png"
+                  src="/images/riverside-logo-2026.png"
                   alt="Riverside Pet Resort"
                   width={150}
-                  height={75}
-                  className="w-[80px] lg:w-[100px] h-auto"
+                  height={149}
+                  className="w-[90px] lg:w-[110px] h-auto"
                   priority
                 />
               </Link>
