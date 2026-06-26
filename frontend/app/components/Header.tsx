@@ -202,9 +202,9 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-cream ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
         <TransitionBanner banner={transitionBanner} />
         <div className="px-2 md:px-12 border-b border-black/20">
-          <div className="flex bg-cream/95 backdrop-blur-sm items-center justify-between gap-4 py-3">
+          <div className="flex xl:grid xl:grid-cols-[1fr_auto_1fr] bg-cream/95 backdrop-blur-sm items-center justify-between gap-4 py-3">
             {/* Logo + phone (phone sits to the left, next to the logo — Brian, 6/26) */}
-            <div className="flex items-center gap-3 lg:gap-5 shrink-0">
+            <div className="flex items-center gap-3 lg:gap-5 shrink-0 xl:justify-self-start">
               <Link href="/" className="flex items-start">
                 <NextImage
                   src="/images/riverside-logo.png"
@@ -226,7 +226,7 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
             </div>
 
             {/* Desktop Nav */}
-            <nav className="hidden xl:flex items-center justify-center gap-5 2xl:gap-7 flex-1 min-w-0">
+            <nav className="hidden xl:flex items-center justify-center gap-5 2xl:gap-7 xl:justify-self-center">
               {navItems?.map((item) => {
                 const active = isLinkActive(item.link, item.children)
 
@@ -317,8 +317,8 @@ export default function Header({navItems, ctaButton, ctaButtons, logo, phone, tr
               })}
             </nav>
 
-            {/* Desktop CTAs — three persistent buttons (Brian, 6/26) */}
-            <div className="hidden xl:flex items-center justify-end gap-2 shrink-0">
+            {/* Desktop CTAs — two persistent booking buttons (Brian, 6/26) */}
+            <div className="hidden xl:flex items-center justify-end gap-2 shrink-0 xl:justify-self-end">
               {ctaButtons && ctaButtons.length > 0
                 ? ctaButtons.map((cta) => (
                     <Link
