@@ -122,9 +122,17 @@ export default function SchoolFooter({
       {/* Bottom bar */}
       <div className="border-t border-border-dark">
         <div className="px-6 md:px-20 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-sans text-[14px] text-text-muted-dark">
-            {footerText || `© ${new Date().getFullYear()} ${title}. A part of Riverside Pet Resort.`}
-          </p>
+          <div className="flex flex-col items-start">
+            <p className="font-sans text-[14px] text-text-muted-dark">
+              {footerText || `© ${new Date().getFullYear()} ${title}. A part of Riverside Pet Resort.`}
+            </p>
+            <p className="font-sans text-[14px] text-text-muted-dark">
+              Designed and developed by{' '}
+              <Link href="https://www.lauf.co/" target="_blank" className="font-semibold text-cream">
+                Lauf.
+              </Link>{' '}
+            </p>
+          </div>
           {backToResort?.href && (
             <Link href={backToResort.href} className="font-sans text-[14px] text-text-muted-dark hover:text-cream transition-colors inline-flex items-center gap-1.5">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
