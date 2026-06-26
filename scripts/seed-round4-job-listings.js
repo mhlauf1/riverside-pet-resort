@@ -51,7 +51,7 @@ const field = (fieldName, label, type, required) => ({_type: 'formField', _key: 
 const JOB_LISTINGS_PAGE = {
   _id: 'page-job-listings',
   _type: 'page',
-  title: 'Job Listings',
+  name: 'Job Listings',
   slug: {_type: 'slug', current: 'job-listings'},
   seo: {
     metaTitle: 'Job Listings — Submit a Pet Industry Job Posting | Rio Grooming School',

@@ -150,7 +150,7 @@ async function run() {
   await client.createOrReplace({
     _id: 'page-gallery',
     _type: 'page',
-    title: 'Gallery',
+    name: 'Gallery',
     slug: {_type: 'slug', current: 'gallery'},
     seo: {
       metaTitle: 'Pup Pics Gallery | Riverside Pet Resort — Hastings, MN',
@@ -181,7 +181,7 @@ async function run() {
   await client.createOrReplace({
     _id: 'school-gallery',
     _type: 'schoolPage',
-    title: 'Gallery',
+    name: 'Gallery',
     slug: {_type: 'slug', current: 'gallery'},
     seo: {
       metaTitle: 'Gallery | Rio Grooming School — Hastings, MN',
