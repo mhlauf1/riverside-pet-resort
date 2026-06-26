@@ -63,19 +63,51 @@ const SCHOOL_PHOTOS = [
   ['school/634544385_18562317028000299_547218828283688835_n.jpg', 'A Rio Grooming School graduate with her Pet Stylist certificate at the front desk'],
 ]
 
-// Curated finished-groom portraits — resort grooming gallery (NOT school pages).
+// Resort /gallery — a mix across services. Finished-groom portraits + daycare,
+// boarding, and play-yard shots, interleaved for variety. (The "Pup Pics" sets
+// are the daycare/boarding batch; the Barks & Rec-branded harness photo
+// (Pup Pics/IMG_3238) is deliberately excluded — pre-rebrand identity.)
 const RESORT_PHOTOS = [
+  // grooming results
   ['school/518709255_18516163108000299_4098271621680699102_n.jpg', 'A freshly groomed Australian shepherd standing on the grooming table'],
+  ['new/Pup Pics/IMG_2344.jpeg', 'Two happy dogs sitting together in the daycare play yard'],
+  ['new/Pup pics 2/IMG_4815.jpeg', 'Two golden retrievers resting on a raised cot in a boarding suite'],
   ['school/582408038_18542296411000299_2249175644490417684_n.jpg', 'A goldendoodle with a fluffy teddy-bear trim after grooming'],
+  ['new/Pup Pics/IMG_5296.jpeg', 'Two white huskies relaxing on a rock in the play yard'],
+  ['new/Pup pics 2/IMG_7635.jpeg', 'A pack of daycare dogs out together for group play'],
   ['school/603653920_18547898485000299_3653948894109435913_n.jpg', 'A golden retriever with a bright bandana after a grooming visit'],
+  ['new/Pup Pics/IMG_0018.jpeg', 'Dogs greeting the camera on the outdoor patio'],
+  ['new/Pup pics 2/IMG_3231.jpeg', 'A dog enjoying a frozen enrichment treat during a boarding stay'],
   ['school/554703654_18530540713000299_884257409611160005_n.jpg', 'A corgi looking up after a grooming appointment'],
+  ['new/Pup Pics/IMG_9854.jpeg', 'Two dogs happily play-wrestling on the turf'],
+  ['new/Pup pics 2/IMG_4389.jpeg', 'A friendly group of dogs during indoor group play'],
   ['school/571955989_18537838033000299_2859774639057911428_n.jpg', 'A white American bulldog wearing a strawberry bandana after grooming'],
+  ['new/Pup Pics/IMG_9607.jpeg', 'A golden retriever and shepherd puppy resting calmly during boarding'],
+  ['new/Pup pics 2/IMG_3232.jpeg', 'Dogs at play in the indoor climate-controlled playroom'],
   ['school/504105268_18509040940000299_8424044933019260752_n.jpg', 'A Bernese mountain dog with a fresh bandana after grooming'],
+  ['new/Pup Pics/IMG_3235.jpeg', 'Three daycare dogs waiting together on the turf yard'],
+  ['new/Pup pics 2/IMG_6606.jpeg', 'A golden retriever and German shepherd in the outdoor yard'],
   ['school/642096037_18567682891000299_8372291542656584126_n.jpg', 'A toy poodle with a neat face trim and red bandana'],
+  ['new/Pup Pics/IMG_0370.jpeg', 'A doodle and a French bulldog playing on the patio'],
+  ['new/Pup pics 2/IMG_5367.jpeg', 'A Labrador cooling off in a water trough on a summer day'],
   ['school/670581906_18579567079000299_2263132055925049512_n.jpg', 'A groomed cockapoo with a teal flower charm'],
+  ['new/Pup Pics/IMG_1898.jpeg', 'A group of daycare dogs gathered at the play-yard door'],
+  ['new/Pup pics 2/IMG_4782.jpeg', 'Two puppies relaxing in the sunny play yard'],
   ['school/642230737_18567682882000299_5080847728287090035_n.jpg', 'A small white dog with a colorful bow tie after grooming'],
+  ['new/Pup Pics/IMG_9365.jpeg', 'Two dogs posing on a rock pedestal in the play yard'],
+  ['new/Pup pics 2/IMG_3230.jpeg', 'A smiling border collie enjoying the daycare play yard'],
   ['school/536473285_18522769654000299_7921821799201690036_n.jpg', 'A wire-haired terrier mix in the grooming bath'],
+  ['new/Pup Pics/IMG_3237.jpeg', 'A black Labrador and friends in the turf play yard'],
+  ['new/Pup pics 2/IMG_4454.jpeg', 'A French bulldog, corgi, and terrier playing outside'],
   ['472945098_18480486463000299_1209361204805618453_n.jpg', 'A freshly bathed yellow Labrador in the grooming wash station'],
+  ['new/Pup Pics/IMG_3236.jpeg', 'A golden retriever with a favorite toy'],
+  ['new/Pup pics 2/IMG_5015.jpeg', 'A pack of dogs enjoying winter play in the yard'],
+  ['new/Pup Pics/IMG_7452.jpeg', 'A golden retriever puppy playing with a toy in the snow'],
+  ['new/Pup pics 2/IMG_7488.jpeg', 'Two herding dogs playing together indoors'],
+  ['new/Pup Pics/IMG_7387.jpeg', 'A freshly bathed dog in the grooming wash station'],
+  ['new/Pup pics 2/IMG_5182.jpeg', 'Dogs gathered on the play structures during a snowy day'],
+  ['new/Pup pics 2/IMG_0966.jpeg', 'A staff member with a happy golden retriever on a snowy evening'],
+  ['new/Pup pics 2/IMG_4130.jpeg', 'A sheltie and a springer spaniel sharing a play-yard chair'],
 ]
 
 async function uploadAll(client, entries, assetCache) {
