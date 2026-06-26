@@ -49,7 +49,7 @@ export default function ContentColumns({block}: ContentColumnsProps) {
             <div className="text-center mb-10 lg:mb-14 max-w-2xl mx-auto">
               {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
               {heading && (
-                <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] text-forest">
+                <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-forest">
                   {heading}
                 </h2>
               )}

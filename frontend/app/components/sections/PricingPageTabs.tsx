@@ -116,7 +116,7 @@ export default function PricingPageTabs({block}: PricingPageTabsProps) {
           <div className="text-center  pt-20 max-w-4xl mx-auto mb-8 lg:mb-10">
             {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[36px] md:text-[58px] lg:text-[70px] font-semibold tracking-tight leading-[105%] text-forest mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-forest mb-4">
                 {heading}
               </h2>
             )}
@@ -172,7 +172,7 @@ export default function PricingPageTabs({block}: PricingPageTabsProps) {
                   <Badge className="mb-3 !bg-forest-card !text-cream/80 !border-border-dark">
                     Pricing Calculator
                   </Badge>
-                  <h3 className="text-[36px] md:text-[48px] font-semibold tracking-tight leading-[105%] text-cream mb-4">
+                  <h3 className="text-[36px] md:text-[48px] font-medium tracking-tight leading-[105%] text-cream mb-4">
                     Estimate Your Cost
                   </h3>
                 </div>

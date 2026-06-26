@@ -74,10 +74,10 @@ export default function FeatureGrid({block}: FeatureGridProps) {
     <section className={`${colors.section} rounded-[48px]`}>
       <div className="px-6 md:px-16 lg:px-24 py-16 lg:py-24">
         <FadeIn>
-          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-10 lg:mb-14">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-6 lg:mb-14">
             {heading && (
               <h2
-                className={`text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] ${colors.heading}`}
+                className={`text-[30px] md:text-[48px] max-w-[12ch] md:max-w-none w-full mx-auto lg:text-[64px] font-medium tracking-tight text-center md:text-start leading-[105%] ${colors.heading}`}
               >
                 {heading}
               </h2>

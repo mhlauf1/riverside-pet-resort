@@ -82,7 +82,7 @@ export default function HeroBanner({block, index}: HeroBannerProps) {
         )}
         {heading && (
           <Wrap delay={0.1}>
-            <h1 className={`text-[48px] tracking-tight font-semibold md:text-[56px] lg:text-[80px] leading-[104%] mb-6 ${hasImage ? 'text-white' : colors.text}`}>
+            <h1 className={`text-[48px] tracking-tight font-medium md:text-[56px] lg:text-[80px] leading-[104%] mb-6 ${hasImage ? 'text-white' : colors.text}`}>
               {heading}
             </h1>
           </Wrap>

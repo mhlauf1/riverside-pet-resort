@@ -35,7 +35,7 @@ export default function FeatureCards({block}: FeatureCardsProps) {
         <FadeIn>
           <div className="flex flex-row justify-between items-center mb-8">
             {heading && (
-              <h2 className="text-[40px] md:text-[56px] lg:text-[72px] leading-[105%] font-semibold tracking-tight text-sand max-w-[16ch]">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] leading-[105%] font-medium tracking-tight text-sand max-w-[16ch]">
                 {heading}
               </h2>
             )}
@@ -80,7 +80,7 @@ export default function FeatureCards({block}: FeatureCardsProps) {
                     </div>
                   )}
                   {feature.title && (
-                    <h3 className="text-[28px] md:text-4xl font-semibold leading-[120%] text-sand mb-3">
+                    <h3 className="text-[28px] md:text-4xl font-medium leading-[120%] text-sand mb-3">
                       {feature.title}
                     </h3>
                   )}

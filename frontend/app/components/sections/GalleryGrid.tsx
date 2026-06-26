@@ -79,7 +79,7 @@ export default function GalleryGrid({block}: GalleryGridProps) {
             {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
             {heading && (
               <h2
-                className={`text-4xl md:text-5xl lg:text-6xl leading-[105%] tracking-tight font-semibold ${isDark ? 'text-cream' : 'text-forest'}`}
+                className={`text-[30px] md:text-[48px] lg:text-[64px] leading-[105%] tracking-tight font-medium ${isDark ? 'text-cream' : 'text-forest'}`}
               >
                 {heading}
               </h2>

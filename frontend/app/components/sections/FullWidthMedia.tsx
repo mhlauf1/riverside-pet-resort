@@ -75,7 +75,7 @@ export default function FullWidthMedia({block, index}: FullWidthMediaProps) {
         <div className={alignment.text}>
           {heading && (
             <FadeIn>
-              <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] text-white mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-white mb-4">
                 {heading}
               </h2>
             </FadeIn>

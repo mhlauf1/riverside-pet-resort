@@ -44,7 +44,7 @@ export default function RequirementsList({block}: RequirementsListProps) {
 
             {heading && (
               <FadeIn delay={0.05} immediate>
-                <h2 className="md:text-5xl text-4xl lg:text-text-6xl leading-[110%] font-semibold tracking-tight mb-4">
+                <h2 className="text-[30px] md:text-[48px] lg:text-[64px] leading-[110%] font-medium tracking-tight mb-4">
                   {heading}
                 </h2>
               </FadeIn>

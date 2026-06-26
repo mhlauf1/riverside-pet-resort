@@ -47,7 +47,7 @@ export default function SplitContent({block}: SplitContentProps) {
           <div className={isImageLeft ? 'lg:order-2' : 'lg:order-1'}>
             {heading && (
               <FadeIn>
-                <h2 className="font-semibold text-[40px] md:text-[52px] lg:text-[68px] leading-[105%] tracking-tight max-w-[18ch] mb-6">
+                <h2 className="font-medium text-[30px] md:text-[48px] lg:text-[64px] leading-[105%] tracking-tight max-w-[18ch] mb-6">
                   {heading}
                 </h2>
               </FadeIn>

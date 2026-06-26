@@ -79,12 +79,12 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
           <div className={`${isImageLeft ? 'lg:order-2' : 'lg:order-1'} min-w-0 flex-1`}>
             {eyebrow && (
               <Wrap>
-                <Badge className="mb-3">{eyebrow}</Badge>
+                <Badge className="mb-5 md:mb-7">{eyebrow}</Badge>
               </Wrap>
             )}
             {heading && (
               <Wrap delay={0.05}>
-                <h1 className="max-w-full text-[clamp(40px,13vw,48px)] tracking-tight md:text-[56px] md:max-w-[15ch] font-semibold lg:text-[84px] leading-[104%] mb-6 [overflow-wrap:anywhere]">
+                <h1 className="max-w-full text-[clamp(32px,10vw,40px)] tracking-tight md:text-[56px] md:max-w-[15ch] font-medium lg:text-[84px] leading-[104%] mb-6 [overflow-wrap:anywhere]">
                   {heading}
                 </h1>
               </Wrap>
@@ -115,7 +115,9 @@ export default function HeroSplit({block, index}: HeroSplitProps) {
           </div>
 
           {/* Image side */}
-          <div className={`${isImageLeft ? 'lg:order-1' : 'lg:order-2'} min-w-0 flex justify-end flex-1`}>
+          <div
+            className={`${isImageLeft ? 'lg:order-1' : 'lg:order-2'} min-w-0 flex justify-end flex-1`}
+          >
             {image?.asset?._ref && (
               <Wrap delay={0.1} className={`relative ${isWide ? 'w-full' : ''}`}>
                 <Image

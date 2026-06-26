@@ -70,7 +70,7 @@ export default function PricingCalculator({block}: PricingCalculatorProps) {
                 </Badge>
               )}
               {heading && (
-                <h2 className="text-[36px] md:text-[48px] lg:text-[68px] font-semibold tracking-tight leading-[105%] text-cream mb-4">
+                <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-cream mb-4">
                   {heading}
                 </h2>
               )}

@@ -74,12 +74,12 @@ export default function ValuePillars({block}: ValuePillarsProps) {
           <div className="text-center flex flex-col items-center mb-10 lg:mb-18 max-w-3xl mx-auto">
             {eyebrow && (
               <FadeIn>
-                <Badge className="mb-3">{eyebrow}</Badge>
+                <Badge className="mb-5 md:mb-7">{eyebrow}</Badge>
               </FadeIn>
             )}
             {heading && (
               <h2
-                className={`text-[36px] md:text-[48px] lg:text-[56px] max-w-[16ch] font-semibold tracking-tight leading-[105%] ${colors.heading}`}
+                className={`text-[30px] md:text-[48px] lg:text-[64px] max-w-[16ch] font-medium tracking-tight leading-[105%] ${colors.heading}`}
               >
                 {heading}
               </h2>
@@ -103,7 +103,7 @@ export default function ValuePillars({block}: ValuePillarsProps) {
                 >
                   {pillar.metric && (
                     <p
-                      className={`font-heading text-[40px] md:text-[48px] lg:text-[56px]  tracking-tight font-semibold leading-[100%] ${colors.metric} mb-3`}
+                      className={`font-heading text-[40px] md:text-[48px] lg:text-[56px]  tracking-tight font-medium leading-[100%] ${colors.metric} mb-3`}
                     >
                       {pillar.metric}
                     </p>

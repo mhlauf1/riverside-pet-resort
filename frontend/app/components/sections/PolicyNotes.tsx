@@ -45,7 +45,7 @@ export default function PolicyNotes({block}: PolicyNotesProps) {
           <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
             {eyebrow && <Badge className="mb-3 md:text-[14px]">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[40px] md:text-[54px] lg:text-[68px] font-semibold tracking-tight leading-[105%] mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] mb-4">
                 {heading}
               </h2>
             )}

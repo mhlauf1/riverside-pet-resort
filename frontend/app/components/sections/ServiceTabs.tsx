@@ -51,7 +51,7 @@ export default function ServiceTabs({block}: ServiceTabsProps) {
           <div className="text-center mb-10">
             {eyebrow && <Badge className="mb-4">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[32px] tracking-tight font-semibold md:max-w-[20ch] md:text-[48px] lg:text-[56px] leading-[105%] text-balance">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] tracking-tight font-medium md:max-w-[20ch] leading-[105%] text-balance">
                 {heading}
               </h2>
             )}
@@ -97,7 +97,7 @@ export default function ServiceTabs({block}: ServiceTabsProps) {
                 />
               )}
               {activeService.title && (
-                <h3 className="text-[28px] md:text-[36px] font-semibold lg:text-[48px] leading-[95%] mb-4">
+                <h3 className="text-[28px] md:text-[36px] font-medium lg:text-[48px] leading-[95%] mb-4">
                   {activeService.title}
                 </h3>
               )}

@@ -109,9 +109,9 @@ export default function IconGrid({block}: IconGridProps) {
       <div className="px-6 md:px-24 py-16 lg:py-24">
         <FadeIn>
           <div className="mb-10 lg:mb-14">
-            {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
+            {eyebrow && <Badge className="mb-5 md:mb-6">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[36px] font-semibold tracking-tight md:text-[48px] lg:text-[56px] leading-[105%] mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] mb-4">
                 {heading}
               </h2>
             )}

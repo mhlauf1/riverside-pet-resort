@@ -67,7 +67,7 @@ export default function HeroMinimal({block}: HeroMinimalProps) {
           )}
           {heading && (
             <FadeIn delay={0.05}>
-              <h1 className="text-[48px] tracking-tight font-semibold md:text-[56px] lg:text-[72px] xl:text-[84px]  leading-[104%]">
+              <h1 className="text-[38px] tracking-tight font-medium md:text-[56px] lg:text-[72px] xl:text-[84px]  leading-[104%]">
                 {heading}
               </h1>
             </FadeIn>

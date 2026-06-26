@@ -80,12 +80,12 @@ export default function WhatsIncluded({block}: WhatsIncludedProps) {
           <div className="text-center flex flex-col items-center mb-10 lg:mb-18 max-w-3xl mx-auto">
             {eyebrow && (
               <FadeIn>
-                <Badge className="mb-3">{eyebrow}</Badge>
+                <Badge className="mb-5 md:mb-7">{eyebrow}</Badge>
               </FadeIn>
             )}
             {heading && (
               <h2
-                className={`text-[40px] md:text-[54px] lg:text-[68px] leading-[105%] font-semibold tracking-tight  md:max-w-[18ch] text-center ${colors.heading}`}
+                className={`text-[30px] md:text-[48px] lg:text-[64px] leading-[105%] font-medium tracking-tight  md:max-w-[18ch] text-center ${colors.heading}`}
               >
                 {heading}
               </h2>

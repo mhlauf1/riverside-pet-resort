@@ -116,10 +116,10 @@ export default function GalleryCarousel({block}: GalleryCarouselProps) {
         {(eyebrow || heading) && (
           <FadeIn>
             <div className="px-6 md:px-24 mb-10 lg:mb-14">
-              {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
+              {eyebrow && <Badge className="mb-5 md:mb-7">{eyebrow}</Badge>}
               {heading && (
                 <h2
-                  className={`text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] ${isDark ? 'text-cream' : 'text-forest'}`}
+                  className={`text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] ${isDark ? 'text-cream' : 'text-forest'}`}
                 >
                   {heading}
                 </h2>

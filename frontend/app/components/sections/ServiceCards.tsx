@@ -52,9 +52,9 @@ export default function ServiceCards({block}: ServiceCardsProps) {
       <div className="px-6 md:px-24 py-16 lg:py-24">
         <FadeIn>
           <div className="text-center mb-10 lg:mb-14 max-w-3xl mx-auto">
-            {eyebrow && <Badge className="md:text-[14px] mb-3">{eyebrow}</Badge>}
+            {eyebrow && <Badge className="md:text-[14px] mb-4 md:mb-5">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[40px] md:text-[52px] lg:text-[68px] font-semibold tracking-tight leading-[105%] text-forest mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-forest mb-4">
                 {heading}
               </h2>
             )}
@@ -146,7 +146,7 @@ export default function ServiceCards({block}: ServiceCardsProps) {
                       </div>
                     )}
                     {card.title && (
-                      <h3 className="text-[24px] md:text-[28px] lg:text-[30px] leading-[110%] font-semibold mb-2">
+                      <h3 className="text-[24px] md:text-[28px] lg:text-[30px] leading-[110%] font-medium mb-2">
                         {card.title}
                       </h3>
                     )}

@@ -27,7 +27,7 @@ export default function StatsBar({block}: StatsBarProps) {
             {stats.map((stat, i) => (
               <FadeIn key={stat._key} delay={0.1 * i}>
                 <div className="bg-white rounded-md p-6 md:p-8 flex flex-col justify-center text-center shadow-card border border-forest h-full">
-                  <div className="text-5xl font-heading lg:text-7xl leading-[100%] tracking-tighter font-semibold text-forest mb-2">
+                  <div className="text-5xl font-heading lg:text-7xl leading-[100%] tracking-tighter font-medium text-forest mb-2">
                     {stat.value}
                   </div>
                   <div className="font-sans text-[16px] md:text-[18px]">{stat.label}</div>

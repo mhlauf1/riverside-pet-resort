@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function NotFound() {
   return (
     <section className="flex min-h-[60vh] flex-col items-center justify-center px-6 py-24 text-center">
-      <h1 className="text-h2 font-heading mb-4 font-semibold tracking-tight">
+      <h1 className="text-h2 font-heading mb-4 font-medium tracking-tight">
         Page Not Found
       </h1>
       <p className="text-body text-text-muted mb-8 max-w-md">

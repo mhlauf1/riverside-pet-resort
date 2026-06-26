@@ -137,11 +137,11 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
           <div className="mb-10 lg:mb-14">
             {eyebrow && (
               <FadeIn>
-                <Badge className="mb-3">{eyebrow}</Badge>
+                <Badge className="mb-5 md:mb-7">{eyebrow}</Badge>
               </FadeIn>
             )}
             {heading && (
-              <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] text-forest mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-forest mb-4">
                 {heading}
               </h2>
             )}
@@ -256,7 +256,7 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
           {nextSteps && nextSteps.length > 0 && !hasContactInfo && (
             <FadeIn delay={0.1} immediate>
               <div className="space-y-4">
-                <h3 className="font-heading text-[24px] font-semibold text-forest mb-2">
+                <h3 className="font-heading text-[24px] font-medium text-forest mb-2">
                   What happens next?
                 </h3>
                 {nextSteps.map((step, i) => (
@@ -368,7 +368,7 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
 
                 {nextSteps && nextSteps.length > 0 && (
                   <div className="space-y-4 pt-2">
-                    <h3 className="font-heading text-[20px] font-semibold text-forest">
+                    <h3 className="font-heading text-[20px] font-medium text-forest">
                       What happens next?
                     </h3>
                     {nextSteps.map((step, i) => (

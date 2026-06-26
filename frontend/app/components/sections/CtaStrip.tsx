@@ -34,7 +34,7 @@ export default function CtaStrip({block}: CtaStripProps) {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               {heading && (
-                <h2 className="text-[36px] md:text-[40px] lg:text-[48px] font-semibold tracking-tight leading-[110%]">
+                <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[110%]">
                   {heading}
                 </h2>
               )}

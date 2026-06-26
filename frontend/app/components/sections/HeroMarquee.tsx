@@ -135,7 +135,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
 
           {heading && (
             <Wrap delay={0.1}>
-              <h1 className="text-[42px] md:text-[60px] lg:text-[84px] leading-[104%]  tracking-tight  mb-5">
+              <h1 className="text-[38px] md:text-[60px] lg:text-[84px] leading-[104%]  tracking-tight  mb-5">
                 {heading}
                 {headingAccent && (
                   <>
@@ -239,7 +239,7 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
 
       {bubbleText && (
         <div
-          className="relative mx-auto -mb-12 mt-4 md:mt-0 md:mb-0 md:absolute md:bottom-[500px] lg:bottom-[620px] md:right-8 lg:right-16 z-20 -rotate-[8deg] md:rotate-[8deg] shadow-xl rounded-full"
+          className="relative mx-auto -mb-12 mt-4 md:mt-0 md:mb-0 md:absolute md:bottom-[468px] lg:bottom-[583px] md:right-8 lg:right-16 z-20 -rotate-[8deg] md:rotate-[8deg] shadow-xl rounded-full"
           aria-hidden="true"
         >
           <svg

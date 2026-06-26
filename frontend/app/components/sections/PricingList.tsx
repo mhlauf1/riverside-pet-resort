@@ -41,7 +41,7 @@ export default function PricingList({block}: PricingListProps) {
           <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
             {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] text-forest mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-forest mb-4">
                 {heading}
               </h2>
             )}
@@ -73,7 +73,7 @@ export default function PricingList({block}: PricingListProps) {
                       </h3>
                     )}
                     {item.price && (
-                      <p className="mt-3 text-[36px] md:text-[44px] font-semibold leading-none tracking-tight text-terracotta">
+                      <p className="mt-3 text-[28px] md:text-[40px] font-semibold leading-none tracking-tight text-terracotta">
                         {item.price}
                       </p>
                     )}

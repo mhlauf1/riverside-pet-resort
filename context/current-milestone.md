@@ -241,8 +241,14 @@ Domain **confirmed: riversidepetmn.com** (Peter loaded it into GoDaddy). It's al
   - `settings.email` = null, `schoolSettings.formEmail` = `[EMAIL-TBD]`.
 - **Single blocker:** `CONTACT_FORM_TO_EMAIL` is empty in `.env.local` and (presumably) not yet set in Vercel. While it's empty, **every form returns 503 — no form delivers.** Set it + the 5 SMTP vars in Vercel and all forms work.
 - **Relay VERIFIED (6/26):** dedicated Gmail relay `riversidepetmn.notifications@gmail.com` (2FA + app password) created. riversidepetmn.com email is on **Microsoft 365 (via GoDaddy)**, so the Gmail relay sends *to* the client's M365 mailboxes — we never touch their mail. Local submit-test against `/api/contact` returned 200 / delivered (test routed to Mike's own inbox, not the client). SMTP chain proven end-to-end; values live in `frontend/.env.local` (gitignored). **Still need:** same 6 vars in Vercel + one preview submit-test.
-- **Emails received (6/26):** `reception@riversidepetmn.com` + `olivia@riversidepetmn.com`. **Interim routing = BOTH addresses on ALL 5 forms** (Mike's call — safest pre-launch; nothing gets missed). Achieved purely via the env fallback — set `CONTACT_FORM_TO_EMAIL="reception@riversidepetmn.com, olivia@riversidepetmn.com"` (nodemailer accepts a comma-separated `to`); leave every per-form `destinationEmailOverride` + `schoolSettings.formEmail` as-is (placeholders → fall through). **No Sanity or code change needed for this state.**
-- **Final split TBD:** drafting a client email to confirm who actually owns what (likely reception → resort forms, olivia → school funnels). Once confirmed, set per-form overrides in Sanity (no deploy).
+- **FINAL routing confirmed by client (6/26) — set as per-form `destinationEmailOverride` in Sanity, published, LIVE (no deploy; override-reading code already shipped):**
+  - Contact (`page-contact`/`kform`) → `reception@riversidepetmn.com, olivia@riversidepetmn.com`
+  - Grooming Appt (`service-grooming`/`groom-appt-form`) → `support@, sarah@, amy@, sabrina@riogrooming.com`
+  - School Request Info (`school-request-information`/`rio-request-info-form`) → `amy@riogrooming.com` *(client eventually wants this wired to their QuickSchools account — needs QuickSchools embed/webhook; email for now)*
+  - School Schedule a Tour (`school-schedule-a-tour`/`rio-schedule-tour-form`) → `amy@riogrooming.com`
+  - School Job Listings (`school-job-listings`/`jl-form`) → `amy@, jen@riogrooming.com`
+  - `schoolSettings.formEmail` fallback → `amy@riogrooming.com`
+  - Note: grooming + school forms deliver to **@riogrooming.com** mailboxes (Rio's existing M365 on external CSP — we only *send to* them, never touch their records). `CONTACT_FORM_TO_EMAIL` env stays as the global safety-net fallback (currently reception@ + olivia@).
 - Env vars to set in Vercel (Production + Preview), then **redeploy**: `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=465`, `SMTP_USER`, `SMTP_PASS` (Gmail **app password**, not account pw), `SMTP_FROM`, `CONTACT_FORM_TO_EMAIL` (both addresses, comma-separated). Then submit-test each of the 5 forms on the preview URL (the one thing un-verifiable from code).
 
 ## Redirects: READY (two operational notes)

@@ -40,7 +40,7 @@ export default function ExpandingCardsRow({block}: ExpandingCardsRowProps) {
           <div className="text-center mb-10 lg:mb-14 max-w-2xl mx-auto">
             {eyebrow && <Badge className="mb-3">{eyebrow}</Badge>}
             {heading && (
-              <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold tracking-tight leading-[105%] text-forest mb-4">
+              <h2 className="text-[30px] md:text-[48px] lg:text-[64px] font-medium tracking-tight leading-[105%] text-forest mb-4">
                 {heading}
               </h2>
             )}
@@ -79,7 +79,7 @@ export default function ExpandingCardsRow({block}: ExpandingCardsRowProps) {
 
                   <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 text-white flex flex-col gap-1">
                     {card.title && (
-                      <h3 className="text-[24px] md:text-[28px] font-semibold leading-[110%]">
+                      <h3 className="text-[24px] md:text-[28px] font-medium leading-[110%]">
                         {card.title}
                       </h3>
                     )}
