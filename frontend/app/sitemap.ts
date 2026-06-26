@@ -1,16 +1,16 @@
 import {MetadataRoute} from 'next'
 import {sanityFetch} from '@/sanity/lib/live'
 import {sitemapData} from '@/sanity/lib/queries'
-import {headers} from 'next/headers'
+import {SITE_URL} from '@/app/site-config'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allPages = await sanityFetch({
     query: sitemapData,
   })
-  const headersList = await headers()
   const sitemap: MetadataRoute.Sitemap = []
-  const host = headersList.get('host') as string
-  const domain = host.startsWith('http') ? host : `https://${host}`
+  // Always emit the canonical host (SITE_URL), never the request host — otherwise
+  // the sitemap lists www while canonical tags + robots point at the apex.
+  const domain = SITE_URL
   sitemap.push({
     url: domain,
     lastModified: new Date(),
