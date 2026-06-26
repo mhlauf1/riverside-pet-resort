@@ -247,53 +247,67 @@ export default function HeroMarquee({block, index}: HeroMarqueeProps) {
             viewBox="0 0 200 200"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Circle background */}
+            {/* Seal background + double edge ring */}
             <circle cx="100" cy="100" r="96" fill="var(--color-cream, #FAF6EF)" />
             <circle
               cx="100"
               cy="100"
-              r="96"
+              r="93"
               fill="none"
               stroke="var(--color-forest, #1B4F8A)"
-              strokeWidth="1.5"
+              strokeWidth="2"
             />
-            {/* Arched text — top and bottom */}
+            <circle
+              cx="100"
+              cy="100"
+              r="87"
+              fill="none"
+              stroke="var(--color-forest, #1B4F8A)"
+              strokeOpacity="0.4"
+              strokeWidth="1"
+            />
+            {/* Arched text — top reads L→R, bottom reads L→R */}
             <defs>
-              <path id="topArc" d="M 30,105 a 70,70 0 1,1 140,0" fill="none" />
-              <path id="bottomArc" d="M 25,108 a 75,75 0 0,0 150,0" fill="none" />
+              <path id="topArc" d="M 28,100 a 72,72 0 1,1 144,0" fill="none" />
+              <path id="bottomArc" d="M 26,100 a 74,74 0 0,0 148,0" fill="none" />
             </defs>
             <text
               fill="var(--color-forest, #1B4F8A)"
-              fontSize="17"
-              fontWeight="600"
-              fontFamily="var(--font-heading)"
-              letterSpacing="1"
+              fontSize="14"
+              fontWeight="700"
+              fontFamily="var(--font-sans)"
+              letterSpacing="1.5"
             >
               <textPath href="#topArc" startOffset="50%" textAnchor="middle">
-                {bubbleText
+                {(bubbleText
                   ? bubbleText
                       .split(' ')
-                      .slice(0, Math.ceil(bubbleText.split(' ').length / 2))
+                      .slice(0, Math.floor(bubbleText.split(' ').length / 2))
                       .join(' ')
-                  : 'All-inclusive care'}
+                  : 'All-inclusive care'
+                ).toUpperCase()}
               </textPath>
             </text>
             <text
               fill="var(--color-forest, #1B4F8A)"
-              fontSize="17"
-              fontWeight="600"
-              fontFamily="var(--font-heading)"
-              letterSpacing="2"
+              fontSize="14"
+              fontWeight="700"
+              fontFamily="var(--font-sans)"
+              letterSpacing="1.5"
             >
               <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">
-                {bubbleText
+                {(bubbleText
                   ? bubbleText
                       .split(' ')
-                      .slice(Math.ceil(bubbleText.split(' ').length / 2))
+                      .slice(Math.floor(bubbleText.split(' ').length / 2))
                       .join(' ')
-                  : 'under one roof'}
+                  : 'under one roof'
+                ).toUpperCase()}
               </textPath>
             </text>
+            {/* Side dot separators */}
+            <circle cx="22" cy="100" r="2.5" fill="var(--color-terracotta, #E8872D)" />
+            <circle cx="178" cy="100" r="2.5" fill="var(--color-terracotta, #E8872D)" />
             {/* Paw icon centered */}
             <g transform="translate(37, 42) scale(1.3)" fill="var(--color-terracotta, #E8872D)">
               <ellipse cx="50" cy="62" rx="20" ry="17" />
