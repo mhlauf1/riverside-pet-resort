@@ -627,6 +627,7 @@ export type ContactForm = {
     fieldName: string
     label: string
     type?: 'text' | 'email' | 'tel' | 'textarea' | 'select'
+    placeholder?: string
     required?: boolean
     options?: Array<string>
     _type: 'formField'
