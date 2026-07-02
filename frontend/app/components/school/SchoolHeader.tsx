@@ -115,7 +115,12 @@ export default function SchoolHeader({
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center justify-center gap-7 xl:gap-9">
+            <nav
+              className="hidden lg:grid items-center justify-center gap-x-7 xl:gap-x-9"
+              style={{
+                gridTemplateColumns: `repeat(${navItems?.length || 1}, minmax(max-content, 1fr))`,
+              }}
+            >
               {navItems?.map((item) => {
                 const active = isActive(item.link, item.children)
                 const hasChildren = !!item.children?.length
@@ -123,7 +128,7 @@ export default function SchoolHeader({
                 return (
                   <div
                     key={item._key}
-                    className="relative"
+                    className="relative flex justify-center"
                     onMouseEnter={() => (hasChildren ? setDropdownOpen(item._key) : undefined)}
                     onMouseLeave={() => (hasChildren ? setDropdownOpen(null) : undefined)}
                   >
@@ -132,7 +137,7 @@ export default function SchoolHeader({
                         type="button"
                         aria-expanded={dropdownOpen === item._key}
                         aria-haspopup="true"
-                        className={`relative flex items-center gap-1 font-sans text-[14px] transition-colors whitespace-nowrap pb-1 ${
+                        className={`relative flex items-center justify-center gap-1 font-sans text-[14px] transition-colors whitespace-nowrap pb-1 ${
                           active ? 'text-terracotta font-medium' : 'text-forest hover:text-forest/70'
                         }`}
                       >
@@ -144,7 +149,7 @@ export default function SchoolHeader({
                     ) : (
                       <Link
                         href={resolveNavLink(item.link) || '#'}
-                        className={`relative font-sans text-[14px] transition-colors whitespace-nowrap pb-1 ${
+                        className={`relative inline-flex justify-center font-sans text-[14px] transition-colors whitespace-nowrap pb-1 ${
                           active
                             ? 'text-terracotta font-medium after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-terracotta after:rounded-full'
                             : 'text-forest hover:text-forest/70'
@@ -155,7 +160,7 @@ export default function SchoolHeader({
                     )}
 
                     {hasChildren && dropdownOpen === item._key && (
-                      <div className="absolute top-full left-0 pt-2">
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
                         <div className="bg-white rounded-md shadow-card-hover py-2 min-w-[180px] border border-border-light" role="menu">
                           {item.children!.map((child) => {
                             const childActive = resolveNavLink(child.link) === pathname
