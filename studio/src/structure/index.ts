@@ -14,6 +14,7 @@ const DISABLED_TYPES = [
   'settings',
   'schoolSettings',
   'schoolPage',
+  'jobPosting',
   'assist.instruction.context',
 ]
 
@@ -49,6 +50,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                 ),
               S.divider(),
               S.documentTypeListItem('schoolPage').title('School Pages'),
+              S.documentTypeListItem('jobPosting').title('Job Postings'),
             ]),
         ),
 

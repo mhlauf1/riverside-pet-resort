@@ -46,6 +46,8 @@ const ValuePillars = lazy(() => import('@/app/components/sections/ValuePillars')
 const PricingPageTabs = lazy(() => import('@/app/components/sections/PricingPageTabs'))
 const PhotoMarquee = lazy(() => import('@/app/components/sections/PhotoMarquee'))
 const Spacer = lazy(() => import('@/app/components/sections/Spacer'))
+const QuickSchoolsEnquiry = lazy(() => import('@/app/components/sections/QuickSchoolsEnquiry'))
+const JobListings = lazy(() => import('@/app/components/sections/JobListings'))
 import {dataAttr} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
 
@@ -115,6 +117,8 @@ const Blocks = {
   pricingPageTabs: PricingPageTabs,
   photoMarquee: PhotoMarquee,
   spacer: Spacer,
+  quickSchoolsEnquiry: QuickSchoolsEnquiry,
+  jobListings: JobListings,
 } as BlocksType
 
 export default function BlockRenderer({block, index, pageId, pageType}: BlockProps) {
@@ -129,6 +133,8 @@ export default function BlockRenderer({block, index, pageId, pageType}: BlockPro
     return (
       <div
         key={block._key}
+        id={block._key}
+        className="scroll-mt-24"
         data-sanity={dataAttr({
           id: pageId,
           type: pageType,

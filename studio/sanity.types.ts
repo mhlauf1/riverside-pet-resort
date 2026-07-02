@@ -127,6 +127,25 @@ export type MatrixData = {
   footnotes?: Array<string>
 }
 
+export type JobListings = {
+  _type: 'jobListings'
+  eyebrow?: string
+  heading: string
+  description?: BlockContent
+  emptyMessage?: string
+  backgroundColor?: 'cream' | 'sand' | 'white'
+}
+
+export type QuickSchoolsEnquiry = {
+  _type: 'quickSchoolsEnquiry'
+  eyebrow?: string
+  heading: string
+  description?: BlockContent
+  scriptUrl: string
+  divId: string
+  showFootnote?: boolean
+}
+
 export type Spacer = {
   _type: 'spacer'
   size?: 'sm' | 'md' | 'lg' | 'xl'
@@ -1223,6 +1242,24 @@ export type Slug = {
   source?: string
 }
 
+export type JobPosting = {
+  _id: string
+  _type: 'jobPosting'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  company: string
+  location?: string
+  employmentType?: 'Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Other'
+  postedAt?: string
+  expiresAt?: string
+  applicationUrl?: string
+  applicationEmail?: string
+  description: BlockContent
+  isActive?: boolean
+}
+
 export type SchoolPage = {
   _id: string
   _type: 'schoolPage'
@@ -1362,6 +1399,12 @@ export type SchoolPage = {
     | ({
         _key: string
       } & Spacer)
+    | ({
+        _key: string
+      } & QuickSchoolsEnquiry)
+    | ({
+        _key: string
+      } & JobListings)
   >
 }
 
@@ -2147,6 +2190,8 @@ export type AllSanitySchemaTypes =
   | ItemsObjectImage
   | TableData
   | MatrixData
+  | JobListings
+  | QuickSchoolsEnquiry
   | Spacer
   | PhotoMarquee
   | PricingPageTabs
@@ -2201,6 +2246,7 @@ export type AllSanitySchemaTypes =
   | Testimonial
   | LocationPage
   | Slug
+  | JobPosting
   | SchoolPage
   | Service
   | SanityImageCrop

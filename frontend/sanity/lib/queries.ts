@@ -294,6 +294,47 @@ const pageBuilderExpansion = /* groq */ `
       primaryCta ${buttonFields},
       secondaryCta ${buttonFields}
     },
+    _type == "quickSchoolsEnquiry" => {
+      ...,
+      description[]{
+        ...,
+        markDefs[]{
+          ...,
+          ${linkReference}
+        }
+      }
+    },
+    _type == "jobListings" => {
+      ...,
+      description[]{
+        ...,
+        markDefs[]{
+          ...,
+          ${linkReference}
+        }
+      },
+      "jobs": *[
+        _type == "jobPosting" &&
+        isActive != false &&
+        (!defined(expiresAt) || dateTime(expiresAt) > dateTime(now()))
+      ] | order(coalesce(postedAt, _createdAt) desc) {
+        _id,
+        title,
+        company,
+        location,
+        employmentType,
+        postedAt,
+        applicationUrl,
+        applicationEmail,
+        description[]{
+          ...,
+          markDefs[]{
+            ...,
+            ${linkReference}
+          }
+        }
+      }
+    },
   }
 `
 

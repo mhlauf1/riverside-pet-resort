@@ -88,6 +88,8 @@ export const schoolPage = defineType({
         {type: 'pricingPageTabs'},
         {type: 'photoMarquee'},
         {type: 'spacer'},
+        {type: 'quickSchoolsEnquiry'},
+        {type: 'jobListings'},
       ],
       options: {
         insertMenu: {

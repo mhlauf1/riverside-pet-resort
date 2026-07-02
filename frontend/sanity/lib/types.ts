@@ -1,6 +1,8 @@
-import {GetPageQueryResult} from '@/sanity.types'
+import {GetPageQueryResult, GetSchoolPageQueryResult} from '@/sanity.types'
 
-export type PageBuilderSection = NonNullable<NonNullable<GetPageQueryResult>['pageBuilder']>[number]
+type PageBuilderSource = GetPageQueryResult | GetSchoolPageQueryResult
+
+export type PageBuilderSection = NonNullable<NonNullable<PageBuilderSource>['pageBuilder']>[number]
 export type ExtractPageBuilderType<T extends PageBuilderSection['_type']> = Extract<
   PageBuilderSection,
   {_type: T}

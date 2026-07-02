@@ -1,6 +1,7 @@
 import {page} from './documents/page'
 import {service} from './documents/service'
 import {schoolPage} from './documents/schoolPage'
+import {jobPosting} from './documents/jobPosting'
 import {locationPage} from './documents/locationPage'
 import {testimonial} from './documents/testimonial'
 import {callToAction} from './objects/callToAction'
@@ -46,6 +47,8 @@ import {valuePillars} from './objects/valuePillars'
 import {pricingPageTabs} from './objects/pricingPageTabs'
 import {photoMarquee} from './objects/photoMarquee'
 import {spacer} from './objects/spacer'
+import {quickSchoolsEnquiry} from './objects/quickSchoolsEnquiry'
+import {jobListings} from './objects/jobListings'
 import {seo} from './objects/seo'
 import {settings} from './singletons/settings'
 import {schoolSettings} from './singletons/schoolSettings'
@@ -62,6 +65,7 @@ export const schemaTypes = [
   page,
   service,
   schoolPage,
+  jobPosting,
   locationPage,
   testimonial,
   // Objects
@@ -114,4 +118,6 @@ export const schemaTypes = [
   pricingPageTabs,
   photoMarquee,
   spacer,
+  quickSchoolsEnquiry,
+  jobListings,
 ]
