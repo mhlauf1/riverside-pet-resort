@@ -263,3 +263,15 @@ Domain **confirmed: riversidepetmn.com** (Peter loaded it into GoDaddy). It's al
 - Confirm Vercel project **Root Directory = `frontend`** (monorepo) and all Sanity env vars present in Vercel.
 - DNS at GoDaddy, not Cloudflare (diverges from CLAUDE.md Cloudflare plan, but works) — add Vercel's A/CNAME records as shown in the Vercel Domains tab. **24h notice to Brian before cutover; never touch Rio M365 email records.**
 - FAQ JSON-LD still needs Google Rich Results validation on preview (M5).
+
+---
+
+# Job postings round 1 — Amy's forwarded employer submissions (7/17)
+
+Amy forwarded 5 employer job submissions (legacy riogrooming.com form + one via the new `/school/job-listings` form), each with "Please post under job postings section." Full verbatim capture in `context/job-postings-intake.md`.
+
+- **Infrastructure already existed** (built in a prior session, committed + deployed): `jobPosting` doc type, `jobListings` page-builder block (auto-queries active, non-expired postings, newest first), `JobListings.tsx`, GROQ projection, and the `jl-current-postings` block already on `school-job-listings`. This round was **content-only — no code changes, no deploy needed.**
+- **Published 5 `jobPosting` docs** to `7ze0boy4`/production via MCP: `job-woofgang-plymouth` (Pet Groomer, JotForm apply link) · `job-luckydog-mobile` (Mobile Dog Groomer, Indeed link) · `job-woofgang-edina` (Groomer & Bather, mailto apply) · `job-petsmart-maplegrove` (Pet Stylist, mailto to work email m1585@petsmart.com — personal gmail withheld) · `job-poochie-perfect` (no apply button; voicemail-only per employer, stated in description).
+- Descriptions are the employers' copy essentially verbatim, formatted as portable text with bold section labels + bullet lists; employer contact info appended to each. PetSmart's source-truncated "animal care prot" completed to "protocols".
+- Verified: frontend filter query returns all 5 (published perspective); dev-server render of `/school/job-listings` shows all 5 cards.
+- Going forward Amy can manage these herself in Studio (Job Posting docs; "Show on Website" toggle + optional expiration date).
