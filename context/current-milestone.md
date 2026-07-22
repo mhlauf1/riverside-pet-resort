@@ -275,3 +275,37 @@ Amy forwarded 5 employer job submissions (legacy riogrooming.com form + one via 
 - Descriptions are the employers' copy essentially verbatim, formatted as portable text with bold section labels + bullet lists; employer contact info appended to each. PetSmart's source-truncated "animal care prot" completed to "protocols".
 - Verified: frontend filter query returns all 5 (published perspective); dev-server render of `/school/job-listings` shows all 5 cards.
 - Going forward Amy can manage these herself in Studio (Job Posting docs; "Show on Website" toggle + optional expiration date).
+
+---
+
+# Thank-you pages for contact forms (7/22 — client request, ported from Wags pilot)
+
+Client (via Brian's email) wants a dedicated thank-you page after form submission on every facility site (example: petcamp.com/get-in-touch/thank-you). Wags Stay N' Play was the pilot (`wags-stay-n-play` commit `5d7f4f3`); this ports the flow to Riverside.
+
+**Code change (needs a deploy):**
+- `ContactForm.tsx`: on successful submit, `router.push()` to a thank-you page instead of the inline success card (card + scroll-into-view effect removed; `successMessage` schema field remains but is no longer rendered — same divergence note as Wags). **Riverside divergence from the Wags flow:** two destinations, since 4 of the 5 forms live in the school section — forms on `/school/*` paths → `/school/thank-you` (school chrome/theme), everything else → `/thank-you`. Keeps the site-within-a-site boundary.
+- The Wags commit also bundled reCAPTCHA v3 — **NOT ported here** (separate concern; needs site/secret keys). Port later if spam becomes an issue.
+
+**Content (Sanity `7ze0boy4`/production, published via MCP):**
+- `page-thank-you` (`/thank-you`): heroMinimal ("Thank You for Your Submission" + ~1-business-day reply + phone) + ctaStrip → Back to Homepage. `seo.noIndex: true`.
+- `school-thank-you` (`/school/thank-you`, `schoolPage`): same shape, school-voiced, ctaStrip → Back to School Home (`/school`). `seo.noIndex: true`.
+
+**Verified:** type-check clean; production build green — both routes SSG-prerendered with `noindex, follow` robots meta and **excluded from sitemap.xml**; correct content in the rendered HTML. (Local build gotcha: `.next/cache` fetch-cache had stale slug lists — pages only appeared as SSG after clearing it; harmless either way since `[slug]` routes render on demand.)
+
+**⚠️ Flag (pre-existing, found during this work):** all 7 school sub-pages (`school-why-become-a-groomer`, `school-enrollment-financing`, `school-scholarships`, `school-student-housing`, `school-career-placement`, `school-request-information`, `school-schedule-a-tour`) have `seo.noIndex: true` in production — they're excluded from search + sitemap. The brief says the school draws from the greater TC market and beyond; this looks unintentional. Confirm and flip to indexable if so.
+
+**Not committed yet** (per workflow: commit only when asked). Once deployed, submit-test one resort form + one school form to see the redirects live.
+
+## reCAPTCHA v3 added (7/22 — second half of the Wags `5d7f4f3` port)
+
+- Same pattern as Wags, applied to the shared `ContactForm.tsx` → covers **all 5 forms** (contact, grooming appt, school request-info, tour, job listings), not just `/contact`: script loads on form mount (only when `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` is set), token fetched on submit (`action: 'contact_form'`) and sent as `recaptchaToken`. `app/api/contact/route.ts` verifies via Google siteverify (min score 0.5) **before** any email is sent; `recaptchaToken` is stripped from the email body. **Fails open**: no secret key → verification skipped; Google unreachable → allowed. A missing/invalid token only blocks when the secret IS configured (400 with a call-us fallback message, 651-480-4726). Env vars documented in `frontend/.env.example`.
+- Verified: type-check clean, production build green. Safe to deploy before keys exist (behavior unchanged until env vars are set).
+- **TODO (Mike, not code):** create a reCAPTCHA v3 site in Google admin (https://www.google.com/recaptcha/admin/create) with domains `riversidepetmn.com` + `localhost` (+ `vercel.app` if preview testing is wanted), then set `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` + `RECAPTCHA_SECRET_KEY` in Vercel (Production + Preview) and redeploy. Then submit-test one form.
+
+## GTM + CTM analytics wiring (7/22 — for Impact marketing team; Wags ports c1fe43b + 9b6746a)
+
+- **Already existed:** GTM (`gtmContainerId`) + GA4 (`ga4MeasurementId`) fields in `settings` and injection in the ROOT `app/layout.tsx` — which wraps every route (resort + school + thank-you pages), so coverage is site-wide by construction, never per-page.
+- **Added (Wags c1fe43b):** `ctmScriptUrl` field in `settings` schema + `settingsQuery` + `<Script id="ctm">` in root layout head (loads on every page for dynamic number insertion).
+- **Added (Wags 9b6746a):** `TrackingRouteEvents.tsx` (verbatim) in root layout body — pushes `virtual_page_view` to the dataLayer and re-runs CTM number-swap (`__ctm.main.runNow`) on every client-side route change. **This fixes the "shows on homepage but not other pages" symptom the marketing team noticed** (on an SPA, GTM/CTM only see the initial page load without these events); it's also what makes the thank-you-page redirect trackable as a conversion.
+- Types regenerated; type-check clean; production build green.
+- **⚠️ BLOCKER — values are all NULL in Sanity** (`gtmContainerId`, `ga4MeasurementId`, `ctmScriptUrl`): nothing fires until they're set. Get from Impact marketing: (1) GTM container ID `GTM-XXXXXXX`, (2) CTM script URL like `//NNNNNN.tctm.co/t.js`. Paste into Studio → Settings (Riverside gets its OWN GTM container + CTM account — do not reuse Wags'). Requires this code deployed first; after that, values are live CMS edits, no deploy.
