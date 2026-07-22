@@ -309,3 +309,24 @@ Client (via Brian's email) wants a dedicated thank-you page after form submissio
 - **Added (Wags 9b6746a):** `TrackingRouteEvents.tsx` (verbatim) in root layout body — pushes `virtual_page_view` to the dataLayer and re-runs CTM number-swap (`__ctm.main.runNow`) on every client-side route change. **This fixes the "shows on homepage but not other pages" symptom the marketing team noticed** (on an SPA, GTM/CTM only see the initial page load without these events); it's also what makes the thank-you-page redirect trackable as a conversion.
 - Types regenerated; type-check clean; production build green.
 - **⚠️ BLOCKER — values are all NULL in Sanity** (`gtmContainerId`, `ga4MeasurementId`, `ctmScriptUrl`): nothing fires until they're set. Get from Impact marketing: (1) GTM container ID `GTM-XXXXXXX`, (2) CTM script URL like `//NNNNNN.tctm.co/t.js`. Paste into Studio → Settings (Riverside gets its OWN GTM container + CTM account — do not reuse Wags'). Requires this code deployed first; after that, values are live CMS edits, no deploy.
+
+---
+
+# Boarding pricing update — luxury suites live (7/22 — client note w/ rate-sheet photos)
+
+Client: suites are fully updated — $129 goes live, rename tiers "Standard Lodge – $52" / "Private Luxury Suite – $129", add per-tier descriptions matching their printed Boarding & Services sheet.
+
+**Code change (needs a deploy):**
+- `pricingList` item schema gains optional `features` (array of strings) — `studio/.../objects/pricingList.ts`. `PricingList.tsx` renders it as a left-aligned ✓ bullet list inside the card variant (below note, bordered divider). GROQ projection already uses `...` — no query change. Types regenerated; type-check clean both workspaces.
+
+**Content (Sanity `7ze0boy4`/production, published — `service-boarding` block `bprice`):**
+- Removed the stale section description ("premium suite tier expected ~$129 upon completion of renovations").
+- `bp1` → **Standard Lodge $52/night**; note = 50% off each additional dog (2 $78 · 3 $104 · 4 $130); features = 4'×6' private lodge, fresh water & feeding (owner-provided food), complimentary treat/biscuit, 4–5 Riverside Romps/day, pictures sent to owners.
+- `bp2` → **Private Luxury Suite $129/night** (was Luxury Boarding $69); note = 50% off each additional dog (2 $193.50 · 3 $258 · 4 $322.50); features = ~8'×16' suite, water/feeding, Romps, pictures, Just Dogs bedtime snack & go-home gourmet treats, daily personalized walk, interactive enrichment activities, plush premium bedding, in-suite television & relaxing atmosphere.
+- All copy transcribed from the client's rate sheet (add-ons list on the sheet NOT added — not requested). Grep-confirmed no other CMS doc referenced $69/renovation copy.
+
+**Verified:** fresh production build green (after clearing stale `.next` fetch cache); prerendered `/services/boarding` HTML contains new tier names, $129, features, and zero renovation/$69 strings.
+
+⚠️ **Deploy needed:** tier names/prices/notes are live in the CMS now, but the `features` bullet lists only render once this code deploys. Not committed yet (commit only when asked).
+
+**Same round — daycare hour definitions (CMS-only, live):** `service-daycare` block `dprice` item notes set — Full Day $35 = "Over 5 hours", Half Day $25 = "5 hours or less". Published + re-query verified; no code change (note field already renders).

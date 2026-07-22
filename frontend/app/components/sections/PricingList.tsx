@@ -14,6 +14,7 @@ type PricingListProps = {
       service?: string
       price?: string
       note?: string
+      features?: string[]
     }>
     columns?: number
     backgroundColor?: 'cream' | 'sand'
@@ -81,6 +82,21 @@ export default function PricingList({block}: PricingListProps) {
                       <p className="font-sans text-[13px] leading-[150%] text-charcoal/55 mt-3">
                         {item.note}
                       </p>
+                    )}
+                    {item.features && item.features.length > 0 && (
+                      <ul className="mt-5 space-y-2 border-t border-border-light pt-5 text-left">
+                        {item.features.map((feature, fi) => (
+                          <li
+                            key={fi}
+                            className="flex gap-2 font-sans text-[14px] leading-[145%] text-charcoal/75"
+                          >
+                            <span className="mt-[2px] shrink-0 text-terracotta" aria-hidden="true">
+                              ✓
+                            </span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
                     )}
                   </div>
                 ) : (

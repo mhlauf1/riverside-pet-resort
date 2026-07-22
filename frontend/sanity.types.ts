@@ -350,6 +350,7 @@ export type PricingList = {
     service: string
     price?: string
     note?: string
+    features?: Array<string>
     _type: 'pricingListItem'
     _key: string
   }>
@@ -3409,6 +3410,7 @@ export type GetPageQueryResult = {
           service: string
           price?: string
           note?: string
+          features?: Array<string>
           _type: 'pricingListItem'
           _key: string
         }>
@@ -4744,6 +4746,7 @@ export type HomepageQueryResult = {
           service: string
           price?: string
           note?: string
+          features?: Array<string>
           _type: 'pricingListItem'
           _key: string
         }>
@@ -6099,6 +6102,7 @@ export type GetServiceQueryResult = {
           service: string
           price?: string
           note?: string
+          features?: Array<string>
           _type: 'pricingListItem'
           _key: string
         }>
@@ -7423,6 +7427,7 @@ export type GetLocationPageQueryResult = {
           service: string
           price?: string
           note?: string
+          features?: Array<string>
           _type: 'pricingListItem'
           _key: string
         }>
@@ -8951,6 +8956,7 @@ export type GetSchoolPageQueryResult = {
           service: string
           price?: string
           note?: string
+          features?: Array<string>
           _type: 'pricingListItem'
           _key: string
         }>
@@ -10412,6 +10418,7 @@ export type SchoolHomeQueryResult = {
           service: string
           price?: string
           note?: string
+          features?: Array<string>
           _type: 'pricingListItem'
           _key: string
         }>

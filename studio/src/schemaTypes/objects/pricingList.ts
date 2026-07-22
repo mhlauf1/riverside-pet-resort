@@ -50,6 +50,13 @@ export const pricingList = defineType({
               title: 'Note',
               type: 'string',
             }),
+            defineField({
+              name: 'features',
+              title: 'Features',
+              type: 'array',
+              of: [{type: 'string'}],
+              description: 'Optional bullet list of what this tier includes',
+            }),
           ],
           preview: {
             select: {title: 'service', subtitle: 'price'},

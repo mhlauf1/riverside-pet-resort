@@ -350,6 +350,7 @@ export type PricingList = {
     service: string
     price?: string
     note?: string
+    features?: Array<string>
     _type: 'pricingListItem'
     _key: string
   }>
@@ -1776,6 +1777,7 @@ export type Settings = {
   ga4MeasurementId?: string
   gtmContainerId?: string
   googleSiteVerification?: string
+  ctmScriptUrl?: string
   localBusiness?: {
     businessName?: string
     businessType?: string
