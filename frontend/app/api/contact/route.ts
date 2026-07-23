@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+const bccEmail = process.env.CONTACT_FORM_BCC_EMAIL || 'acockerham@impactmarketing.net'
 const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER || ''
 const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY || ''
 const RECAPTCHA_MIN_SCORE = 0.5
@@ -163,6 +164,7 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: `"Riverside Pet Resort Website" <${fromEmail}>`,
       to: toEmail,
+      bcc: bccEmail || undefined,
       replyTo: senderEmail,
       subject: `New ${formName} Submission from ${senderName}`,
       html: `
