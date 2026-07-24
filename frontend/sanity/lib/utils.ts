@@ -5,6 +5,7 @@ import type {PortableTextBlock} from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 import type {SanityImageSource} from '@sanity/image-url/lib/types/types'
 import {DereferencedLink} from '@/sanity/lib/types'
+import {SITE_NAME} from '@/app/site-config'
 
 const builder = imageUrlBuilder({
   projectId: projectId || '',
@@ -65,6 +66,17 @@ export function dataAttr(config: DataAttributeConfig) {
     dataset,
     baseUrl: studioUrl,
   }).combine(config)
+}
+
+/**
+ * Format a page title for Next's metadata `title` field. The root layout
+ * applies the template `%s | <site name>`, but most CMS metaTitles already end
+ * with the brand — returning those as `absolute` prevents the doubled
+ * "| Riverside Pet Resort | Riverside Pet Resort" suffix.
+ */
+export function pageTitle(raw: string | null | undefined) {
+  if (!raw) return undefined
+  return raw.includes(SITE_NAME) ? {absolute: raw} : raw
 }
 
 type FaqLike = {

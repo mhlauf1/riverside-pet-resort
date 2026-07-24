@@ -1,9 +1,10 @@
 import type {Metadata} from 'next'
 
+import FaqJsonLd from '@/app/components/FaqJsonLd'
 import PageBuilder from '@/app/components/PageBuilder'
 import {homepageQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+import {pageTitle, resolveOpenGraphImage} from '@/sanity/lib/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {data: page} = await sanityFetch({
@@ -17,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = resolveOpenGraphImage(seo.ogImage)
 
   return {
-    ...(seo.metaTitle && {title: seo.metaTitle}),
+    ...(seo.metaTitle && {title: pageTitle(seo.metaTitle)}),
     ...(seo.metaDescription && {description: seo.metaDescription}),
     ...(ogImage && {openGraph: {images: [ogImage]}}),
     ...(seo.noIndex && {robots: {index: false, follow: true}}),
@@ -42,5 +43,10 @@ export default async function Page() {
     )
   }
 
-  return <PageBuilder page={page} />
+  return (
+    <>
+      <FaqJsonLd pageBuilder={page.pageBuilder} />
+      <PageBuilder page={page} />
+    </>
+  )
 }

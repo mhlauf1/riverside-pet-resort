@@ -330,3 +330,20 @@ Client: suites are fully updated — $129 goes live, rename tiers "Standard Lodg
 ⚠️ **Deploy needed:** tier names/prices/notes are live in the CMS now, but the `features` bullet lists only render once this code deploys. Not committed yet (commit only when asked).
 
 **Same round — daycare hour definitions (CMS-only, live):** `service-daycare` block `dprice` item notes set — Full Day $35 = "Over 5 hours", Half Day $25 = "5 hours or less". Published + re-query verified; no code change (note field already renders).
+
+---
+
+# SEO crawl audit + fixes (7/24 — Googlebot-style crawl of live riversidepetmn.com)
+
+Crawled all 19 sitemap URLs as Googlebot: everything 200, fully server-rendered, correct canonicals, robots.txt + sitemap healthy, intentional noindex (thank-you + school sub-pages) working. Three defects found and fixed:
+
+**Code changes (need a deploy):**
+- **Duplicate FAQPage JSON-LD on `/faq`** — both `FaqAccordion.tsx` (per-block, template built-in) and the M4 page-level emitter in `(site)/[slug]/page.tsx` emitted the same 8 questions (Search Console flags duplicate FAQPage). Fix: removed the component-level emitter; new shared `app/components/FaqJsonLd.tsx` (aggregates via `collectFaqs`, one FAQPage per page max) now rendered by ALL page-builder routes — `(site)/page.tsx`, `(site)/[slug]`, `services/[slug]`, `locations/[suburb]`, `(school)/school/page.tsx`, `(school)/school/[slug]`. Net win: school/location/service pages with FAQ accordions now get (single) FAQPage markup they'd have lost.
+- **Doubled title suffix site-wide** ("… | Riverside Pet Resort | Riverside Pet Resort") — CMS metaTitles already end with the brand AND the root layout applies the `%s | <brand>` template. Fix: `pageTitle()` helper in `sanity/lib/utils.ts` returns `{absolute}` when the title already contains `SITE_NAME`; applied in all 6 generateMetadata sites above. Titles without the brand still get the template suffix.
+
+**Content (Sanity `7ze0boy4`/production, published):**
+- `school-home` seo: metaTitle "Rio Grooming School in Hastings, MN | Riverside Pet Resort" + real metaDescription (was name-fallback "School Home" + empty description — the only indexable school page had the weakest metadata on the site).
+
+**Verified:** type-check clean both workspaces; production build green; prerendered HTML shows single-brand titles on all sampled routes, exactly 1 FAQPage block on `/faq` (and now 1 on `/school` + FAQ-bearing school sub-pages), new `/school` title + description. Not committed (commit only when asked). **Deploy needed** for the code fixes; the `/school` metadata renders correctly once deployed (title fix is code-side too since the CMS title contains the brand).
+
+**School sub-pages now indexable (7/24, same session):** flipped `seo.noIndex` → false on all 7 school sub-pages (why-become-a-groomer, enrollment-financing, scholarships, student-housing, career-placement, request-information, schedule-a-tour) in Sanity, published. Rationale: the M4 301 map deliberately lands indexed legacy riogrooming.com URLs on these pages — noindex was throwing that equity away — and the brief says the school draws from the greater TC market. `/school/thank-you` intentionally stays noindexed (form confirmation). Verified in a fresh production build: all 7 in sitemap.xml, no robots noindex meta, thank-you still noindexed. Sub-pages appear in the live sitemap/drop noindex at the next deploy (pages are SSG).

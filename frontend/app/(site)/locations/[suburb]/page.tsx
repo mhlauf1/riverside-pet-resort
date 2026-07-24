@@ -1,10 +1,11 @@
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
+import FaqJsonLd from '@/app/components/FaqJsonLd'
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
 import {getLocationPageQuery, locationPageSlugs} from '@/sanity/lib/queries'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+import {pageTitle, resolveOpenGraphImage} from '@/sanity/lib/utils'
 
 type Props = {
   params: Promise<{suburb: string}>
@@ -32,7 +33,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ogImage = resolveOpenGraphImage(seo?.ogImage)
 
   return {
-    title: seo?.metaTitle || page?.suburb,
+    title: pageTitle(seo?.metaTitle || page?.suburb),
     description: seo?.metaDescription || undefined,
     ...(ogImage && {openGraph: {images: [ogImage]}}),
     ...(seo?.noIndex && {robots: {index: false, follow: true}}),
@@ -51,5 +52,10 @@ export default async function LocationPage(props: Props) {
     notFound()
   }
 
-  return <PageBuilderPage page={page} />
+  return (
+    <>
+      <FaqJsonLd pageBuilder={page.pageBuilder} />
+      <PageBuilderPage page={page} />
+    </>
+  )
 }

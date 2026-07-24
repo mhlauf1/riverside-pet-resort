@@ -1,11 +1,12 @@
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
+import FaqJsonLd from '@/app/components/FaqJsonLd'
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {client} from '@/sanity/lib/client'
 import {sanityFetch} from '@/sanity/lib/live'
 import {getServiceQuery, serviceSlugs} from '@/sanity/lib/queries'
-import {resolveOpenGraphImage} from '@/sanity/lib/utils'
+import {pageTitle, resolveOpenGraphImage} from '@/sanity/lib/utils'
 
 type Props = {
   params: Promise<{slug: string}>
@@ -49,7 +50,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ogImage = resolveOpenGraphImage(seo?.ogImage)
 
   return {
-    title: seo?.metaTitle || service?.title,
+    title: pageTitle(seo?.metaTitle || service?.title),
     description: seo?.metaDescription || service?.heading || service?.shortDescription,
     ...(ogImage && {openGraph: {images: [ogImage]}}),
     ...(seo?.noIndex && {robots: {index: false, follow: true}}),
@@ -65,5 +66,10 @@ export default async function ServicePage(props: Props) {
     notFound()
   }
 
-  return <PageBuilderPage page={service} />
+  return (
+    <>
+      <FaqJsonLd pageBuilder={service.pageBuilder} />
+      <PageBuilderPage page={service} />
+    </>
+  )
 }

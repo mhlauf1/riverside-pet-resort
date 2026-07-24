@@ -1,10 +1,11 @@
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
+import FaqJsonLd from '@/app/components/FaqJsonLd'
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
 import {getPageQuery, pagesSlugs} from '@/sanity/lib/queries'
-import {buildFaqPageJsonLd, collectFaqs, resolveOpenGraphImage} from '@/sanity/lib/utils'
+import {pageTitle, resolveOpenGraphImage} from '@/sanity/lib/utils'
 
 type Props = {
   params: Promise<{slug: string}>
@@ -31,7 +32,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const ogImage = resolveOpenGraphImage(seo?.ogImage)
 
   return {
-    title: seo?.metaTitle || page?.name,
+    title: pageTitle(seo?.metaTitle || page?.name),
     description: seo?.metaDescription || undefined,
     ...(ogImage && {openGraph: {images: [ogImage]}}),
     ...(seo?.noIndex && {robots: {index: false, follow: true}}),
@@ -47,17 +48,9 @@ export default async function Page(props: Props) {
     notFound()
   }
 
-  // Emit FAQPage JSON-LD when the page contains one or more FAQ accordions.
-  const faqJsonLd = buildFaqPageJsonLd(collectFaqs(page.pageBuilder))
-
   return (
     <>
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{__html: JSON.stringify(faqJsonLd)}}
-        />
-      )}
+      <FaqJsonLd pageBuilder={page.pageBuilder} />
       <PageBuilderPage page={page} />
     </>
   )
