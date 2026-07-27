@@ -1,6 +1,6 @@
 'use client'
 
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 import {useRouter, useSearchParams} from 'next/navigation'
 import {PortableText} from '@portabletext/react'
 
@@ -79,7 +79,6 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
 
   const router = useRouter()
   const searchParams = useSearchParams()
-  const sectionRef = useRef<HTMLElement>(null)
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -154,7 +153,7 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
   const isNearPageTop = index <= 1
 
   return (
-    <section ref={sectionRef} className="bg-cream">
+    <section className="bg-cream">
       <div
         className={`px-6 md:px-24 ${
           isNearPageTop ? 'pt-8 pb-16 md:pt-10 lg:pt-16 lg:pb-24' : 'py-16 lg:py-24'
@@ -186,6 +185,18 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
           {/* Form */}
           <FadeIn immediate>
             <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="sr-only" aria-hidden="true">
+                <label htmlFor="company-website">Company website</label>
+                <input
+                  id="company-website"
+                  name="companyWebsite"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.companyWebsite || ''}
+                  onChange={(e) => handleChange('companyWebsite', e.target.value)}
+                />
+              </div>
               {formFields &&
                 formFields.map((field) => {
                   const fieldName = stegaClean(field.fieldName) || ''

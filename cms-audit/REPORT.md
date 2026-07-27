@@ -1,5 +1,7 @@
 # Riverside Pet Resort — Sanity CMS Audit
 
+> **SNAPSHOT — captured July 2026.** This audit reflects the codebase and dataset at the time it was written and is NOT kept up to date. Verify any finding against the current code before acting on it.
+
 1. Riverside registers 5 regular document types, 2 settings singletons, and 50 object types (`studio/src/schemaTypes/index.ts`) — the largest schema in the portfolio, because it hosts the Rio Grooming School sub-site.
 2. The machine inventory contains every registered field; no registered schema file was omitted (`cms-audit/schema-inventory.json`).
 3. Four Portable Text configurations exist (`studio/src/schemaTypes/objects/blockContent.tsx`, `blockContentTextOnly.tsx`, `singletons/settings.tsx` description, and the new `settings.transitionBanner.content`).
@@ -7,7 +9,7 @@
 5. Mechanical source diff against Wags found 6 added schema files and 6 variants; 45 of 51 schema files are byte-identical. The documented parentage (wags-stay-n-play) is supported, not contradicted.
 6. Production contains 6 pages, 3 services, 10 school pages, 7 suburb location pages, 0 job postings, 1 settings doc, 1 schoolSettings doc, 93 image assets, 0 file assets (read-only GROQ, 2026-07-11).
 7. Settings integrity is CLEAN — the first repo in the lineage where it is: one `settings` doc at pinned id `siteSettings`, one `schoolSettings` at `schoolSettings` (`scripts/migrate-settings-id.js` shows deliberate consolidation).
-8. Highest risk: `frontend/app/redirect-map.ts` (legacy riogrooming.com 301 map for DNS cutover) is authored but **not wired** — no `middleware.ts` exists and nothing imports the map.
+8. ~~Highest risk: `frontend/app/redirect-map.ts` … not wired~~ **CORRECTED (7/26): FALSE POSITIVE.** The map IS wired via `frontend/proxy.ts` — Next 16 renamed `middleware.ts` to `proxy.ts`; the original audit grepped for the old filename. Redirects fire correctly for legacy hosts.
 9. Second risk: the canonical production domain is explicitly UNCONFIRMED in source (`frontend/app/site-config.ts`, pending Peter).
 10. Third risk: 29 out-of-band production write scripts with the hardcoded project id (`scripts/`), meaning dataset state — not script history — must be treated as the source of truth for migration.
 
@@ -91,7 +93,7 @@ serviceTabs.tabs[] --ref--> service      testimonials.reviews[] --ref--> testimo
 blockContent/link/button --internal links--> page | service
 ```
 
-Routing: `/` → page slug `homepage`; `/[slug]` → pages; `/services/[slug]` → services; `/locations/[suburb]` → locationPages (segment named `suburb`, mapped from slug); `/school` → schoolPage slug `home`; `/school/[slug]` → other schoolPages. All five dynamic routes implement `generateStaticParams` (school excludes `home`). Navigation is CMS-authored and the layout injects fetched service children when a nav label is exactly `Services` — live settings uses that label, so the lineage magic-label path is **live**. SEO: per-document `seo` objects, per-route canonical alternates (new vs Wags), FAQPage JSON-LD from live faqAccordion blocks on `/[slug]` pages (`buildFaqPageJsonLd`/`collectFaqs` in `sanity/lib/utils.ts`), root defaults from settings. Sitemap/robots are code-generated against `SITE_URL`, always emitting the canonical host. Redirects: `redirect-map.ts` defines legacy-host 301s (riogrooming.com, riogroomingschool.com; deliberately excluding multi-location barksnrec.co) — **but no middleware.ts exists and nothing imports it**; `next.config.ts` has no redirects.
+Routing: `/` → page slug `homepage`; `/[slug]` → pages; `/services/[slug]` → services; `/locations/[suburb]` → locationPages (segment named `suburb`, mapped from slug); `/school` → schoolPage slug `home`; `/school/[slug]` → other schoolPages. All five dynamic routes implement `generateStaticParams` (school excludes `home`). Navigation is CMS-authored and the layout injects fetched service children when a nav label is exactly `Services` — live settings uses that label, so the lineage magic-label path is **live**. SEO: per-document `seo` objects, per-route canonical alternates (new vs Wags), FAQPage JSON-LD from live faqAccordion blocks on `/[slug]` pages (`buildFaqPageJsonLd`/`collectFaqs` in `sanity/lib/utils.ts`), root defaults from settings. Sitemap/robots are code-generated against `SITE_URL`, always emitting the canonical host. Redirects: `redirect-map.ts` defines legacy-host 301s (riogrooming.com, riogroomingschool.com; deliberately excluding multi-location barksnrec.co) — wired via `frontend/proxy.ts` (Next 16's rename of `middleware.ts`); `next.config.ts` has no redirects. (An earlier version of this audit wrongly reported the map as unwired.)
 
 ## Phase 5 — Live dataset snapshot
 
@@ -114,7 +116,7 @@ Exactly one document per singleton, both at their Studio-pinned ids — **clean*
 
 | Priority | Severity | Flag | Evidence |
 |---:|---|---|---|
-| 1 | high | redirect-map.ts authored but NOT wired — no middleware.ts, zero imports; DNS-cutover 301s will silently not fire | `frontend/app/redirect-map.ts`; repo-wide find/grep |
+| 1 | ~~high~~ FALSE POSITIVE (corrected 7/26) | redirect-map.ts IS wired via `frontend/proxy.ts` (Next 16 renamed middleware.ts → proxy.ts); the audit grepped for the old filename | `frontend/proxy.ts` imports `isLegacyHost` + `resolveLegacyRedirect` |
 | 2 | high | Canonical domain UNCONFIRMED (riversidepetmn.com vs "RiversidePet.com", pending Peter) | `frontend/app/site-config.ts`; `.env.example` |
 | 3 | medium | 29 production write scripts w/ hardcoded project id — dataset is source of truth, not Studio history | `scripts/` (28 of 29 embed `7ze0boy4`) |
 | 4 | medium | PT link marks unrendered at seven bare render sites (widened from five) | `PortableText.tsx` + seven bare `@portabletext/react` imports |

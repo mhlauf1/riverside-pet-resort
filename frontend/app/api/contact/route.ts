@@ -16,25 +16,83 @@ const bccEmail = process.env.CONTACT_FORM_BCC_EMAIL || 'acockerham@impactmarketi
 const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER || ''
 const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY || ''
 const RECAPTCHA_MIN_SCORE = 0.5
+const RECAPTCHA_ACTION = 'contact_form'
+const RECAPTCHA_TIMEOUT_MS = 3000
+const RECAPTCHA_MAX_ATTEMPTS = 2
+const MAX_CONTACT_BODY_BYTES = 32 * 1024
 
-async function verifyRecaptcha(token: unknown): Promise<boolean> {
-  // Not configured — skip verification so a missing env var never blocks real leads
-  if (!recaptchaSecret) return true
-  if (typeof token !== 'string' || !token) return false
+type RecaptchaVerification =
+  | {status: 'verified'}
+  | {status: 'rejected'}
+  | {status: 'unavailable'}
+  | {status: 'skipped-unconfigured'}
 
-  try {
-    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams({secret: recaptchaSecret, response: token}),
-    })
-    const data = (await res.json()) as {success?: boolean; score?: number; action?: string}
-    return data.success === true && (data.score ?? 0) >= RECAPTCHA_MIN_SCORE
-  } catch (error) {
-    // Google unreachable — fail open rather than dropping legitimate submissions
-    console.error('reCAPTCHA verification request failed:', error)
-    return true
+function isAllowedRecaptchaHostname(hostname: string | undefined): boolean {
+  if (!hostname) return false
+
+  const normalizedHostname = hostname.toLowerCase()
+  const canonicalHostnames = ['riversidepetmn.com', 'www.riversidepetmn.com']
+
+  if (canonicalHostnames.includes(normalizedHostname)) return true
+  if (process.env.VERCEL_ENV === 'preview') {
+    const allowedPreviewHostnames = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
+      .filter((value): value is string => Boolean(value))
+      .map((value) => value.toLowerCase())
+
+    if (allowedPreviewHostnames.includes(normalizedHostname)) return true
   }
+
+  return (
+    process.env.NODE_ENV !== 'production' && ['localhost', '127.0.0.1'].includes(normalizedHostname)
+  )
+}
+
+async function verifyRecaptcha(token: unknown): Promise<RecaptchaVerification> {
+  if (!recaptchaSecret) {
+    // Keys not yet configured (see current-milestone.md TODO) — skip so forms keep
+    // delivering, but log loudly. Enforcement activates once the secret is set.
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('RECAPTCHA_SECRET_KEY is not set; skipping reCAPTCHA verification')
+    }
+    return {status: 'skipped-unconfigured'}
+  }
+  if (typeof token !== 'string' || !token) return {status: 'rejected'}
+
+  let lastError: unknown
+
+  for (let attempt = 1; attempt <= RECAPTCHA_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({secret: recaptchaSecret, response: token}),
+        signal: AbortSignal.timeout(RECAPTCHA_TIMEOUT_MS),
+      })
+
+      if (!res.ok) throw new Error(`reCAPTCHA verification returned HTTP ${res.status}`)
+
+      const data = (await res.json()) as {
+        success?: boolean
+        score?: number
+        action?: string
+        hostname?: string
+      }
+      const verified =
+        data.success === true &&
+        (data.score ?? 0) >= RECAPTCHA_MIN_SCORE &&
+        data.action === RECAPTCHA_ACTION &&
+        isAllowedRecaptchaHostname(data.hostname)
+
+      return verified ? {status: 'verified'} : {status: 'rejected'}
+    } catch (error) {
+      lastError = error
+    }
+  }
+
+  // Keep legitimate leads moving during a genuine Google outage, but make the
+  // bypass visible in both server logs and the resulting notification email.
+  console.error('reCAPTCHA verification unavailable after retries:', lastError)
+  return {status: 'unavailable'}
 }
 
 function isPlaceholderEmail(value?: string) {
@@ -87,20 +145,39 @@ async function getRecipientEmail(body: Record<string, unknown>) {
 
 export async function POST(request: Request) {
   try {
+    const declaredLength = Number(request.headers.get('content-length'))
+    if (Number.isFinite(declaredLength) && declaredLength > MAX_CONTACT_BODY_BYTES) {
+      return NextResponse.json({error: 'Request is too large'}, {status: 413})
+    }
+
     const body = await request.json()
 
     if (!body || typeof body !== 'object') {
       return NextResponse.json({error: 'Invalid request body'}, {status: 400})
     }
 
-    const {recaptchaToken, ...fields} = body as Record<string, unknown>
+    const {recaptchaToken, companyWebsite, ...fields} = body as Record<string, unknown>
 
-    if (!(await verifyRecaptcha(recaptchaToken))) {
+    // Honeypot fields are hidden from people but commonly filled by simple bots.
+    // Return the normal success response so the trap is not disclosed.
+    if (typeof companyWebsite === 'string' && companyWebsite.trim()) {
+      console.warn('Contact form honeypot triggered; submission discarded', {
+        email: typeof fields.email === 'string' ? fields.email : undefined,
+        formName: typeof fields._formName === 'string' ? fields._formName : undefined,
+      })
+      return NextResponse.json({success: true})
+    }
+
+    const recaptchaVerification = await verifyRecaptcha(recaptchaToken)
+
+    if (recaptchaVerification.status === 'rejected') {
       return NextResponse.json(
         {error: 'Verification failed. Please try again, or call us at 651-480-4726.'},
         {status: 400},
       )
     }
+
+    const recaptchaUnavailable = recaptchaVerification.status === 'unavailable'
 
     const fieldLabels: Record<string, string> = {
       _formName: 'Form',
@@ -166,9 +243,14 @@ export async function POST(request: Request) {
       to: toEmail,
       bcc: bccEmail || undefined,
       replyTo: senderEmail,
-      subject: `New ${formName} Submission from ${senderName}`,
+      subject: `${recaptchaUnavailable ? '[reCAPTCHA unavailable] ' : ''}New ${formName} Submission from ${senderName}`,
       html: `
         <h2>New Contact Form Submission</h2>
+        ${
+          recaptchaUnavailable
+            ? '<p><strong>Security notice:</strong> Google reCAPTCHA could not be reached after two attempts. This submission was delivered to avoid losing a potentially legitimate lead.</p>'
+            : ''
+        }
         ${lines}
         <hr />
         <p style="color: #888; font-size: 12px;">Sent from the Riverside Pet Resort website contact form.</p>

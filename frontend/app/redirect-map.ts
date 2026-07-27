@@ -7,8 +7,8 @@
  * requirement: school/enrollment deep links → `/school/...`, everything else → `/`.
  *
  * SAFETY: redirects only fire for requests whose Host is a LEGACY_HOST (see
- * middleware.ts). Canonical-domain traffic is never rewritten, so the live
- * Riverside routes are unaffected.
+ * proxy.ts — Next 16's rename of middleware.ts). Canonical-domain traffic is
+ * never rewritten, so the live Riverside routes are unaffected.
  *
  * The exhaustive old→new pairs come from a crawl of riogrooming.com's indexed
  * pages (page/post/portfolio sitemaps, 6/20). EXPLICIT_REDIRECTS below carries the

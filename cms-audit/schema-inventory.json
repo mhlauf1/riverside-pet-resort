@@ -5019,7 +5019,7 @@
  "riskFlags": [
   {
    "severity": "high",
-   "flag": "redirect-map.ts (legacy riogrooming.com host redirects for DNS cutover) is authored but NOT WIRED — no middleware.ts exists anywhere in the repo and nothing imports the map, so the planned 301 equity transfer will silently not fire at cutover",
+   "flag": "CORRECTED 7/26 — FALSE POSITIVE: redirect-map.ts IS wired via frontend/proxy.ts (Next 16 renamed middleware.ts to proxy.ts); the original audit grepped for the old filename",
    "evidence": "frontend/app/redirect-map.ts (header comment says \"see middleware.ts\"); find . -name middleware.ts → none; grep for LEGACY_HOSTS/redirect-map consumers → only the map itself"
   },
   {
