@@ -407,7 +407,7 @@ export const settings = defineType({
       title: 'CallTrackingMetrics Script URL',
       type: 'string',
       description:
-        'CallTrackingMetrics tracking script src (e.g. //598463.tctm.co/t.js). Loaded on every page for dynamic number insertion.',
+        'CallTrackingMetrics tracking script src, format //NNNNNN.tctm.co/t.js. Riverside CTM number is pending from Impact Marketing — leave empty until they provide it, and never reuse another site’s number.',
     }),
     defineField({
       name: 'localBusiness',
