@@ -276,6 +276,15 @@ Amy forwarded 5 employer job submissions (legacy riogrooming.com form + one via 
 - Verified: frontend filter query returns all 5 (published perspective); dev-server render of `/school/job-listings` shows all 5 cards.
 - Going forward Amy can manage these herself in Studio (Job Posting docs; "Show on Website" toggle + optional expiration date).
 
+## Job postings round 2 — Amy's forwarded submissions (8/5)
+
+Amy forwarded 2 more "Post a Job" submissions. Content-only, same playbook — no code changes, no deploy. Created + published via MCP:
+
+- `job-doggie-business-holmen` — Professional Dog Groomer, Doggie Business LLC (Holmen, WI), submitted 7/30. Commission-based/flexible. Apply = Google Forms link (`applicationUrl`); description notes to email resume + portfolio to abbi.gates@doggiebusinessllc.com after applying.
+- `job-hometown-rosemount` — Dog Groomer, Hometown Dog Boarding (Rosemount, MN), submitted 7/24. Hourly or commission. No apply link provided → `applicationEmail` = info@hometowndogboarding.com (their listed contact).
+
+Employer copy verbatim as portable text (bold section labels + bullets), contact block appended — matches round 1. Verified: frontend filter query returns all 7 (published perspective), new two first; live `/school/job-listings` re-checked after cache revalidation.
+
 ---
 
 # Thank-you pages for contact forms (7/22 — client request, ported from Wags pilot)
