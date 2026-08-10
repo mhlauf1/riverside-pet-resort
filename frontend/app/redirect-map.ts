@@ -4,7 +4,8 @@
  * Purpose: when legacy domains (riogrooming.com, the Barks & Rec domain, …) are
  * pointed at this deployment at DNS cutover, their old URLs must 301 to the
  * right place on the new canonical site — preserving search equity. Per the
- * requirement: school/enrollment deep links → `/school/...`, everything else → `/`.
+ * requirement: the legacy homepage and school/enrollment deep links →
+ * `/school/...`, while service and other known paths land on their closest match.
  *
  * SAFETY: redirects only fire for requests whose Host is a LEGACY_HOST (see
  * proxy.ts — Next 16's rename of middleware.ts). Canonical-domain traffic is
@@ -41,6 +42,9 @@ export const LEGACY_HOSTS = [
  * new page (school sub-page, specific service) instead of a generic section root.
  */
 export const EXPLICIT_REDIRECTS: Record<string, string> = {
+  // Rio's legacy homepage now represents the Rio Grooming School section.
+  '/': '/school',
+
   // Rio Grooming School — deep links to the matching school sub-pages.
   '/grooming-school': '/school',
   '/grooming-school/request-school-info': '/school/request-information',
