@@ -285,6 +285,14 @@ Amy forwarded 2 more "Post a Job" submissions. Content-only, same playbook — n
 
 Employer copy verbatim as portable text (bold section labels + bullets), contact block appended — matches round 1. Verified: frontend filter query returns all 7 (published perspective), new two first; live `/school/job-listings` re-checked after cache revalidation.
 
+## Job postings round 3 (8/17)
+
+One more "Post a Job" submission forwarded. Content-only, same playbook — no code changes, no deploy. Created + published via MCP:
+
+- `job-blueruff-amery` — Professional Pet Groomer, Blue Ruff Pet Lodge (Amery, WI; 945 131st St), submitted by Katie Adams. Commission-based employee position, flexible schedule. Employer copy verbatim (bold section labels + bullets, incl. nested salon-equipment list), contact block appended. ⚠️ Employer says "Apply through Indeed" but supplied **no Indeed URL** → `applicationEmail` = info@blueruff.com for the apply button; the Indeed instruction stays in the description. If Katie sends the Indeed link, set `applicationUrl` and clear `applicationEmail`.
+
+Verified: frontend filter query returns all 8 (published perspective), Blue Ruff first.
+
 ---
 
 # Thank-you pages for contact forms (7/22 — client request, ported from Wags pilot)
