@@ -364,3 +364,11 @@ Crawled all 19 sitemap URLs as Googlebot: everything 200, fully server-rendered,
 **Verified:** type-check clean both workspaces; production build green; prerendered HTML shows single-brand titles on all sampled routes, exactly 1 FAQPage block on `/faq` (and now 1 on `/school` + FAQ-bearing school sub-pages), new `/school` title + description. Not committed (commit only when asked). **Deploy needed** for the code fixes; the `/school` metadata renders correctly once deployed (title fix is code-side too since the CMS title contains the brand).
 
 **School sub-pages now indexable (7/24, same session):** flipped `seo.noIndex` → false on all 7 school sub-pages (why-become-a-groomer, enrollment-financing, scholarships, student-housing, career-placement, request-information, schedule-a-tour) in Sanity, published. Rationale: the M4 301 map deliberately lands indexed legacy riogrooming.com URLs on these pages — noindex was throwing that equity away — and the brief says the school draws from the greater TC market. `/school/thank-you` intentionally stays noindexed (form confirmation). Verified in a fresh production build: all 7 in sitemap.xml, no robots noindex meta, thank-you still noindexed. Sub-pages appear in the live sitemap/drop noindex at the next deploy (pages are SSG).
+
+## Job postings round 4 (9/9)
+
+Amy forwarded one more "Post a Job" submission (via the new `/school/job-listings` form, 9/8). Content-only, same playbook — no code changes, no deploy. Created + published via MCP:
+
+- `job-rivervalley-osceola` — Dog Groomer (Operate Your Own Grooming Business), River Valley Kennels (Osceola, WI; 2827 37th Ave), submitted by Gwen Schaffer. Not an employee role: a groomer runs their own business inside the kennel with negotiable rent + employer-purchased table/tub. `employmentType: Other`. Employer copy verbatim minus emoji (bold section label + bullets), contact block appended. Apply button → `applicationEmail` gwen@rivervalleykennels.com (employer offered email/phone/"private message"; no URL supplied).
+
+Verified: frontend filter query returns all 9 (published perspective), River Valley first.
