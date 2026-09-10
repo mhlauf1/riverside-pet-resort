@@ -1,5 +1,7 @@
 'use client'
 
+import {useEffect} from 'react'
+import {useRouter} from 'next/navigation'
 import Script from 'next/script'
 import {PortableText} from '@portabletext/react'
 import {stegaClean} from '@sanity/client/stega'
@@ -23,6 +25,26 @@ export default function QuickSchoolsEnquiry({block}: QuickSchoolsEnquiryProps) {
     stegaClean(block.scriptUrl) ||
     'https://riogran.quickschools.com/sms/es/enquiry?divId=enquiry-form'
   const divId = stegaClean(block.divId) || 'enquiry-form'
+  const thankYouPath = stegaClean(block.thankYouPath)
+  const router = useRouter()
+
+  // QuickSchools renders and submits the form itself (no callback hook), then
+  // hides `.qsform-holder` and shows `.qsdone`. Watch for that success state
+  // and send the visitor to a unique thank-you page for conversion tracking.
+  useEffect(() => {
+    if (!thankYouPath?.startsWith('/')) return
+    const root = document.getElementById(divId)
+    if (!root) return
+    const observer = new MutationObserver(() => {
+      const done = root.querySelector<HTMLElement>('.qsdone')
+      if (done && done.offsetParent !== null) {
+        observer.disconnect()
+        router.push(thankYouPath)
+      }
+    })
+    observer.observe(root, {subtree: true, childList: true, attributes: true, attributeFilter: ['style', 'class']})
+    return () => observer.disconnect()
+  }, [divId, thankYouPath, router])
 
   return (
     <section className="bg-cream">

@@ -131,10 +131,13 @@ export default function ContactForm({block, index, pageId, pageType}: ContactFor
         throw new Error(data.error || 'Something went wrong')
       }
 
-      // School-section forms land on the school-themed thank-you page so the
-      // visitor stays inside the school "building".
+      // Per-form thank-you path (CMS) lets ad/analytics tracking tell forms apart.
+      // Fallback: school-section forms land on the school-themed thank-you page
+      // so the visitor stays inside the school "building".
+      const thankYouPath = block.thankYouPath?.startsWith('/') ? block.thankYouPath : null
       router.push(
-        window.location.pathname.startsWith('/school') ? '/school/thank-you' : '/thank-you',
+        thankYouPath ??
+          (window.location.pathname.startsWith('/school') ? '/school/thank-you' : '/thank-you'),
       )
     } catch (err) {
       setStatus('error')

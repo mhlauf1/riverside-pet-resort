@@ -143,6 +143,7 @@ export type QuickSchoolsEnquiry = {
   description?: BlockContent
   scriptUrl: string
   divId: string
+  thankYouPath?: string
   showFootnote?: boolean
 }
 
@@ -643,6 +644,7 @@ export type ContactForm = {
   heading: string
   description?: BlockContent
   destinationEmailOverride?: string
+  thankYouPath?: string
   formFields?: Array<{
     fieldName: string
     label: string
@@ -2566,6 +2568,7 @@ export type GetPageQueryResult = {
             }
         > | null
         destinationEmailOverride?: string
+        thankYouPath?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -3902,6 +3905,7 @@ export type HomepageQueryResult = {
             }
         > | null
         destinationEmailOverride?: string
+        thankYouPath?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -5277,6 +5281,7 @@ export type GetServiceQueryResult = {
             }
         > | null
         destinationEmailOverride?: string
+        thankYouPath?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -6583,6 +6588,7 @@ export type GetLocationPageQueryResult = {
             }
         > | null
         destinationEmailOverride?: string
+        thankYouPath?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -8028,6 +8034,7 @@ export type GetSchoolPageQueryResult = {
             }
         > | null
         destinationEmailOverride?: string
+        thankYouPath?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -9120,6 +9127,7 @@ export type GetSchoolPageQueryResult = {
         > | null
         scriptUrl: string
         divId: string
+        thankYouPath?: string
         showFootnote?: boolean
       }
     | {
@@ -9490,6 +9498,7 @@ export type SchoolHomeQueryResult = {
             }
         > | null
         destinationEmailOverride?: string
+        thankYouPath?: string
         formFields?: Array<{
           fieldName: string
           label: string
@@ -10582,6 +10591,7 @@ export type SchoolHomeQueryResult = {
         > | null
         scriptUrl: string
         divId: string
+        thankYouPath?: string
         showFootnote?: boolean
       }
     | {

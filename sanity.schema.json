@@ -810,6 +810,13 @@
           },
           "optional": false
         },
+        "thankYouPath": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "showFootnote": {
           "type": "objectAttribute",
           "value": {
@@ -4677,6 +4684,13 @@
           "optional": true
         },
         "destinationEmailOverride": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "thankYouPath": {
           "type": "objectAttribute",
           "value": {
             "type": "string"

@@ -143,6 +143,7 @@ export type QuickSchoolsEnquiry = {
   description?: BlockContent
   scriptUrl: string
   divId: string
+  thankYouPath?: string
   showFootnote?: boolean
 }
 
@@ -643,6 +644,7 @@ export type ContactForm = {
   heading: string
   description?: BlockContent
   destinationEmailOverride?: string
+  thankYouPath?: string
   formFields?: Array<{
     fieldName: string
     label: string

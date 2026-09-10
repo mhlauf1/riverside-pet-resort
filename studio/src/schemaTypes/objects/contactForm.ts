@@ -31,6 +31,19 @@ export const contactForm = defineType({
         'Optional. Route submissions from THIS form to a specific email address (e.g. the grooming team or school administrator). Leave blank to use the site default. Comma-separate to send to multiple addresses. A "[EMAIL-TBD]" marker is treated as unset (form will not deliver until a real address is entered).',
     }),
     defineField({
+      name: 'thankYouPath',
+      title: 'Thank-You Page Path',
+      type: 'string',
+      description:
+        'Optional. Where to send visitors after a successful submission (e.g. "/thank-you-contact"). Give each form its own path so ad/analytics tracking can tell forms apart. Leave blank to use the default (/school/thank-you inside the school section, /thank-you elsewhere).',
+      validation: (Rule) =>
+        Rule.custom((value) =>
+          !value || /^\/[a-z0-9\-/]*$/.test(value)
+            ? true
+            : 'Must be an internal path starting with "/" (lowercase letters, numbers, hyphens).',
+        ),
+    }),
+    defineField({
       name: 'formFields',
       title: 'Form Fields',
       type: 'array',

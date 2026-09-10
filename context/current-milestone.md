@@ -372,3 +372,25 @@ Amy forwarded one more "Post a Job" submission (via the new `/school/job-listing
 - `job-rivervalley-osceola` — Dog Groomer (Operate Your Own Grooming Business), River Valley Kennels (Osceola, WI; 2827 37th Ave), submitted by Gwen Schaffer. Not an employee role: a groomer runs their own business inside the kennel with negotiable rent + employer-purchased table/tub. `employmentType: Other`. Employer copy verbatim minus emoji (bold section label + bullets), contact block appended. Apply button → `applicationEmail` gwen@rivervalleykennels.com (employer offered email/phone/"private message"; no URL supplied).
 
 Verified: frontend filter query returns all 9 (published perspective), River Valley first.
+
+---
+
+# Per-form thank-you pages (9/10 — Alex @ Impact Marketing, for ad conversion tracking)
+
+Impact needs a unique thank-you URL per form (shared `/thank-you` + `/school/thank-you` can't distinguish conversions). Ads are waiting on this.
+
+**Code change (needs a deploy):**
+- `contactForm` schema gains optional `thankYouPath` (internal path, validated). `ContactForm.tsx` redirects to it on success; blank → previous fallback (`/school/*` → `/school/thank-you`, else `/thank-you`). Future forms get a unique page via CMS only. Types regenerated; type-check clean; production build green.
+
+**Content (Sanity, published):** 4 new noindex pages + each form's `thankYouPath` set:
+- Contact (`page-contact`/`kform`) → `/thank-you-contact` (`page-thank-you-contact`)
+- Grooming appt (`service-grooming`/`groom-appt-form`) → `/thank-you-grooming` (`page-thank-you-grooming`)
+- Schedule a Tour (`school-schedule-a-tour`/`rio-schedule-tour-form`) → `/school/thank-you-tour` (`school-thank-you-tour`)
+- Job Listings (`school-job-listings`/`jl-form`) → `/school/thank-you-job-listing` (`school-thank-you-job-listing`)
+- Old `/thank-you` + `/school/thank-you` kept as fallbacks.
+
+**⚠️ Request Information is NOT our form** — `school-request-information` renders a `quickSchoolsEnquiry` embed (form HTML + submit handled by QuickSchools), so it never redirected to our thank-you page. The 7/22 reply to Alex listing it under `/school/thank-you` was incorrect. Needs a separate fix (see below).
+
+**Request Information fix (same session):** QuickSchools' form code hides `.qsform-holder` + shows `.qsdone` on success (optional server-configured `redirectIsTrue`/`url` redirect exists but is set in Rio's QuickSchools admin, not ours). Added optional `thankYouPath` to the `quickSchoolsEnquiry` schema; `QuickSchoolsEnquiry.tsx` watches (MutationObserver) for `.qsdone` becoming visible and `router.push`es there. Set `/school/thank-you-request-info` on `rio-quickschools-enquiry`; new noindex page `school-thank-you-request-info` published. ⚠️ Depends on QuickSchools' DOM class names — if they change markup, falls back to their inline thank-you message. Not submit-tested (a test would create a real QuickSchools inquiry in Rio's account).
+
+Type-check clean; production build green (all 5 new thank-you pages SSG, noindex, not in sitemap). Not committed (commit only when asked). **Deploy needed** for redirects to take effect — pages themselves are CMS-live.

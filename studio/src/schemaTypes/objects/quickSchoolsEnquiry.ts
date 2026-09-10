@@ -40,6 +40,19 @@ export const quickSchoolsEnquiry = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'thankYouPath',
+      title: 'Thank-You Page Path',
+      type: 'string',
+      description:
+        'Optional. Where to send visitors after QuickSchools confirms a submission (e.g. "/school/thank-you-request-info"). Leave blank to keep QuickSchools\' inline "Thank you" message.',
+      validation: (Rule) =>
+        Rule.custom((value) =>
+          !value || /^\/[a-z0-9\-/]*$/.test(value)
+            ? true
+            : 'Must be an internal path starting with "/" (lowercase letters, numbers, hyphens).',
+        ),
+    }),
+    defineField({
       name: 'showFootnote',
       title: 'Show QuickSchools Footnote',
       type: 'boolean',
