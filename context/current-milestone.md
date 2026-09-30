@@ -394,3 +394,19 @@ Impact needs a unique thank-you URL per form (shared `/thank-you` + `/school/tha
 **Request Information fix (same session):** QuickSchools' form code hides `.qsform-holder` + shows `.qsdone` on success (optional server-configured `redirectIsTrue`/`url` redirect exists but is set in Rio's QuickSchools admin, not ours). Added optional `thankYouPath` to the `quickSchoolsEnquiry` schema; `QuickSchoolsEnquiry.tsx` watches (MutationObserver) for `.qsdone` becoming visible and `router.push`es there. Set `/school/thank-you-request-info` on `rio-quickschools-enquiry`; new noindex page `school-thank-you-request-info` published. ⚠️ Depends on QuickSchools' DOM class names — if they change markup, falls back to their inline thank-you message. Not submit-tested (a test would create a real QuickSchools inquiry in Rio's account).
 
 Type-check clean; production build green (all 5 new thank-you pages SSG, noindex, not in sitemap). Not committed (commit only when asked). **Deploy needed** for redirects to take effect — pages themselves are CMS-live.
+
+## Job postings round 5 (9/14)
+
+Amy forwarded one more "Post a Job" submission (via `/school/job-listings`, 9/13). Content-only, same playbook — no code changes, no deploy. Created + published via MCP:
+
+- `job-emerald-green-river-falls` — Full-Time Dog Groomer, Emerald Green Grooming (River Falls, WI; 667 N Main Street), submitted by Shelby Dixon. Small private shop, Mon–Fri 8am–4pm, weekend hours available if desired. Employer copy verbatim (bold section label + bullets), contact block appended. Apply button → `applicationEmail` shdixo22266@gmail.com (the only contact supplied; no work email or URL given).
+
+Verified: frontend filter query returns all 10 (published perspective), Emerald Green first.
+
+## Job postings round 6 (9/30)
+
+Amy forwarded one more "Post a Job" submission (via `/school/job-listings`, 9/20). Content-only, same playbook — no code changes, no deploy. Created + published via MCP:
+
+- `job-crafted-canine-minneapolis` — Full-Time Dog Stylist, The Crafted Canine (Minneapolis, MN; 414 Penn Ave S), submitted by Laura Goulet. Boutique salon; $20/hr guaranteed base + 100% tips (~$30/hr avg), hourly not commission. Employer copy verbatim (bold section labels + bullets for Compensation & Benefits, Schedule & Workload, Work Environment, What the Job Includes, Ideal Candidate, Our Culture, To Apply), contact block appended. Apply button → `applicationEmail` craftedcanineoffice@gmail.com (the employer's stated application address; no URL given). `postedAt` = submission date 9/20.
+
+Verified: frontend filter query returns all 11 (published perspective), Crafted Canine first.
