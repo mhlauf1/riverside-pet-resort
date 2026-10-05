@@ -1780,6 +1780,7 @@ export type Settings = {
   gtmContainerId?: string
   googleSiteVerification?: string
   ctmScriptUrl?: string
+  embedReachScriptUrl?: string
   localBusiness?: {
     businessName?: string
     businessType?: string

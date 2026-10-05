@@ -410,3 +410,9 @@ Amy forwarded one more "Post a Job" submission (via `/school/job-listings`, 9/20
 - `job-crafted-canine-minneapolis` — Full-Time Dog Stylist, The Crafted Canine (Minneapolis, MN; 414 Penn Ave S), submitted by Laura Goulet. Boutique salon; $20/hr guaranteed base + 100% tips (~$30/hr avg), hourly not commission. Employer copy verbatim (bold section labels + bullets for Compensation & Benefits, Schedule & Workload, Work Environment, What the Job Includes, Ideal Candidate, Our Culture, To Apply), contact block appended. Apply button → `applicationEmail` craftedcanineoffice@gmail.com (the employer's stated application address; no URL given). `postedAt` = submission date 9/20.
 
 Verified: frontend filter query returns all 11 (published perspective), Crafted Canine first.
+
+---
+
+# Goose/EmbedReach tracking pixel (10/5 — client request)
+
+Client asked for the Goose tracking script on the Riverside site. Ported Wags `933a8f6`: `embedReachScriptUrl` field in `settings` schema + `settingsQuery`, rendered via `<Script id="embedreach">` in the root `app/layout.tsx` (every page — resort, school, thank-you). Sanity `siteSettings.embedReachScriptUrl` = `https://public.embedreach.com/scripts/26ac5e882814/barks-rec-hastings/analytics.js` (published). Slug is `barks-rec-hastings` (Goose account predates the rebrand) — as supplied by the client. Verified: type-check clean; production build green; script present in prerendered `/`, `/school`, `/services/boarding` HTML.
