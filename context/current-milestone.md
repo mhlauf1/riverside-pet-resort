@@ -411,6 +411,14 @@ Amy forwarded one more "Post a Job" submission (via `/school/job-listings`, 9/20
 
 Verified: frontend filter query returns all 11 (published perspective), Crafted Canine first.
 
+## Job postings round 7 (10/9)
+
+Amy forwarded one more "Post a Job" submission (via `/school/job-listings`, 10/1). Content-only, same playbook — no code changes, no deploy. Created + published via MCP:
+
+- `job-premier-pet-salon-plymouth` — Dog Groomer (Full or Part-Time), Premier Pet Salon (Plymouth, MN; 1115 Vicksburg Ln N), submitted by Abby Schlosser. 50% commission, medical/dental after 30 days, PTO after 6 months; hiring end of Oct–early Nov. `employmentType: Full-time` (schema has no full-or-part option; title states both). Employer copy verbatim (bold section labels + bullets), contact block appended. Apply button → `applicationEmail` premierpetsalonmn@gmail.com — the form field had a typo (`.con`); used the `.com` address stated in the employer's own message.
+
+Verified: frontend filter query returns Premier Pet Salon first (published perspective).
+
 ---
 
 # Goose/EmbedReach tracking pixel (10/5 — client request)
